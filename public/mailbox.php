@@ -24,6 +24,7 @@
         .response-box input { flex: 1; padding: 5px; border: 1px solid #ccc; border-radius: 5px; }
         .response-box button { padding: 5px 10px; background: #2196f3; color: white; border: none; border-radius: 5px; cursor: pointer; }
         .response-box button:hover { background: #1976d2; }
+        .response-label { background: #ccc; padding: 10px; border-radius: 5px; display: block; }
     </style>
 </head>
 <body>
@@ -55,17 +56,11 @@
     <script>
         const emailsData = {
             "General": [
-                { avatar: "https://i.pravatar.cc/40?img=1", name: "John Doe", email: "john@example.com", subject: "Hello!", content: "Welcome to the mailbox system." },
-                { avatar: "https://i.pravatar.cc/40?img=2", name: "Jane Smith", email: "jane@example.com", subject: "Meeting Reminder", content: "Don't forget the meeting at 3 PM." }
+                { avatar: "https://i.pravatar.cc/40?img=1", name: "John Doe", email: "john@example.com", subject: "Hello!", content: "Welcome to the mailbox system.", response: null },
+                { avatar: "https://i.pravatar.cc/40?img=2", name: "Jane Smith", email: "jane@example.com", subject: "Meeting Reminder", content: "Don't forget the meeting at 3 PM.", response: null }
             ],
             "Announcements": [
-                { avatar: "https://i.pravatar.cc/40?img=3", name: "Admin", email: "admin@example.com", subject: "System Update", content: "A new update will be released tomorrow." }
-            ],
-            "Support": [
-                { avatar: "https://i.pravatar.cc/40?img=4", name: "Support Team", email: "support@example.com", subject: "Ticket Resolved", content: "Your issue has been resolved." }
-            ],
-            "Feedback": [
-                { avatar: "https://i.pravatar.cc/40?img=5", name: "User Feedback", email: "feedback@example.com", subject: "Feature Request", content: "Please add dark mode support." }
+                { avatar: "https://i.pravatar.cc/40?img=3", name: "Admin", email: "admin@example.com", subject: "System Update", content: "A new update will be released tomorrow.", response: 'Achivment : <b/><img src="https://i.pravatar.cc/40?img=2" style="width:50px; border-radius:50%;">'}
             ]
         };
 
@@ -73,8 +68,8 @@
             const mailList = document.querySelector(".mail-list");
             const emailDetails = document.querySelector(".email-details");
 
-            mailList.innerHTML = ""; 
-            emailDetails.innerHTML = ""; 
+            mailList.innerHTML = "";
+            emailDetails.innerHTML = "";
             emailDetails.style.display = "none";
 
             document.querySelectorAll(".topics li").forEach(item => item.classList.remove("active"));
@@ -104,10 +99,11 @@
                 <img src="${email.avatar}" style="width:50px; border-radius:50%;">
                 <h3>${email.name} (${email.email})</h3>
                 <p>${email.content}</p>
+                ${email.response ? `<label class="response-label">${email.response}</label>` : `
                 <div class="response-box">
                     <input type="text" placeholder="Type your response..." id="responseInput">
                     <button onclick="sendResponse('${email.email}')">Respond</button>
-                </div>
+                </div>`}
             `;
             emailDetails.style.display = "flex";
         }
@@ -116,8 +112,8 @@
             const responseInput = document.getElementById("responseInput");
             const responseText = responseInput.value.trim();
             if (responseText) {
-                alert(`Response sent to ${email}: "${responseText}"`);
-                responseInput.value = "";
+                emailsData["General"].find(e => e.email === email).response = responseText;
+                showEmailDetails(emailsData["General"].find(e => e.email === email));
             }
         }
 
