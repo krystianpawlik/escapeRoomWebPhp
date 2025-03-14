@@ -6,7 +6,23 @@
     <title>Mailbox</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: Arial, sans-serif; display: flex; height: 100vh; background: #e3f2fd; }
+        body { font-family: Arial, sans-serif; display: flex; flex-direction: column; height: 100vh; background: #e3f2fd; }
+        .header {
+            text-align: left;
+            font-size: 42px;
+            font-weight: bold;
+            padding: 20px;
+            background: linear-gradient(135deg, #f0f8ff, #1976d2);
+            color: #0d47a1;
+            width: 100%;
+            padding-left: 40px;
+            letter-spacing: 3px;
+            text-shadow: 3px 3px 6px rgba(255, 255, 255, 0.3),
+                         -3px -3px 6px rgba(0, 0, 0, 0.3);
+            border-bottom: 5px solid #1565c0;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+        }
+        .content { display: flex; flex: 1; }
         .sidebar { width: 25%; background: #2196f3; padding: 15px; color: white; }
         .sidebar h2 { margin-bottom: 10px; }
         .topics { list-style: none; }
@@ -47,19 +63,22 @@
     </style>
 </head>
 <body>
-    <div class="sidebar">
-        <h2>Topics</h2>
-        <ul class="topics">
-            <li class="active" onclick="loadEmails('General')">General</li>
-            <li onclick="loadEmails('Announcements')">Announcements</li>
-            <li onclick="loadEmails('Support')">Support</li>
-            <li onclick="loadEmails('Feedback')">Feedback</li>
-        </ul>
-    </div>
+    <div class="header">CustomerWeb</div>
+    <div class="content">
+        <div class="sidebar">
+            <h2>Topics</h2>
+            <ul class="topics">
+                <li class="active" onclick="loadEmails('General')">General</li>
+                <li onclick="loadEmails('Announcements')">Announcements</li>
+                <li onclick="loadEmails('Support')">Support</li>
+                <li onclick="loadEmails('Feedback')">Feedback</li>
+            </ul>
+        </div>
 
-    <div class="mailbox">
-        <div class="mail-list"></div>
-        <div class="email-details"></div>
+        <div class="mailbox">
+            <div class="mail-list"></div>
+            <div class="email-details"></div>
+        </div>
     </div>
 
     <div id="popup" class="popup">
