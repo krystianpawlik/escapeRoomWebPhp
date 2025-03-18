@@ -42,8 +42,8 @@
         .response-box button:hover { background: #1976d2; }
         .response-label { background: #ccc; padding: 10px; border-radius: 5px; display: block; }
         
-        .popup {
-            display: none;
+         /* .popup {
+            
             position: fixed;
             top: 50%;
             left: 50%;
@@ -53,13 +53,32 @@
             border-radius: 15px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             text-align: center;
-            /* width: 600px;
-            height: 400px; */
+        }  */
+
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border: 2px solid black;
+            box-shadow: 0px 0px 10px gray;
+            text-align: center;
         }
-        .popup img {
+
+        .popup button {
+            display: block;
+            width: 100%;
+            margin: 5px 0;
+            padding: 10px;
+            cursor: pointer;
+        }
+        /* .popup img {
             width: 300px;
             height: auto;
-        }
+        } */
     </style>
 </head>
 <body>
@@ -85,7 +104,12 @@
         <p>Was this respons really correct?</p>
         <img src="https://media1.tenor.com/m/x8v1oNUOmg4AAAAd/rickroll-roll.gif" alt="Rickroll">
         <audio id="popupAudio" src="https://www.myinstants.com/media/sounds/rickroll.mp3" loop></audio>
-        <button onclick="closePopup()">OK</button>
+        <p id="question">Quiz to close: Jaką rocznice Er będzie świętował w tym roku w tym roku?</p>
+        <!-- <button onclick="closePopup()">OK</button> -->
+        <button onclick="closePopup()">121</button>
+        <button onclick="thinkAgain()">120</button>
+        <button onclick="thinkAgain()">6</button>
+        <button onclick="thinkAgain()">100</button>
     </div>
 
     <template id="email-template">
@@ -99,15 +123,25 @@
     </template>
 
     <script>
+
+        //solutionType=TextBox or solutionType="external"
         const emailsData = {
             "General": [
-                { avatar: "https://i.pravatar.cc/40?img=1", name: "John Doe", email: "john@example.com", subject: "Hello!", content: "Welcome to the mailbox system.", response: null, expectedResponse: "Hello!" },
-                { avatar: "https://i.pravatar.cc/40?img=2", name: "Jane Smith", email: "jane@example.com", subject: "Meeting Reminder", content: "Don't forget the meeting at 3 PM.", response: null, expectedResponse: "Got it!" }
+                { avatar: "https://i.pravatar.cc/40?img=1", name: "John Doe", email: "john@example.com", 
+                    subject: "Hello!", content: "Welcome to the mailbox system.", response: null, expectedResponse: "Hello!", solutionType: "TextBox" },
+                { avatar: "https://i.pravatar.cc/40?img=2", name: "Jane Smith", email: "jane@example.com", 
+                    subject: "Meeting Reminder", content: "Don't forget the meeting at 3 PM.", response: null, expectedResponse: "Got it!", solutionType: "external" }
             ],
             "Announcements": [
-                { avatar: "https://i.pravatar.cc/40?img=3", name: "Admin", email: "admin@example.com", subject: "System Update", content: "A new update will be released tomorrow.", response: 'Achivment : <b/><img src="https://i.pravatar.cc/40?img=2" style="width:50px; border-radius:50%;">', expectedResponse: "Thanks for the update!" }
+                { avatar: "https://i.pravatar.cc/40?img=3", name: "Admin", email: "admin@example.com", 
+                    subject: "System Update", content: "A new update will be released tomorrow.", response: 'Achivment : <b/><img src="https://i.pravatar.cc/40?img=2" style="width:50px; border-radius:50%;">', 
+                    expectedResponse: "Thanks for the update!", solutionType: "external" }
             ]
         };
+
+        function thinkAgain() {
+            alert("Zastanów się!");
+        }
 
         function loadEmails(topic) {
             const mailList = document.querySelector(".mail-list");
