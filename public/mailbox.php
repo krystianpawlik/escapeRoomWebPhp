@@ -56,7 +56,6 @@
         }  */
 
         .popup {
-            display: none;
             position: fixed;
             top: 50%;
             left: 50%;
@@ -105,18 +104,16 @@
         </div>
     </div>
 
-    <div id="popup" class="popup">
-        <p>Was this respons really correct?</p>
-        <img src="https://media1.tenor.com/m/x8v1oNUOmg4AAAAd/rickroll-roll.gif" alt="Rickroll">
-        <audio id="popupAudio" src="https://www.myinstants.com/media/sounds/rickroll.mp3" loop></audio>
-        <p id="question">Quiz to close: Jaką rocznicę będzie świętował Ericsson w tym roku w tym roku?</p>
-        <p id="timer" style="display:none; font-weight: bold;"></p>
-        <!-- <button onclick="closePopup()">OK</button> -->
-        <button onclick="closePopup()">121</button>
-        <button onclick="thinkAgain()">120</button>
-        <button onclick="thinkAgain()">6</button>
-        <button onclick="thinkAgain()">100</button>
-    </div>
+    <template id="popupTemplate">
+        <div class="popup">
+            <p class="question-text"></p>
+            <img src="https://media1.tenor.com/m/x8v1oNUOmg4AAAAd/rickroll-roll.gif" alt="Rickroll">
+            <audio class="popup-audio" src="https://www.myinstants.com/media/sounds/rickroll.mp3" loop></audio>
+            <p class="quiz-question">Quiz to close: <span class="question-text"></span></p>
+            <p class="timer" style="display:none; font-weight: bold;"></p>
+            <div class="answers"></div>
+        </div>
+    </template>
 
     <template id="email-template">
         <div class="email-message">
@@ -153,56 +150,82 @@
             ]
         };
 
+        function thinkAgain(popupId) {
+            const popup = document.getElementById(popupId);
+            if (!popup) return;
 
-        function thinkAgain() {
-            const buttons = document.querySelectorAll("#popup button");
-            const timerDisplay = document.getElementById("timer");
+            const buttons = popup.querySelectorAll("button");
+            const timerDisplay = popup.querySelector(".timer");
             let countdown = 5;
 
-            // Wyszarz wszystkie przyciski
-            buttons.forEach(btn => btn.classList.add("disabled"));
-
-            // Pokaż timer
+            buttons.forEach(btn => btn.disabled = true);
             timerDisplay.style.display = "block";
-            timerDisplay.textContent = `Pomyśl jeszcze raz... (${countdown}s)`;
+            timerDisplay.textContent = `Try again in ${countdown}s`;
 
-            // Odliczanie
             const interval = setInterval(() => {
                 countdown--;
-                timerDisplay.textContent = `Pomyśl jeszcze raz... (${countdown}s)`;
-                
-                if (countdown <= 0) {
-                    clearInterval(interval);
-                    timerDisplay.style.display = "none";
+                timerDisplay.textContent = `Try again in ${countdown}s`;
 
-                    // Przywróć przyciski
-                    buttons.forEach(btn => btn.classList.remove("disabled"));
+                if (countdown <= 0) {
+                clearInterval(interval);
+                timerDisplay.style.display = "none";
+                buttons.forEach(btn => btn.disabled = false);
                 }
             }, 1000);
-        }   
+        }
 
-        // function generatePopup() {
-        //     const randomIndex = Math.floor(Math.random() * popupQuestions.length);
-        //     const q = popupQuestions[randomIndex];
+        function closePopup(popupId) {
+            const popup = document.getElementById(popupId);
+            if (popup) {
+                const audio = popup.querySelector(".popup-audio");
+                if (audio) {
+                audio.pause();
+                }
+                popup.remove();
+            }
+        }
 
-        //     // Zbuduj HTML popupu
-        //     const popupHtml = `
-        //         <div id="popup" class="popup">
-        //             <p>${q.question}</p>
-        //             <img src="https://media1.tenor.com/m/x8v1oNUOmg4AAAAd/rickroll-roll.gif" alt="Rickroll">
-        //             <audio id="popupAudio" src="https://www.myinstants.com/media/sounds/rickroll.mp3" loop autoplay></audio>
-        //             <p id="question">Quiz to close: ${q.question}</p>
-        //             <p id="timer" style="display:none; font-weight: bold;"></p>
-        //             ${q.answers.map(answer => `
-        //                 <button onclick="${answer === q.correct ? 'closePopup()' : 'thinkAgain()'}">${answer}</button>
-        //             `).join('')}
-        //         </div>
-        //     `;
+        function generatePopup() {
+            const randomIndex = Math.floor(Math.random() * popupQuestions.length);
+            const questionData = popupQuestions[randomIndex];
 
-        //     // Wstaw do body
-        //     document.body.insertAdjacentHTML('beforeend', popupHtml);
-        //     document.getElementById('popupAudio').play();
-        // }
+            const template = document.getElementById("popupTemplate");
+            const popupClone = document.importNode(template.content, true);
+            const popupElement = popupClone.querySelector(".popup");
+
+            // Ustaw unikalne ID dla popupu
+            const uniqueId = `popup-${Date.now()}`;
+            popupElement.setAttribute("id", uniqueId);
+
+            // Ustaw tekst pytania
+            popupElement.querySelectorAll(".question-text").forEach(el => {
+                el.textContent = questionData.question;
+            });
+
+            // Dodaj przyciski odpowiedzi
+            const answersContainer = popupElement.querySelector(".answers");
+            questionData.answers.forEach(answer => {
+                const btn = document.createElement("button");
+                btn.textContent = answer;
+                btn.onclick = () => {
+                if (answer === questionData.correct) {
+                    closePopup(uniqueId);
+                } else {
+                    thinkAgain(uniqueId);
+                }
+                };
+                answersContainer.appendChild(btn);
+            });
+
+            // Dodaj popup do dokumentu
+            document.body.appendChild(popupElement);
+
+            // Odtwórz dźwięk
+            const audio = popupElement.querySelector(".popup-audio");
+            if (audio) {
+                audio.play();
+            }
+        }
 
         function loadEmails(topic) {
             const mailList = document.querySelector(".mail-list");
@@ -253,20 +276,22 @@
             const responseText = responseInput.value.trim();
             const emailData = Object.values(emailsData).flat().find(e => e.email === email);
             if (emailData) {
-                emailData.response = responseText;
-                showEmailDetails(emailData);
                 if (responseText !== emailData.expectedResponse) {
-                    document.getElementById("popup").style.display = "block";
-                    document.getElementById("popupAudio").play();
+                    // document.getElementById("popup").style.display = "block";
+                    // document.getElementById("popupAudio").play();
+                    generatePopup();
+                } else{
+                    emailData.response = responseText;
+                    showEmailDetails(emailData);
                 }
             }
         }
 
-        function closePopup() {
-            document.getElementById("popup").style.display = "none";
-            document.getElementById("popupAudio").pause();
-            document.getElementById("popupAudio").currentTime = 0;
-        }
+        // function closePopup() {
+        //     document.getElementById("popup").style.display = "none";
+        //     document.getElementById("popupAudio").pause();
+        //     document.getElementById("popupAudio").currentTime = 0;
+        // }
 
         document.addEventListener("DOMContentLoaded", () => loadEmails("General"));
     </script>
