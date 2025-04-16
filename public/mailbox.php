@@ -74,6 +74,14 @@
             padding: 10px;
             cursor: pointer;
         }
+
+        .timer {
+            display: none;
+            font-weight: bold;
+            font-size: 1.2em;
+            color: #ff0000;
+            animation: fadeIn 0.5s ease-in-out;
+        }
         .disabled {
             opacity: 0.3;
             pointer-events: none;
@@ -110,7 +118,7 @@
             <img src="https://media1.tenor.com/m/x8v1oNUOmg4AAAAd/rickroll-roll.gif" alt="Rickroll">
             <audio class="popup-audio" src="https://www.myinstants.com/media/sounds/rickroll.mp3" loop></audio>
             <p class="quiz-question">Quiz to close: <span class="question-text"></span></p>
-            <p class="timer" style="display:none; font-weight: bold;"></p>
+            <p class="timer"></p>
             <div class="answers"></div>
         </div>
     </template>
@@ -128,12 +136,11 @@
     <script>
 
         const popupQuestions = [
-            { question: "Was this response really correct?", answers: ["Yes", "No", "Not sure", "Show correct answer"], correct: "Yes" },
+            { question: "Was this response really correct?", answers: ["Yes", "No", "Not sure", "Show correct answer"], correct: "No" },
             { question: "What is the capital of France?", answers: ["Berlin", "Madrid", "Paris", "Rome"], correct: "Paris" },
             { question: "How many continents are there?", answers: ["5", "6", "7", "8"], correct: "7" },
             { question: "Which planet is known as the Red Planet?", answers: ["Earth", "Mars", "Venus", "Jupiter"], correct: "Mars" }
         ];
-
 
         //solutionType=TextBox or solutionType="external"
         const emailsData = {
@@ -286,12 +293,6 @@
                 }
             }
         }
-
-        // function closePopup() {
-        //     document.getElementById("popup").style.display = "none";
-        //     document.getElementById("popupAudio").pause();
-        //     document.getElementById("popupAudio").currentTime = 0;
-        // }
 
         document.addEventListener("DOMContentLoaded", () => loadEmails("General"));
     </script>
