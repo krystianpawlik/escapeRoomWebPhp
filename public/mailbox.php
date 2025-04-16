@@ -75,6 +75,11 @@
             padding: 10px;
             cursor: pointer;
         }
+        .disabled {
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
         /* .popup img {
             width: 300px;
             height: auto;
@@ -104,7 +109,8 @@
         <p>Was this respons really correct?</p>
         <img src="https://media1.tenor.com/m/x8v1oNUOmg4AAAAd/rickroll-roll.gif" alt="Rickroll">
         <audio id="popupAudio" src="https://www.myinstants.com/media/sounds/rickroll.mp3" loop></audio>
-        <p id="question">Quiz to close: Jaką rocznice Er będzie świętował w tym roku w tym roku?</p>
+        <p id="question">Quiz to close: Jaką rocznicę będzie świętował Ericsson w tym roku w tym roku?</p>
+        <p id="timer" style="display:none; font-weight: bold;"></p>
         <!-- <button onclick="closePopup()">OK</button> -->
         <button onclick="closePopup()">121</button>
         <button onclick="thinkAgain()">120</button>
@@ -124,6 +130,14 @@
 
     <script>
 
+        const popupQuestions = [
+            { question: "Was this response really correct?", answers: ["Yes", "No", "Not sure", "Show correct answer"], correct: "Yes" },
+            { question: "What is the capital of France?", answers: ["Berlin", "Madrid", "Paris", "Rome"], correct: "Paris" },
+            { question: "How many continents are there?", answers: ["5", "6", "7", "8"], correct: "7" },
+            { question: "Which planet is known as the Red Planet?", answers: ["Earth", "Mars", "Venus", "Jupiter"], correct: "Mars" }
+        ];
+
+
         //solutionType=TextBox or solutionType="external"
         const emailsData = {
             "General": [
@@ -139,9 +153,56 @@
             ]
         };
 
+
         function thinkAgain() {
-            alert("Zastanów się!");
-        }
+            const buttons = document.querySelectorAll("#popup button");
+            const timerDisplay = document.getElementById("timer");
+            let countdown = 5;
+
+            // Wyszarz wszystkie przyciski
+            buttons.forEach(btn => btn.classList.add("disabled"));
+
+            // Pokaż timer
+            timerDisplay.style.display = "block";
+            timerDisplay.textContent = `Pomyśl jeszcze raz... (${countdown}s)`;
+
+            // Odliczanie
+            const interval = setInterval(() => {
+                countdown--;
+                timerDisplay.textContent = `Pomyśl jeszcze raz... (${countdown}s)`;
+                
+                if (countdown <= 0) {
+                    clearInterval(interval);
+                    timerDisplay.style.display = "none";
+
+                    // Przywróć przyciski
+                    buttons.forEach(btn => btn.classList.remove("disabled"));
+                }
+            }, 1000);
+        }   
+
+        // function generatePopup() {
+        //     const randomIndex = Math.floor(Math.random() * popupQuestions.length);
+        //     const q = popupQuestions[randomIndex];
+
+        //     // Zbuduj HTML popupu
+        //     const popupHtml = `
+        //         <div id="popup" class="popup">
+        //             <p>${q.question}</p>
+        //             <img src="https://media1.tenor.com/m/x8v1oNUOmg4AAAAd/rickroll-roll.gif" alt="Rickroll">
+        //             <audio id="popupAudio" src="https://www.myinstants.com/media/sounds/rickroll.mp3" loop autoplay></audio>
+        //             <p id="question">Quiz to close: ${q.question}</p>
+        //             <p id="timer" style="display:none; font-weight: bold;"></p>
+        //             ${q.answers.map(answer => `
+        //                 <button onclick="${answer === q.correct ? 'closePopup()' : 'thinkAgain()'}">${answer}</button>
+        //             `).join('')}
+        //         </div>
+        //     `;
+
+        //     // Wstaw do body
+        //     document.body.insertAdjacentHTML('beforeend', popupHtml);
+        //     document.getElementById('popupAudio').play();
+        // }
 
         function loadEmails(topic) {
             const mailList = document.querySelector(".mail-list");
@@ -194,7 +255,7 @@
             if (emailData) {
                 emailData.response = responseText;
                 showEmailDetails(emailData);
-                if (responseText === emailData.expectedResponse) {
+                if (responseText !== emailData.expectedResponse) {
                     document.getElementById("popup").style.display = "block";
                     document.getElementById("popupAudio").play();
                 }
