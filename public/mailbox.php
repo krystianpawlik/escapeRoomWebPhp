@@ -75,7 +75,7 @@
             cursor: pointer;
         }
 
-        .timer {
+        .popup .timer {
             display: none;
             font-weight: bold;
             font-size: 1.2em;
@@ -262,6 +262,25 @@
             });
         }
 
+        function sendResponse(email) {
+            const responseInput = document.getElementById("responseInput");
+            const responseText = responseInput.value.trim();
+            const emailData = Object.values(emailsData).flat().find(e => e.email === email);
+            if (emailData) {
+                if(responseText == "alert!"){
+                    //only temporary
+                    
+                }else if (responseText !== emailData.expectedResponse) {
+                    // document.getElementById("popup").style.display = "block";
+                    // document.getElementById("popupAudio").play();
+                    generatePopup();
+                } else{
+                    emailData.response = responseText;
+                    showEmailDetails(emailData);
+                }
+            }
+        }
+
         function showEmailDetails(email) {
             const emailDetails = document.querySelector(".email-details");
             emailDetails.innerHTML = `
@@ -276,21 +295,15 @@
                 </div>`}
             `;
             emailDetails.style.display = "flex";
-        }
 
-        function sendResponse(email) {
+            // Add Enter eventListener
             const responseInput = document.getElementById("responseInput");
-            const responseText = responseInput.value.trim();
-            const emailData = Object.values(emailsData).flat().find(e => e.email === email);
-            if (emailData) {
-                if (responseText !== emailData.expectedResponse) {
-                    // document.getElementById("popup").style.display = "block";
-                    // document.getElementById("popupAudio").play();
-                    generatePopup();
-                } else{
-                    emailData.response = responseText;
-                    showEmailDetails(emailData);
-                }
+            if (responseInput) {
+                responseInput.addEventListener("keydown", function(event) {
+                    if (event.key === "Enter") {
+                        sendResponse(email.email);
+                    }
+                });
             }
         }
 
