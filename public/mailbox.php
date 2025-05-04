@@ -365,7 +365,7 @@
                         "❗ALERT: Błąd krytyczny systemu!",
                         "⛔ALERT: Zatrzymano wszystkie procesy.",
                         "✅ Proces zakończony. Można kontynuować."
-                    ], 10000);
+                    ], 5000);
                 }else if (responseText !== emailData.expectedResponse) {
                     // document.getElementById("popup").style.display = "block";
                     // document.getElementById("popupAudio").play();
