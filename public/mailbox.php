@@ -87,6 +87,46 @@
             pointer-events: none;
         }
 
+        .overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 9999;
+        }
+
+        .alerts-container {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .alert {
+            background: red;
+            color: white;
+            font-size: 26px;
+            font-weight: bold;
+            padding: 25px 40px;
+            border-radius: 12px;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.4);
+            opacity: 0.95;
+            text-align: center;
+            min-width: 320px;
+        }
+
+        .countdown {
+            font-size: 18px;
+            margin-top: 10px;
+            color: white;
+        }
+
         /* .popup img {
             width: 300px;
             height: auto;
@@ -262,6 +302,56 @@
             });
         }
 
+        function blockPageWithBigRedAlerts(messages, alertDuration = 4000) {
+            const overlay = document.createElement('div');
+            overlay.className = 'overlay';
+            document.body.appendChild(overlay);
+
+            const alertContainer = document.createElement('div');
+            alertContainer.className = 'alerts-container';
+            document.body.appendChild(alertContainer);
+
+            //const alarmSound = document.getElementById('alarm-sound');
+
+            let index = 0;
+
+            function showNextAlert() {
+                if (index >= messages.length) {
+                document.body.removeChild(overlay);
+                document.body.removeChild(alertContainer);
+                return;
+                }
+
+                // Alarm!
+                // alarmSound.currentTime = 0;
+                // alarmSound.play().catch(e => console.warn("Autoplay blocked or no file loaded", e));
+
+                const alertBox = document.createElement('div');
+                alertBox.className = 'alert';
+                alertBox.innerText = messages[index];
+
+                const countdown = document.createElement('div');
+                countdown.className = 'countdown';
+                alertBox.appendChild(countdown);
+
+                alertContainer.appendChild(alertBox);
+
+                let timeLeft = alertDuration / 1000;
+
+                const timer = setInterval(() => {
+                countdown.textContent = `Pozostało: ${timeLeft--}s`;
+                if (timeLeft < 0) {
+                    clearInterval(timer);
+                    alertBox.remove();
+                    index++;
+                    showNextAlert();
+                }
+                }, 1000);
+            }
+
+            showNextAlert();
+        }
+
         function sendResponse(email) {
             const responseInput = document.getElementById("responseInput");
             const responseText = responseInput.value.trim();
@@ -269,7 +359,13 @@
             if (emailData) {
                 if(responseText == "alert!"){
                     //only temporary
-                    
+                            // Użycie:
+                    blockPageWithBigRedAlerts([
+                        "⚠️ ALERT SYSTEMOWY: Naruszenie bezpieczeństwa!",
+                        "❗ALERT: Błąd krytyczny systemu!",
+                        "⛔ALERT: Zatrzymano wszystkie procesy.",
+                        "✅ Proces zakończony. Można kontynuować."
+                    ], 10000);
                 }else if (responseText !== emailData.expectedResponse) {
                     // document.getElementById("popup").style.display = "block";
                     // document.getElementById("popupAudio").play();
@@ -308,6 +404,10 @@
         }
 
         document.addEventListener("DOMContentLoaded", () => loadEmails("General"));
+
+
+
+
     </script>
 </body>
 </html>
