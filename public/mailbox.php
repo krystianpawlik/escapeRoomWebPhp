@@ -183,19 +183,21 @@
         ];
 
         //solutionType=TextBox or solutionType="external"
-        const emailsData = {
-            "General": [
-                { avatar: "https://i.pravatar.cc/40?img=1", name: "John Doe", email: "john@example.com", 
-                    subject: "Hello!", content: "Welcome to the mailbox system.", response: null, expectedResponse: "Hello!", solutionType: "TextBox" },
-                { avatar: "https://i.pravatar.cc/40?img=2", name: "Jane Smith", email: "jane@example.com", 
-                    subject: "Meeting Reminder", content: "Don't forget the meeting at 3 PM.", response: null, expectedResponse: "Got it!", solutionType: "external" }
-            ],
-            "Announcements": [
-                { avatar: "https://i.pravatar.cc/40?img=3", name: "Admin", email: "admin@example.com", 
-                    subject: "System Update", content: "A new update will be released tomorrow.", response: 'Achivment : <b/><img src="https://i.pravatar.cc/40?img=2" style="width:50px; border-radius:50%;">', 
-                    expectedResponse: "Thanks for the update!", solutionType: "external" }
-            ]
-        };
+        // const emailsData = {
+        //     "General": [
+        //         { avatar: "https://i.pravatar.cc/40?img=1", name: "John Doe", email: "john@example.com", 
+        //             subject: "Hello!", content: "Welcome to the mailbox system.", response: null, expectedResponse: "Hello!", solutionType: "TextBox" },
+        //         { avatar: "https://i.pravatar.cc/40?img=2", name: "Jane Smith", email: "jane@example.com", 
+        //             subject: "Meeting Reminder", content: "Don't forget the meeting at 3 PM.", response: null, expectedResponse: "Got it!", solutionType: "external" }
+        //     ],
+        //     "Announcements": [
+        //         { avatar: "https://i.pravatar.cc/40?img=3", name: "Admin", email: "admin@example.com", 
+        //             subject: "System Update", content: "A new update will be released tomorrow.", response: 'Achivment : <b/><img src="https://i.pravatar.cc/40?img=2" style="width:50px; border-radius:50%;">', 
+        //             expectedResponse: "Thanks for the update!", solutionType: "external" }
+        //     ]
+        // };
+
+        let emailsData = null; // Store the last fetched email data
 
         function thinkAgain(popupId) {
             const popup = document.getElementById(popupId);
@@ -403,7 +405,47 @@
             }
         }
 
-        document.addEventListener("DOMContentLoaded", () => loadEmails("General"));
+        function getEmailsFromDatabase(topic) {
+            // Make a GET request to the PHP server to get all emails
+            fetch('database_api.php')
+                .then(response => response.json()) // Parse the JSON response
+                .then(data => {
+
+                    const hasDataChanged = JSON.stringify(data) !== JSON.stringify(emailsData);
+                    //const topicChanged = lastTopic !== topic;
+
+                    // Only update if the data has changed or if it's the first time fetching
+                    if (hasDataChanged) {
+                        //TODO popup when new eamil arive.
+                        // const mailContent = document.querySelector(".mail-content");
+                        // mailContent.innerHTML = ""; // Clear current content
+
+                        // updateContent(topic, data); // Update the content with the new emails
+
+                        emailsData = data; // Store the current data
+                        loadEmails(topic);
+                        // lastTopic = topic;
+                    }
+
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                    mailContent.innerHTML = "<p>There was an error loading the emails.</p>";
+                });
+        }
+
+        // Periodically check for updates every 1 second (1000ms)
+        setInterval(() => {
+            //console.log("This action runs every second");
+            const activeTopic = document.querySelector(".topics li.active"); // Get the currently active topic
+
+            console.log(activeTopic.textContent);
+            if (activeTopic) {
+                getEmailsFromDatabase(activeTopic.textContent); // Reload emails for the active topic if data has changed
+            }
+        }, 1000); // Check every 1000ms = 1 second
+
+        document.addEventListener("DOMContentLoaded", () => getEmailsFromDatabase("General"));
 
 
 
