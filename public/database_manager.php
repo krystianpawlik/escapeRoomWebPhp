@@ -30,11 +30,11 @@
             font-size: 14px;
             color: #555;
         }
-        .solved {
+        .visable {
             color: green;
             font-weight: bold;
         }
-        .unsolved {
+        .invisable {
             color: red;
             font-weight: bold;
         }
@@ -90,10 +90,10 @@
                 const emailElement = document.createElement('div');
                 emailElement.className = 'email';
                 emailElement.innerHTML = `
-                    <h3>${email.subject} <span class="${email.solved ? 'solved' : 'unsolved'}">[${email.solved ? 'Solved' : 'Unsolved'}]</span></h3>
+                    <h3>${email.subject} <span class="${email.visable ? 'visable' : 'invisable'}">[${email.visable ? 'visable' : 'invisable'}]</span></h3>
                     <p><strong>From:</strong> ${email.name} (${email.email})</p>
                     <p><strong>Content:</strong> ${email.content}</p>
-                    <button onclick="toggleSolved(${email.id}, ${email.solved})">Change Status</button>
+                    <button onclick="toggleVisable(${email.id}, ${email.visable})">Change Status</button>
                 `;
                 generalEmailsList.appendChild(emailElement);
             });
@@ -103,18 +103,18 @@
                 const emailElement = document.createElement('div');
                 emailElement.className = 'email';
                 emailElement.innerHTML = `
-                    <h3>${email.subject} <span class="${email.solved ? 'solved' : 'unsolved'}">[${email.solved ? 'Solved' : 'Unsolved'}]</span></h3>
+                    <h3>${email.subject} <span class="${email.visable ? 'visable' : 'invisable'}">[${email.visable ? 'visable' : 'invisable'}]</span></h3>
                     <p><strong>From:</strong> ${email.name} (${email.email})</p>
                     <p><strong>Content:</strong> ${email.content}</p>
-                    <button onclick="toggleSolved(${email.id}, ${email.solved})">Change Status</button>
+                    <button onclick="toggleVisable(${email.id}, ${email.visable})">Change Status</button>
                 `;
                 announcementsEmailsList.appendChild(emailElement);
             });
         }
 
-        // Funkcja do zmiany stanu 'solved' wiadomości
-        async function toggleSolved(id, solved) {
-            const newSolved = solved === 1 ? 0 : 1;  // Zmienia stan solved na przeciwny
+        // Funkcja do zmiany stanu 'visable' wiadomości
+        async function toggleVisable(id, visable) {
+            const newVisable = visable === 1 ? 0 : 1;  // Zmienia stan visable na przeciwny
 
             // Wysłanie żądania POST do API PHP z dodatkowym polem 'action'
             const response = await fetch("database_api.php", {
@@ -125,7 +125,7 @@
                 body: JSON.stringify({
                     action: "update",  // Określamy, że chodzi o akcję "update"
                     id: id,
-                    solved: newSolved
+                    visable: newVisable
                 })
             });
 

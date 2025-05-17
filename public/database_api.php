@@ -13,7 +13,7 @@ $db->exec("CREATE TABLE IF NOT EXISTS emails (
     expectedResponse TEXT,
     solutionType TEXT,
     category TEXT,
-    solved INTEGER,
+    visable INTEGER,
     previous_ids TEXT
 )");
 
@@ -59,7 +59,7 @@ if ($result == 0) {
                 "response" => null,
                 "expectedResponse" => "",
                 "solutionType" => "external",
-                "solved" => true,
+                "visable" => true,
                 "previous_ids" => ""
             ],
             [
@@ -72,7 +72,7 @@ if ($result == 0) {
                 "response" => null,
                 "expectedResponse" => "",
                 "solutionType" => "external",
-                "solved" => false,
+                "visable" => false,
                 "previous_ids" => ""
             ],
             [
@@ -85,7 +85,7 @@ if ($result == 0) {
                 "response" => null,
                 "expectedResponse" => "Got it!",
                 "solutionType" => "external",
-                "solved" => false,
+                "visable" => false,
                 "previous_ids" => ""
             ]
         ],
@@ -100,7 +100,7 @@ if ($result == 0) {
                 "response" => 'Achivment : <b/><img src="https://i.pravatar.cc/40?img=2" style="width:50px; border-radius:50%;">',
                 "expectedResponse" => "Thanks for the update!",
                 "solutionType" => "external",
-                "solved" => false,
+                "visable" => false,
                 "previous_ids" => ""
             ]
         ]
@@ -108,8 +108,8 @@ if ($result == 0) {
 
     //insert data
     $stmt = $db->prepare("INSERT INTO emails 
-        (avatar, name, email, subject, content, response, expectedResponse, solutionType, category, solved, previous_ids)
-        VALUES (:avatar, :name, :email, :subject, :content, :response, :expectedResponse, :solutionType, :category, :solved, :previous_ids)");
+        (avatar, name, email, subject, content, response, expectedResponse, solutionType, category, visable, previous_ids)
+        VALUES (:avatar, :name, :email, :subject, :content, :response, :expectedResponse, :solutionType, :category, :visable, :previous_ids)");
 
     foreach ($initialData as $category => $emails) {
         foreach ($emails as $email) {
@@ -122,7 +122,7 @@ if ($result == 0) {
             $stmt->bindValue(':expectedResponse', $email['expectedResponse'], SQLITE3_TEXT);
             $stmt->bindValue(':solutionType', $email['solutionType'], SQLITE3_TEXT);
             $stmt->bindValue(':category', $category, SQLITE3_TEXT);
-            $stmt->bindValue(':solved', $email['solved'] ? 1 : 0, SQLITE3_INTEGER);
+            $stmt->bindValue(':visable', $email['visable'] ? 1 : 0, SQLITE3_INTEGER);
             $stmt->bindValue(':previous_ids',  $email['previous_ids'], SQLITE3_TEXT);
             $stmt->execute();
         }
@@ -165,7 +165,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     switch ($data['action']) {
         case "update":
-            // Handles "solved" update
+            // Handles "visable" update
             if (!isset($data['id'])) {
                 http_response_code(400);
                 echo "Missing field: id";
@@ -182,13 +182,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 exit;
             }
 
-            // Update "solved"
-            $stmt = $db->prepare("UPDATE emails SET solved = :solved WHERE id = :id");
-            $stmt->bindValue(':solved', $data['solved'], SQLITE3_INTEGER);
+            // Update "visable"
+            $stmt = $db->prepare("UPDATE emails SET visable = :visable WHERE id = :id");
+            $stmt->bindValue(':visable', $data['visable'], SQLITE3_INTEGER);
             $stmt->bindValue(':id', $id, SQLITE3_INTEGER);
             $stmt->execute();
 
-            echo "Message $id updated (solved = true)";
+            echo "Message $id updated (visable = true)";
             break;
         case "box":
             handleBoxPost($data);
@@ -202,13 +202,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 if ($_SERVER["REQUEST_METHOD"] === "GET") {
     $all = isset($_GET['all']) && $_GET['all'] === 'true';
 
-    // If the 'all' parameter is not set, only select messages marked as solved
+    // If the 'all' parameter is not set, only select messages marked as visable
     if ($all) {
-        // Get all messages (ignore 'solved' state)
+        // Get all messages (ignore 'visable' state)
         $results = $db->query("SELECT * FROM emails ORDER BY category, id");
     } else {
-        // Get only messages with solved = 1
-        $results = $db->query("SELECT * FROM emails WHERE solved = 1 ORDER BY category, id");
+        // Get only messages with visable = 1
+        $results = $db->query("SELECT * FROM emails WHERE visable = 1 ORDER BY category, id");
     }
 
     $grouped = [];
