@@ -17,26 +17,67 @@ $db->exec("CREATE TABLE IF NOT EXISTS emails (
     previous_ids TEXT
 )");
 
+// Create team table if it doesn't exist
+$db->exec("
+    CREATE TABLE IF NOT EXISTS team (
+        id INTEGER PRIMARY KEY CHECK (id = 1),
+        teamName TEXT NOT NULL
+    )
+");
+
+function setTeamName($db, $teamName) {
+    $stmt = $db->prepare("
+        INSERT INTO team (id, teamName)
+        VALUES (1, :teamName)
+        ON CONFLICT(id) DO UPDATE SET teamName = excluded.teamName
+    ");
+    $stmt->bindValue(':teamName', $teamName, SQLITE3_TEXT);
+    return $stmt->execute() !== false;
+}
+
+function getTeamName($db) {
+    $result = $db->querySingle("SELECT teamName FROM team WHERE id = 1");
+    return $result ?: "No team name set.";
+}
+
+//
+setTeamName($db, "Troubleshooting team");
+
 // Check if table is empty
 $result = $db->querySingle("SELECT COUNT(*) FROM emails");
 if ($result == 0) {
     $initialData = [
         "General" => [
             [
-                "id" => 1,
+                "id" => 11,
                 "avatar" => "https://i.pravatar.cc/40?img=1",
-                "name" => "John Doe",
-                "email" => "john@example.com",
-                "subject" => "Hello!",
-                "content" => "Welcome to the mailbox system.",
+                "name" => "Safty team",
+                "email" => "support@ericsson.com",
+                "subject" => "Veryfication!",
+                "content" => "We kindly ask you to carry out a verification of personnel using ID cards. This process is part of our ongoing efforts to ensure site security and confirm that all individuals have the appropriate access permissions.
+                              In light of our recent suspicion regarding possible unauthorized access to the RBS system, we kindly request an urgent verification. Use available yellow box for veryfication.",
                 "response" => null,
-                "expectedResponse" => "Hello!",
-                "solutionType" => "TextBox",
+                "expectedResponse" => "",
+                "solutionType" => "external",
+                "solved" => true,
+                "previous_ids" => ""
+            ],
+            [
+                "id" => 12,
+                "avatar" => "https://i.pravatar.cc/40?img=1",
+                "name" => "Safty team",
+                "email" => "support@ericsson.com",
+                "subject" => "Veryfication!",
+                "content" => "We kindly ask you to carry out a verification of personnel using ID cards. This process is part of our ongoing efforts to ensure site security and confirm that all individuals have the appropriate access permissions.
+                              In light of our recent suspicion regarding possible unauthorized access to the RBS system, we kindly request an urgent verification. Use available yellow box for veryfication.",
+                "response" => null,
+                "expectedResponse" => "",
+                "solutionType" => "external",
                 "solved" => false,
                 "previous_ids" => ""
             ],
             [
-                "id" => 2,
+                "id" => 20,
                 "avatar" => "https://i.pravatar.cc/40?img=2",
                 "name" => "Jane Smith",
                 "email" => "jane@example.com",
@@ -51,7 +92,7 @@ if ($result == 0) {
         ],
         "Announcements" => [
             [
-                "id" => 3,
+                "id" => 30,
                 "avatar" => "https://i.pravatar.cc/40?img=3",
                 "name" => "Admin",
                 "email" => "admin@example.com",
@@ -94,6 +135,25 @@ header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST');
 header('Access-Control-Allow-Headers: Content-Type');
 
+
+function handleBoxPost($db) {
+    if (!isset($input['teamName'])) {
+        http_response_code(400);
+        echo json_encode(['success' => false, 'message' => 'Brak pola teamName w JSON.']);
+        return;
+    }
+
+    $teamName = $input['teamName'];
+    if (setTeamName($db, $teamName)) {
+        echo json_encode(['success' => true, 'message' => 'Sucess', 'teamName' => $teamName]);
+    }
+    // else {
+    //     http_response_code(500);
+    //     echo json_encode(['success' => false, 'message' => 'Błąd podczas zapisu do bazy.']);
+    // }
+}
+
+
 // POST — add a message
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $data = json_decode(file_get_contents("php://input"), true);
@@ -131,6 +191,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             echo "Message $id updated (solved = true)";
             break;
+        case "box":
+            handleBoxPost($data);
+            break;
     }
 
     exit;
@@ -143,10 +206,10 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
     // If the 'all' parameter is not set, only select messages marked as solved
     if ($all) {
         // Get all messages (ignore 'solved' state)
-        $results = $db->query("SELECT * FROM emails ORDER BY category, id DESC");
+        $results = $db->query("SELECT * FROM emails ORDER BY category, id");
     } else {
         // Get only messages with solved = 1
-        $results = $db->query("SELECT * FROM emails WHERE solved = 1 ORDER BY category, id DESC");
+        $results = $db->query("SELECT * FROM emails WHERE solved = 1 ORDER BY category, id");
     }
 
     $grouped = [];

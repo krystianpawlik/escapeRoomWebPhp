@@ -168,7 +168,7 @@
             <img class="avatar" src="" alt="Avatar">
             <div>
                 <h3 class="name"></h3>
-                <p class="subject"></p>
+                <div class="subject"></div>
             </div>
         </div>
     </template>
@@ -385,7 +385,7 @@
                 <h2>${email.subject}</h2>
                 <img src="${email.avatar}" style="width:50px; border-radius:50%;">
                 <h3>${email.name} (${email.email})</h3>
-                <p>${email.content}</p>
+                <div>${email.content}</div>
                 ${email.response ? `<label class="response-label">${email.response}</label>` : `
                 <div class="response-box">
                     <input type="text" placeholder="Type your response..." id="responseInput">
