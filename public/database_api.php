@@ -68,8 +68,7 @@ if ($result == 0) {
                 "name" => "Safty team",
                 "email" => "support@ericsson.com",
                 "subject" => "Veryfication!",
-                "content" => "We kindly ask you to carry out a verification of personnel using ID cards. This process is part of our ongoing efforts to ensure site security and confirm that all individuals have the appropriate access permissions.
-                              In light of our recent suspicion regarding possible unauthorized access to the RBS system, we kindly request an urgent verification. Use available yellow box for veryfication.",
+                "content" => "The verification has been successfully completed. You will receive new emails with further instructions shortly.",
                 "response" => null,
                 "expectedResponse" => "",
                 "solutionType" => "external",
