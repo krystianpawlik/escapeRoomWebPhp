@@ -49,7 +49,7 @@ setTeamName($db, "Troubleshooting team");
 // 4X Router
 // 5X Energy
 // 6X InstallLms
-// 7X RBS burning ?
+// 7X RBS burning?
 
 // Check if table is empty
 $result = $db->querySingle("SELECT COUNT(*) FROM emails");
@@ -62,8 +62,8 @@ if ($result == 0) {
                 "name" => "Safty team",
                 "email" => "support@ericsson.com",
                 "subject" => "Veryfication!",
-                "content" => "We kindly ask you to carry out a verification of personnel using ID cards. This process is part of our ongoing efforts to ensure site security and confirm that all individuals have the appropriate access permissions.
-                              In light of our recent suspicion regarding possible unauthorized access to the RBS system, we kindly request an urgent verification. Use available yellow box for veryfication.",
+                "content" => "We kindly ask you to carry out a <b>verification of personnel using ID cards</b>. This process is part of our ongoing efforts to ensure site security and confirm that all individuals have the appropriate access permissions.<br>
+                              In light of our recent suspicion regarding possible unauthorized access to the RBS system, we kindly request an urgent verification. <b>Use available yellow box for veryfication.</b>",
                 "response" => null,
                 "expectedResponse" => "",
                 "solutionType" => "external",
@@ -84,12 +84,12 @@ if ($result == 0) {
                 "previous_ids" => ""
             ],
             [
-                "id" => 20,
+                "id" => 13,
                 "avatar" => "https://i.pravatar.cc/40?img=2",
                 "name" => "Jane Smith",
                 "email" => "jane@example.com",
-                "subject" => "Meeting Reminder",
-                "content" => "Don't forget the meeting at 3 PM.",
+                "subject" => "Topic Solved",
+                "content" => 'It just begining<BR> <img src="img/keyCardIcon.png" style="width:150px; border-radius:50%;">',
                 "response" => null,
                 "expectedResponse" => "Got it!",
                 "solutionType" => "external",
@@ -100,6 +100,33 @@ if ($result == 0) {
         "Network_Configuration" => [
             [
                 "id" => 30,
+                "avatar" => "https://i.pravatar.cc/40?img=3",
+                "name" => "Admin",
+                "email" => "admin@example.com",
+                "subject" => "System Update",
+                "content" => "We've lost contact with multiple RBS in the customer network.<br>
+
+                            Your objectives:<br>
+                                <ol type = \"1\" style=\"margin-left: 20px\">
+                                <li>Locate missing antenna components hidden on-site.</li>
+                                <li>Use the map to correctly reconfigure our programable network.</li>
+                                </ol><br>
+                                This failure impacts client operations. <br>
+                                Act fast. Restore the link.<br><br>
+
+                            Best Regards,<br>
+                            Network Control",
+
+                "response" => null,
+                "expectedResponse" => "",
+                "solutionType" => "external",
+                "visable" => false,
+                "previous_ids" => ""
+            ]
+            ],
+        "Router_Configuration" => [
+            [
+                "id" => 40,
                 "avatar" => "https://i.pravatar.cc/40?img=3",
                 "name" => "Admin",
                 "email" => "admin@example.com",
@@ -167,6 +194,9 @@ function handleBoxPost($db, $data) {
             
             if (setTeamName($db, $teamName)) {
                 setVisableById($db, 12); //!!! Trigger next mail.
+                setVisableById($db, 13); //!!! Trigger next mail.
+                setVisableById($db, 30); //!!! Trigger next mail.
+                setVisableById($db, 40); //!!! Trigger next mail.
                 echo json_encode(['line1' => "Authentication", 'line2' => $teamName]);
             }
             break;
