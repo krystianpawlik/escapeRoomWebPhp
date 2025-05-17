@@ -140,9 +140,9 @@
             <h2>Topics</h2>
             <ul class="topics">
                 <li class="active" onclick="loadEmails('General')">General</li>
-                <li onclick="loadEmails('Announcements')">Announcements</li>
+                <!-- <li onclick="loadEmails('Announcements')">Announcements</li>
                 <li onclick="loadEmails('Support')">Support</li>
-                <li onclick="loadEmails('Feedback')">Feedback</li>
+                <li onclick="loadEmails('Feedback')">Feedback</li> -->
             </ul>
         </div>
 
@@ -279,18 +279,33 @@
         function loadEmails(topic) {
             const mailList = document.querySelector(".mail-list");
             const emailDetails = document.querySelector(".email-details");
+            const topicList = document.querySelector(".topics");
 
             mailList.innerHTML = "";
             emailDetails.innerHTML = "";
             emailDetails.style.display = "none";
 
-            document.querySelectorAll(".topics li").forEach(item => item.classList.remove("active"));
+            // 1. Upewnij się, że wszystkie tematy z emailsData są w DOM
+            const existingTopics = Array.from(document.querySelectorAll(".topics li")).map(li => li.textContent.trim());
+
+            Object.keys(emailsData).forEach(dataTopic => {
+                if (!existingTopics.includes(dataTopic)) {
+                    const li = document.createElement("li");
+                    li.textContent = dataTopic;
+                    li.addEventListener("click", () => loadEmails(dataTopic));
+                    topicList.appendChild(li);
+                }
+            });
+
+            // 2. Ustaw "active" tylko na aktualnie wybranym temacie
             document.querySelectorAll(".topics li").forEach(li => {
                 li.classList.toggle("active", li.textContent.trim() === topic);
             });
 
+            // 3. Jeśli nie ma maili dla danego tematu, zakończ
             if (!emailsData[topic]) return;
 
+            // 4. Załaduj maile dla wybranego tematu
             emailsData[topic].forEach(email => {
                 const template = document.querySelector("#email-template").content.cloneNode(true);
                 template.querySelector(".avatar").src = email.avatar;

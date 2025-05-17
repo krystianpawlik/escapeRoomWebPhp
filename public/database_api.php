@@ -44,6 +44,13 @@ function setTeamName($db, $teamName) {
 //
 setTeamName($db, "Troubleshooting team");
 
+// 1X Card veryfication
+// 3X Contactrons and Lamp
+// 4X Router
+// 5X Energy
+// 6X InstallLms
+// 7X RBS burning ?
+
 // Check if table is empty
 $result = $db->querySingle("SELECT COUNT(*) FROM emails");
 if ($result == 0) {
@@ -90,7 +97,7 @@ if ($result == 0) {
                 "previous_ids" => ""
             ]
         ],
-        "Announcements" => [
+        "Network_Configuration" => [
             [
                 "id" => 30,
                 "avatar" => "https://i.pravatar.cc/40?img=3",
