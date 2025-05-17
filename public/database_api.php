@@ -25,6 +25,11 @@ $db->exec("
     )
 ");
 
+function getTeamName($db) {
+    $result = $db->querySingle("SELECT teamName FROM team WHERE id = 1");
+    return $result ?: "No team name set.";
+}
+
 function setTeamName($db, $teamName) {
     $stmt = $db->prepare("
         INSERT INTO team (id, teamName)
@@ -35,10 +40,6 @@ function setTeamName($db, $teamName) {
     return $stmt->execute() !== false;
 }
 
-function getTeamName($db) {
-    $result = $db->querySingle("SELECT teamName FROM team WHERE id = 1");
-    return $result ?: "No team name set.";
-}
 
 //
 setTeamName($db, "Troubleshooting team");
@@ -108,11 +109,12 @@ if ($result == 0) {
 
     //insert data
     $stmt = $db->prepare("INSERT INTO emails 
-        (avatar, name, email, subject, content, response, expectedResponse, solutionType, category, visable, previous_ids)
-        VALUES (:avatar, :name, :email, :subject, :content, :response, :expectedResponse, :solutionType, :category, :visable, :previous_ids)");
+        (id, avatar, name, email, subject, content, response, expectedResponse, solutionType, category, visable, previous_ids)
+        VALUES (:id, :avatar, :name, :email, :subject, :content, :response, :expectedResponse, :solutionType, :category, :visable, :previous_ids)");
 
     foreach ($initialData as $category => $emails) {
         foreach ($emails as $email) {
+            $stmt->bindValue(':id', $email['id'], SQLITE3_INTEGER);
             $stmt->bindValue(':avatar', $email['avatar'], SQLITE3_TEXT);
             $stmt->bindValue(':name', $email['name'], SQLITE3_TEXT);
             $stmt->bindValue(':email', $email['email'], SQLITE3_TEXT);
@@ -135,23 +137,52 @@ header('Access-Control-Allow-Methods: GET, POST');
 header('Access-Control-Allow-Headers: Content-Type');
 
 
-function handleBoxPost($db) {
-    if (!isset($input['teamName'])) {
-        http_response_code(400);
-        echo json_encode(['success' => false, 'message' => 'Brak pola teamName w JSON.']);
-        return;
+function setVisableById($db, $id) {
+    // $stmt = $db->prepare("UPDATE emails SET visable = 1 WHERE id = :id");
+    // $stmt->bindValue(':id', $id, SQLITE3_INTEGER);
+    // return $stmt->execute();
+
+    // Update "visable"
+    $stmt = $db->prepare("UPDATE emails SET visable = :visable WHERE id = :id");
+    $stmt->bindValue(':visable', 1, SQLITE3_INTEGER);
+    $stmt->bindValue(':id', $id, SQLITE3_INTEGER);
+    
+    return $stmt->execute();
+}
+
+function handleBoxPost($db, $data) {
+    $values = $data['value'];
+    $splitValues = explode(" ", $values);
+    //error_log("values:", $values);
+    switch ($splitValues[0]) {
+        case "teamName":
+            $teamName = $splitValues[1];
+            
+            if (setTeamName($db, $teamName)) {
+                setVisableById($db, 12); //!!! Trigger next mail.
+                echo json_encode(['line1' => "Authentication", 'line2' => $teamName]);
+            }
+            break;
+        case "lm":
+            installLm($data);
+
+
+
+            break;
     }
 
-    $teamName = $input['teamName'];
-    if (setTeamName($db, $teamName)) {
-        echo json_encode(['success' => true, 'message' => 'Sucess', 'teamName' => $teamName]);
-    }
+    // if (!isset($input['teamName'])) {
+    //     http_response_code(400);
+    //     echo json_encode(['success' => false, 'message' => 'Brak pola teamName w JSON.']);
+    //     return;
+    // }
+
+
     // else {
     //     http_response_code(500);
     //     echo json_encode(['success' => false, 'message' => 'Błąd podczas zapisu do bazy.']);
     // }
 }
-
 
 // POST — add a message
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -191,7 +222,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             echo "Message $id updated (visable = true)";
             break;
         case "box":
-            handleBoxPost($data);
+            handleBoxPost($db, $data);
             break;
     }
 

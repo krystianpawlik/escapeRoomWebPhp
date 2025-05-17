@@ -56,7 +56,7 @@
 <div class="controls" id="controls"></div>
 
 <script>
-  const buttonLabels = ['Card1', 'Card2', 'Card3', 'Card4'];
+  const buttonLabels = ['teamName XFT-Maintanance', 'Card2', 'Card3', 'Card4'];
   const controlsContainer = document.getElementById('controls');
 
   const updateScreen = (line1, line2) => {
@@ -77,11 +77,11 @@
 
     button.addEventListener('click', () => {
       const payload = {
-        action: label.toLowerCase(),
-        value: input.value
+        action: "box",
+        value: label
       };
 
-      fetch('/your-endpoint', {
+      fetch('../database_api.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
