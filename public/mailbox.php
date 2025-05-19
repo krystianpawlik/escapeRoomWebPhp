@@ -127,6 +127,50 @@
             color: white;
         }
 
+        #newMailPopup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 320px;
+            background-color: #fff;
+            padding: 20px 20px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            z-index: 1000;
+        }
+
+        #overlay {
+        display: none;
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+        }
+
+        #newMailPopup p {
+        font-size: 18px;
+        margin: 10px 0;
+        }
+
+        #newMailPopup button {
+        margin-top: 10px;
+        padding: 8px 16px;
+        background-color: #007BFF;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 14px;
+        }
+
+        #newMailPopup button:hover {
+        background-color: #0056b3;
+        }
         /* .popup img {
             width: 300px;
             height: auto;
@@ -151,6 +195,17 @@
             <div class="email-details"></div>
         </div>
     </div>
+
+    <div id="overlay"></div>
+    <div id="newMailPopup">
+        <p style="font-size: 20px;">You have new mail!</p>
+        <button onclick="closeNewMailPopup()">Close</button>
+    </div>
+
+    <audio id="mailSound" preload="auto">
+        <source src="mp3/mailnotyfication.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
 
     <template id="popupTemplate">
         <div class="popup">
@@ -198,6 +253,18 @@
         // };
 
         let emailsData = null; // Store the last fetched email data
+
+
+        function showNewMailPopup() {
+            document.getElementById('newMailPopup').style.display = 'block';
+            document.getElementById('overlay').style.display = 'block';
+            document.getElementById('mailSound').play();
+        }
+
+        function closeNewMailPopup() {
+            document.getElementById('newMailPopup').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        }
 
         function thinkAgain(popupId) {
             const popup = document.getElementById(popupId);
@@ -431,6 +498,10 @@
 
                     // Only update if the data has changed or if it's the first time fetching
                     if (hasDataChanged) {
+                        if(emailsData != null)
+                        {
+                            showNewMailPopup();
+                        }
                         //TODO popup when new eamil arive.
                         // const mailContent = document.querySelector(".mail-content");
                         // mailContent.innerHTML = ""; // Clear current content
@@ -460,7 +531,11 @@
             }
         }, 1000); // Check every 1000ms = 1 second
 
-        document.addEventListener("DOMContentLoaded", () => getEmailsFromDatabase("General"));
+        document.addEventListener("DOMContentLoaded", () => {
+            getEmailsFromDatabase("General");
+            const audio = document.getElementById('mailSound');
+            audio.load(); // Wczytaj dźwięk natychmiast
+        });
 
 
 
