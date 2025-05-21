@@ -55,15 +55,20 @@
 
 <div class="controls" id="controls"></div>
 
+<button id="sendAliveButton">Send Alive</button>
+
+<div id="response"></div>
+
 <script>
-  const buttonLabels = ["1", "0", 'Card3', 'Card4'];
+  const buttonLabels = ["1", "0", '2', '3', ];
+  const imputText = ["login Vip", "Unautorized", 'lm rpcSectorCarrier', 'lm rpcConfig'];
   const controlsContainer = document.getElementById('controls');
 
   const updateScreen = (line1, line2) => {
     //document.getElementById('line1').textContent = line1;
     document.getElementById('line2').textContent = line2;
   };
-
+ // i = 0;
   buttonLabels.forEach(label => {
     const row = document.createElement('div');
     row.className = 'control-row';
@@ -73,7 +78,8 @@
 
     const input = document.createElement('input');
     input.type = 'text';
-    input.placeholder = `Enter ${label.toLowerCase()} value`;
+    //imput.value = ""
+    //input.placeholder = `Enter ${label.toLowerCase()} value`;
 
     button.addEventListener('click', () => {
       const payload = {
@@ -101,6 +107,28 @@
     row.appendChild(input);
     controlsContainer.appendChild(row);
   });
+
+  document.getElementById('sendAliveButton').addEventListener('click', function () {
+      const payload = {
+        action: 'box',
+        value: 'alive'
+      };
+
+      fetch('../database_api.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      })
+      .then(response => response.text()) // Use .json() if server returns JSON
+      .then(data => {
+        document.getElementById('response').innerText = 'Response: ' + data;
+      })
+      .catch(error => {
+        document.getElementById('response').innerText = 'Error: ' + error.message;
+      });
+    });
 </script>
 
 </body>

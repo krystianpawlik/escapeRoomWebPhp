@@ -25,6 +25,8 @@ $db->exec("
     )
 ");
 
+$db->exec("CREATE TABLE IF NOT EXISTS devices (name TEXT PRIMARY KEY, last_seen INTEGER)");
+
 function getTeamName($db) {
     $result = $db->querySingle("SELECT teamName FROM team WHERE id = 1");
     return $result ?: "No team name set.";
@@ -170,6 +172,15 @@ header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST');
 header('Access-Control-Allow-Headers: Content-Type');
 
+function updateDeviceState($db, $device)
+{
+    $time = time();
+    $stmt = $db->prepare("INSERT INTO devices (name, last_seen) VALUES (:name, :seen)
+                        ON CONFLICT(name) DO UPDATE SET last_seen = excluded.last_seen");
+    $stmt->bindValue(':name', $device, SQLITE3_TEXT);
+    $stmt->bindValue(':seen', $time, SQLITE3_INTEGER);
+    $stmt->execute();
+}
 
 function setVisableById($db, $id) {
     // $stmt = $db->prepare("UPDATE emails SET visable = 1 WHERE id = :id");
@@ -204,6 +215,7 @@ function handleBoxPost($db, $data) {
             break;
         case "alive":
             //log to database
+            updateDeviceState($db, "box");
             echo "alive";
             break; 
         case "button":
