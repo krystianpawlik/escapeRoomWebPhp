@@ -190,6 +190,8 @@ function handleBoxPost($db, $data) {
     //error_log("values:", $values);
     switch ($splitValues[0]) {
         case "teamName":
+            //Todo probably to be removed
+            //for now leaving for future
             $teamName = $splitValues[1];
             
             if (setTeamName($db, $teamName)) {
@@ -200,26 +202,47 @@ function handleBoxPost($db, $data) {
                 echo json_encode(['line1' => "Authentication", 'line2' => $teamName]);
             }
             break;
-        case "lm":
-            installLm($data);
-
-
-
+        case "alive":
+            //log to database
+            echo "alive";
+            break; 
+        case "button":
+            echo "button";
+            break;
+        default:
+            echo "defult action";
             break;
     }
 
-    // if (!isset($input['teamName'])) {
-    //     http_response_code(400);
-    //     echo json_encode(['success' => false, 'message' => 'Brak pola teamName w JSON.']);
-    //     return;
-    // }
-
-
-    // else {
-    //     http_response_code(500);
-    //     echo json_encode(['success' => false, 'message' => 'Błąd podczas zapisu do bazy.']);
-    // }
 }
+
+function handleBoxCardPost($db, $data) {
+    $values = $data['value'];
+    $splitValues = explode(" ", $values);
+    //error_log("values:", $values);
+    switch ($splitValues[0]) {
+        case "0":
+            //Cards that reject authentication
+            echo "Unauthorized";
+            break;
+        case "1":
+            // First Login Card
+            setVisableById($db, 12); //!!! Trigger next mail.
+            setVisableById($db, 13); //!!! Trigger next mail.
+            setVisableById($db, 30); //!!! Trigger next mail.
+            setVisableById($db, 40); //!!! Trigger next mail.
+            echo "Sucesfull Log";
+
+            break;
+        case "2":
+
+            break;
+        default:
+            echo "defult action";
+            break;
+    }
+}
+
 
 // POST — add a message
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -260,6 +283,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             break;
         case "box":
             handleBoxPost($db, $data);
+            break;
+        case "box-card":
+            handleBoxCardPost($db, $data);
+            break;
+        default:
+            echo "action not recognised";
             break;
     }
 

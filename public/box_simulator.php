@@ -56,11 +56,11 @@
 <div class="controls" id="controls"></div>
 
 <script>
-  const buttonLabels = ['teamName XFT-Maintanance', 'Card2', 'Card3', 'Card4'];
+  const buttonLabels = ["1", "0", 'Card3', 'Card4'];
   const controlsContainer = document.getElementById('controls');
 
   const updateScreen = (line1, line2) => {
-    document.getElementById('line1').textContent = line1;
+    //document.getElementById('line1').textContent = line1;
     document.getElementById('line2').textContent = line2;
   };
 
@@ -77,7 +77,7 @@
 
     button.addEventListener('click', () => {
       const payload = {
-        action: "box",
+        action: "box-card",
         value: label
       };
 
@@ -88,9 +88,9 @@
         },
         body: JSON.stringify(payload)
       })
-      .then(response => response.json())
+      .then(response => response.text()) 
       .then(data => {
-        updateScreen(data.line1 || '', data.line2 || '');
+        updateScreen('', data);
       })
       .catch(error => {
         updateScreen('Error:', error.message);
