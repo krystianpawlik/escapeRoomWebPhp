@@ -25,7 +25,39 @@ $db->exec("
     )
 ");
 
-$db->exec("CREATE TABLE IF NOT EXISTS devices (name TEXT PRIMARY KEY, last_seen INTEGER)");
+// Tworzymy tabelę z kolumną state (jeśli nie istnieje)
+$db->exec("
+    CREATE TABLE IF NOT EXISTS devices (
+        name TEXT PRIMARY KEY,
+        last_seen INTEGER,
+        state TEXT DEFAULT 'idle'
+    )
+");
+
+$resultDevices = $db->querySingle("SELECT COUNT(*) FROM devices");
+if ($resultDevices == 0) {
+    //Initiate devices
+
+    // $time = time();
+    // $stmt = $db->prepare("INSERT INTO devices (name, last_seen) VALUES (:name, :seen)
+    //                     ON CONFLICT(name) DO UPDATE SET last_seen = excluded.last_seen");
+    // $stmt->bindValue(':name', $device, SQLITE3_TEXT);
+    // $stmt->bindValue(':seen', $time, SQLITE3_INTEGER);
+    // $stmt->execute();
+
+    $time = time();
+    $devices = ['box', 'lamp', 'raspberry1', 'raspberry2'];
+
+    $stmt = $db->prepare('INSERT INTO devices (name, last_seen, state) VALUES (:name, :time, :state)');
+
+    foreach ($devices as $device) {
+        $stmt->bindValue(':name', $device, SQLITE3_TEXT);
+        $stmt->bindValue(':time', $time, SQLITE3_INTEGER);
+        $stmt->bindValue(':state', "idle", SQLITE3_TEXT);
+        $stmt->execute();
+    }
+}
+
 
 function getTeamName($db) {
     $result = $db->querySingle("SELECT teamName FROM team WHERE id = 1");
