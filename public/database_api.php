@@ -36,15 +36,6 @@ $db->exec("
 
 $resultDevices = $db->querySingle("SELECT COUNT(*) FROM devices");
 if ($resultDevices == 0) {
-    //Initiate devices
-
-    // $time = time();
-    // $stmt = $db->prepare("INSERT INTO devices (name, last_seen) VALUES (:name, :seen)
-    //                     ON CONFLICT(name) DO UPDATE SET last_seen = excluded.last_seen");
-    // $stmt->bindValue(':name', $device, SQLITE3_TEXT);
-    // $stmt->bindValue(':seen', $time, SQLITE3_INTEGER);
-    // $stmt->execute();
-
     $time = time();
     $devices = ['box', 'lamp', 'raspberry1', 'raspberry2'];
 
@@ -131,7 +122,7 @@ if ($result == 0) {
                 "previous_ids" => ""
             ]
         ],
-        "Network_Configuration" => [
+        "Network_Configuration/Kontaktrons" => [
             [
                 "id" => 30,
                 "avatar" => "https://i.pravatar.cc/40?img=3",
@@ -156,9 +147,45 @@ if ($result == 0) {
                 "solutionType" => "external",
                 "visable" => false,
                 "previous_ids" => ""
+            ],
+            [
+                "id" => 31,
+                "avatar" => "https://i.pravatar.cc/40?img=3",
+                "name" => "Admin",
+                "email" => "admin@example.com",
+                "subject" => "System Update",
+                "content" => "Wygląda że sieć została skonfigurowana. Natomiast aby zatwierdzić zmiany potrzebujemy hasła.<br>
+                              Poprzednik technik wspominał że chasło jest ukryte w światłowodzie. Ale niestety nie wiem o co mu chodziło.<br>
+                              Poszukaj wskazuwek w pokoju i prześlij mi hasło.<br>
+
+                            Best Regards,<br>
+                            Network Control",
+
+                "response" => null,
+                "expectedResponse" => "",
+                "solutionType" => "external",
+                "visable" => false,
+                "previous_ids" => ""
+            ],
+            [
+                "id" => 32,
+                "avatar" => "https://i.pravatar.cc/40?img=3",
+                "name" => "Admin",
+                "email" => "admin@example.com",
+                "subject" => "System Update",
+                "content" => 'Brawo hasło które mi podaliście jest poprawne.<br>
+                            <img src="img/achievementPlaceholder.png" style="width:150px; border-radius:50%;">
+                            <br>
+                            Best Regards,<br>
+                            Network Control',
+                "response" => null,
+                "expectedResponse" => "",
+                "solutionType" => "external",
+                "visable" => false,
+                "previous_ids" => ""
             ]
             ],
-        "Router_Configuration" => [
+            "Router_Configuration" => [
             [
                 "id" => 40,
                 "avatar" => "https://i.pravatar.cc/40?img=3",
@@ -234,7 +261,7 @@ header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST');
 header('Access-Control-Allow-Headers: Content-Type');
 
-function updateDeviceState($db, $device)
+function updateDeviceTime($db, $device)
 {
     $time = time();
     $stmt = $db->prepare("INSERT INTO devices (name, last_seen) VALUES (:name, :seen)
@@ -242,6 +269,27 @@ function updateDeviceState($db, $device)
     $stmt->bindValue(':name', $device, SQLITE3_TEXT);
     $stmt->bindValue(':seen', $time, SQLITE3_INTEGER);
     $stmt->execute();
+}
+
+function updateDeviceState($db, $deviceName, $newState) {
+    $currentTime = time();
+    $stmt = $db->prepare('UPDATE devices SET state = :state, last_seen = :time WHERE name = :name');
+    $stmt->bindValue(':state', $newState, SQLITE3_TEXT);
+    $stmt->bindValue(':time', $currentTime, SQLITE3_INTEGER);
+    $stmt->bindValue(':name', $deviceName, SQLITE3_TEXT);
+    return $stmt->execute();
+}
+
+function getDeviceState($db, $deviceName) {
+    $stmt = $db->prepare('SELECT state FROM devices WHERE name = :name');
+    $stmt->bindValue(':name', $deviceName, SQLITE3_TEXT);
+    $result = $stmt->execute();
+    
+    if ($row = $result->fetchArray(SQLITE3_ASSOC)) {
+        return $row['state'];
+    } else {
+        return null;
+    }
 }
 
 function setVisableById($db, $id) {
@@ -277,7 +325,7 @@ function handleBoxPost($db, $data) {
             break;
         case "alive":
             //log to database
-            updateDeviceState($db, "box");
+            updateDeviceTime($db, "box");
             echo "alive";
             break; 
         case "button":
@@ -315,6 +363,72 @@ function handleBoxCardPost($db, $data) {
             echo "defult action";
             break;
     }
+}
+
+
+function handleLampPost($db, $data) {
+    $values = $data['value'];
+    $splitValues = explode(" ", $values);
+    switch ($splitValues[0]) {
+        // case "teamName":
+        //     //Todo probably to be removed
+        //     //for now leaving for future
+        //     $teamName = $splitValues[1];
+            
+        //     if (setTeamName($db, $teamName)) {
+        //         setVisableById($db, 12); //!!! Trigger next mail.
+        //         setVisableById($db, 13); //!!! Trigger next mail.
+        //         setVisableById($db, 30); //!!! Trigger next mail.
+        //         setVisableById($db, 40); //!!! Trigger next mail.
+        //         echo json_encode(['line1' => "Authentication", 'line2' => $teamName]);
+        //     }
+        //     break;
+        case "alive":
+            //log to database
+            updateDeviceTime($db, "lamp");
+            echo "alive";
+            break; 
+        // case "button":
+        //     echo "button";
+        //     break;
+        default:
+            echo "defult action";
+            break;
+    }
+
+}
+
+
+function handleKontaktPost($db, $data) {
+    $values = $data['value'];
+    $splitValues = explode(" ", $values);
+    switch ($splitValues[0]) {
+        case "connected":
+            setVisableById($db, 31); //!!! Trigger next mail.
+            updateDeviceState($db, "lamp", "shine");
+            //start music
+            //start light
+
+            break;
+        case "disconnected":
+            updateDeviceState($db, "lamp", "idle");
+            //stop music
+            //stop light
+            break;
+        case "alive":
+            //log to database
+            //should i add it to database?
+            //updateDeviceTime($db, "lamp");
+            echo "alive";
+            break; 
+        // case "button":
+        //     echo "button";
+        //     break;
+        default:
+            echo "defult action";
+            break;
+    }
+
 }
 
 
@@ -361,6 +475,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         case "box-card":
             handleBoxCardPost($db, $data);
             break;
+        case "kontaktrons":
+            handleKontaktPost($db, $data);
+            break;
+        case "lamp":
+            handleLampPost($db, $data);
+            break;
         default:
             echo "action not recognised";
             break;
@@ -369,8 +489,22 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     exit;
 }
 
+
+
+
 // GET — fetch data
 if ($_SERVER["REQUEST_METHOD"] === "GET") {
+
+    $lamp = isset($_GET['lamp']) && $_GET['lamp'] === 'true';
+
+    if ($lamp)
+    {
+        //header('Content-Type: application/json');
+        echo getDeviceState($db, "lamp");
+        return;
+    }
+
+
     $all = isset($_GET['all']) && $_GET['all'] === 'true';
 
     // If the 'all' parameter is not set, only select messages marked as visable

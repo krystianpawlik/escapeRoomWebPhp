@@ -131,5 +131,59 @@
     });
 </script>
 
+<br>
+<button id="kontaktronyPolaczone">Kontaktrony Poloczone</button> <div id="kontaktrony_response"></div><br>
+<!-- <button id="kontaktronyReset">Kontaktrony Reset</button> -->
+
+<button id="lampSendAliveButton">Lamp Send Alive</button>
+<div id="lamp_response"></div>
+
+<script>
+
+  document.getElementById('lampSendAliveButton').addEventListener('click', function () {
+      const payload = {
+        action: 'lamp',
+        value: 'alive'
+      };
+
+      fetch('database_api.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      })
+      .then(response => response.text()) // Use .json() if server returns JSON
+      .then(data => {
+        document.getElementById('lamp_response').innerText = 'Lamp: ' + data;
+      })
+      .catch(error => {
+        document.getElementById('lamp_response').innerText = 'Error: ' + error.message;
+      });
+    });
+
+  document.getElementById('kontaktronyPolaczone').addEventListener('click', function () {
+      const payload = {
+        action: 'kontaktrons',
+        value: 'connected'
+      };
+
+      fetch('database_api.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      })
+      .then(response => response.text()) // Use .json() if server returns JSON
+      .then(data => {
+        document.getElementById('kontaktrony_response').innerText = 'kontaktorns: ' + data;
+      })
+      .catch(error => {
+        document.getElementById('kontaktrony_response').innerText = 'Error: ' + error.message;
+      });
+    });
+</script>
+
 </body>
 </html>
