@@ -87,7 +87,7 @@
         value: label
       };
 
-      fetch('../database_api.php', {
+      fetch('database_api.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -114,7 +114,7 @@
         value: 'alive'
       };
 
-      fetch('../database_api.php', {
+      fetch('database_api.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

@@ -172,8 +172,38 @@ if ($result == 0) {
                 "visable" => false,
                 "previous_ids" => ""
             ]
-        ]
-    ];
+            ],
+            "Find Key" => [
+            [
+                "id" => 50,
+                "avatar" => "https://i.pravatar.cc/40?img=3",
+                "name" => "Admin",
+                "email" => "admin@example.com",
+                "subject" => "Otworz Sejf",
+                "content" => "Podrzebujemy kodu z Sejfu który <można jakieś zadanie logiczne> aby kolejne zadanie wytriggerować",
+                "response" => 'No response',
+                "expectedResponse" => "Kod",
+                "solutionType" => "internal",
+                "visable" => false,
+                "previous_ids" => ""
+            ]
+            ],
+            "Connect Energy" => [
+            [
+                "id" => 60,
+                "avatar" => "https://i.pravatar.cc/40?img=3",
+                "name" => "Admin",
+                "email" => "admin@example.com",
+                "subject" => "Otworz Sejf",
+                "content" => "Jak poda się kod z sejfu prosimy o podpięcie Energii.",
+                "response" => 'No response',
+                "expectedResponse" => "Kod",
+                "solutionType" => "internal",
+                "visable" => false,
+                "previous_ids" => ""
+            ]
+            ]
+            ];
 
     //insert data
     $stmt = $db->prepare("INSERT INTO emails 
