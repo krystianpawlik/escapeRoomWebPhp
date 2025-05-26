@@ -211,7 +211,7 @@
         <div class="popup">
             <p class="question-text"></p>
             <img src="https://media1.tenor.com/m/x8v1oNUOmg4AAAAd/rickroll-roll.gif" alt="Rickroll">
-            <audio class="popup-audio" src="https://www.myinstants.com/media/sounds/rickroll.mp3" loop></audio>
+            <audio class="popup-audio" src="https://www.myinstants.com/media/sounds/rickroll.mp3" preload="auto" loop></audio>
             <p class="quiz-question">Quiz to close: <span class="question-text"></span></p>
             <p class="timer"></p>
             <div class="answers"></div>
@@ -227,6 +227,11 @@
             </div>
         </div>
     </template>
+
+    <audio id="lampMusic" preload="auto" loop>
+         <source src="https://incompetech.com/music/royalty-free/mp3-royaltyfree/Carefree.mp3" type="audio/mpeg">
+        Twoja przeglądarka nie obsługuje odtwarzania audio.
+    </audio>
 
     <script>
 
@@ -436,10 +441,32 @@
             showNextAlert();
         }
 
-        function sendResponse(email) {
+        function sendMailboxPost(emailId){
+            const data = {
+                action: "mailbox",
+                value: emailId // możesz tu wstawić np. zmienną z dynamicznym ID
+            };
+
+            fetch("database_api.php", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json" // jeśli wysyłasz jako JSON
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.text()) // lub response.json() jeśli zwracasz JSON
+            .then(result => {
+                console.log("Odpowiedź serwera:", result);
+            })
+            .catch(error => {
+                console.error("Błąd:", error);
+            });
+        }
+
+        function sendResponse(emailId) {
             const responseInput = document.getElementById("responseInput");
             const responseText = responseInput.value.trim();
-            const emailData = Object.values(emailsData).flat().find(e => e.email === email);
+            const emailData = Object.values(emailsData).flat().find(e => e.id === emailId);
             if (emailData) {
                 if(responseText == "alert!"){
                     //only temporary
@@ -455,11 +482,14 @@
                     // document.getElementById("popupAudio").play();
                     generatePopup();
                 } else{
-                    emailData.response = responseText;
+                    //emailData.response = responseText;
+                    //toDo send update to database
+                    sendMailboxPost(emailId);
                     showEmailDetails(emailData);
                 }
             }
         }
+
 
         function showEmailDetails(email) {
             const emailDetails = document.querySelector(".email-details");
@@ -471,7 +501,7 @@
                 ${email.response ? `<label class="response-label">${email.response}</label>` : `
                 <div class="response-box">
                     <input type="text" placeholder="Type your response..." id="responseInput">
-                    <button onclick="sendResponse('${email.email}')">Respond</button>
+                    <button onclick="sendResponse(${email.id})">Respond</button>
                 </div>`}
             `;
             emailDetails.style.display = "flex";
@@ -520,8 +550,35 @@
                 });
         }
 
+        const lampAudio = document.getElementById("lampMusic");
+        async function checkLampState() {
+            try {
+                const response = await fetch(`database_api.php?lamp=true`);
+                const data = await response.text(); // spodziewamy się np. "shine" lub "idle"
+                const trimmedData = data.trim();
+
+                // statusEl.textContent = trimmedData;
+
+                if (trimmedData === "shine") {
+                    if (lampAudio.paused) {
+                        await lampAudio.play();
+                    }
+                } else {
+                    if (!lampAudio.paused) {
+                        lampAudio.pause();
+                        lampAudio.currentTime = 0; // reset
+                    }
+                }
+            } catch (error) {
+                console.error("Błąd podczas pobierania stanu:", error);
+                // statusEl.textContent = "Błąd";
+            }
+        }
+
         // Periodically check for updates every 1 second (1000ms)
         setInterval(() => {
+
+            checkLampState();
             //console.log("This action runs every second");
             const activeTopic = document.querySelector(".topics li.active"); // Get the currently active topic
 
@@ -537,7 +594,11 @@
             audio.load(); // Wczytaj dźwięk natychmiast
         });
 
+        // // Uruchamianie co 3 sekundy
+        // setInterval(checkDeviceState, 1000);
 
+        // // Opcjonalnie uruchom od razu
+        // checkDeviceState();
 
 
     </script>

@@ -162,7 +162,7 @@ if ($result == 0) {
                             Network Control",
 
                 "response" => null,
-                "expectedResponse" => "",
+                "expectedResponse" => "Maki",
                 "solutionType" => "external",
                 "visable" => false,
                 "previous_ids" => ""
@@ -370,27 +370,11 @@ function handleLampPost($db, $data) {
     $values = $data['value'];
     $splitValues = explode(" ", $values);
     switch ($splitValues[0]) {
-        // case "teamName":
-        //     //Todo probably to be removed
-        //     //for now leaving for future
-        //     $teamName = $splitValues[1];
-            
-        //     if (setTeamName($db, $teamName)) {
-        //         setVisableById($db, 12); //!!! Trigger next mail.
-        //         setVisableById($db, 13); //!!! Trigger next mail.
-        //         setVisableById($db, 30); //!!! Trigger next mail.
-        //         setVisableById($db, 40); //!!! Trigger next mail.
-        //         echo json_encode(['line1' => "Authentication", 'line2' => $teamName]);
-        //     }
-        //     break;
         case "alive":
             //log to database
             updateDeviceTime($db, "lamp");
             echo "alive";
             break; 
-        // case "button":
-        //     echo "button";
-        //     break;
         default:
             echo "defult action";
             break;
@@ -424,6 +408,22 @@ function handleKontaktPost($db, $data) {
         // case "button":
         //     echo "button";
         //     break;
+        default:
+            echo "defult action";
+            break;
+    }
+
+}
+
+function handleMailboxPost($db, $data) {
+    $values = $data['value'];
+    $splitValues = explode(" ", $values);
+    switch ($splitValues[0]) {
+        case "31"://Post that mailbox 31 was sucesfull
+            setVisableById($db, 32);
+            updateDeviceState($db, "lamp", "idle");
+            echo "31";
+            break;
         default:
             echo "defult action";
             break;
@@ -481,6 +481,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         case "lamp":
             handleLampPost($db, $data);
             break;
+        case "mailbox":
+            handleMailboxPost($db, $data);
+            break;
         default:
             echo "action not recognised";
             break;
@@ -488,9 +491,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     exit;
 }
-
-
-
 
 // GET — fetch data
 if ($_SERVER["REQUEST_METHOD"] === "GET") {

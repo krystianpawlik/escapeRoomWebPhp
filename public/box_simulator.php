@@ -133,6 +133,7 @@
 
 <br>
 <button id="kontaktronyPolaczone">Kontaktrony Poloczone</button> <div id="kontaktrony_response"></div><br>
+<button id="kontaktronyRoz">Kontaktrony Rozłączone</button> <div id="kontaktrony_response2"></div><br>
 <!-- <button id="kontaktronyReset">Kontaktrony Reset</button> -->
 
 <button id="lampSendAliveButton">Lamp Send Alive</button>
@@ -181,6 +182,28 @@
       })
       .catch(error => {
         document.getElementById('kontaktrony_response').innerText = 'Error: ' + error.message;
+      });
+    });
+
+  document.getElementById('kontaktronyRoz').addEventListener('click', function () {
+      const payload = {
+        action: 'kontaktrons',
+        value: 'disconnected'
+      };
+
+      fetch('database_api.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      })
+      .then(response => response.text()) // Use .json() if server returns JSON
+      .then(data => {
+        document.getElementById('kontaktrony_response2').innerText = 'kontaktorns: ' + data;
+      })
+      .catch(error => {
+        document.getElementById('kontaktrony_response2').innerText = 'Error: ' + error.message;
       });
     });
 </script>
