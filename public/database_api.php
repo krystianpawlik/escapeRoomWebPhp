@@ -72,9 +72,11 @@ setTeamName($db, "Troubleshooting team");
 // 1X Card veryfication
 // 3X Contactrons and Lamp
 // 4X Router
-// 5X Energy
-// 6X InstallLms
-// 7X RBS burning?
+// 5X Origami
+// 6X Key
+// 7X Energy
+// 8X InstallLms
+// 9X RBS restart? Time quize?
 
 // Check if table is empty
 $result = $db->querySingle("SELECT COUNT(*) FROM emails");
@@ -113,7 +115,7 @@ if ($result == 0) {
                 "avatar" => "https://i.pravatar.cc/40?img=2",
                 "name" => "Jane Smith",
                 "email" => "jane@example.com",
-                "subject" => "Topic Solved",
+                "subject" => "Veryfication!(Solved)",
                 "content" => 'It just begining<BR> <img src="img/keyCardIcon.png" style="width:150px; border-radius:50%;">',
                 "response" => null,
                 "expectedResponse" => "Got it!",
@@ -172,7 +174,7 @@ if ($result == 0) {
                 "avatar" => "https://i.pravatar.cc/40?img=3",
                 "name" => "Admin",
                 "email" => "admin@example.com",
-                "subject" => "System Update",
+                "subject" => "System Update(Solved)",
                 "content" => 'Brawo hasło które mi podaliście jest poprawne.<br>
                             <img src="img/achievementPlaceholder.png" style="width:150px; border-radius:50%;">
                             <br>
@@ -189,27 +191,106 @@ if ($result == 0) {
             [
                 "id" => 40,
                 "avatar" => "https://i.pravatar.cc/40?img=3",
-                "name" => "Admin",
-                "email" => "admin@example.com",
-                "subject" => "System Update",
-                "content" => "A new update will be released tomorrow.",
-                "response" => 'Achivment : <b/><img src="https://i.pravatar.cc/40?img=2" style="width:50px; border-radius:50%;">',
+                "name" => "Jack Lin?",
+                "email" => "Jack.Lin@ericsson.com",
+                "subject" => "Router_Configuration",
+                "content" => "Kpi drop for some reasone, counters indicate problem with router, please configure it, and send us password. Instruction how to configure router should be in room.",//aby poszukali w pokoju
+                "response" => null,
+                "expectedResponse" => "Haslo!!!", //
+                "solutionType" => "external",
+                "visable" => false,
+                "previous_ids" => ""
+            ],
+            [
+                "id" => 41,
+                "avatar" => "https://i.pravatar.cc/40?img=3",
+                "name" => "Jack Lin?",
+                "email" => "Jack.Lin@ericsson.com",
+                "subject" => "Router_Configuration",
+                "content" => 'KPI were restored, but for some reasone peopel who should not have access have additional features. Did you connect firewall? <br>
+                              <img src="img/achievementPlaceholder.png" style="width:150px; border-radius:50%;">
+                              <br>
+                                Best Regards,<br>
+                                Jack Lin',
+                "response" => null,
+                "expectedResponse" => "Thanks for the update!",
+                "solutionType" => "external",
+                "visable" => false,
+                "previous_ids" => ""
+            ],
+            [
+                "id" => 42,
+                "avatar" => "https://i.pravatar.cc/40?img=3",
+                "name" => "Jack Lin?",
+                "email" => "Jack.Lin@ericsson.com",
+                "subject" => "(Solved)",
+                "content" => 'KPI were restored, And firewall was properly connected bravo. <br>
+                              <img src="img/achievementPlaceholder.png" style="width:150px; border-radius:50%;">
+                              <br>
+                                Best Regards,<br>
+                                Jack Lin',
+                "response" => null,
                 "expectedResponse" => "Thanks for the update!",
                 "solutionType" => "external",
                 "visable" => false,
                 "previous_ids" => ""
             ]
             ],
-            "Find Key" => [
+            "Password Needed" => [
             [
                 "id" => 50,
                 "avatar" => "https://i.pravatar.cc/40?img=3",
-                "name" => "Admin",
-                "email" => "admin@example.com",
-                "subject" => "Otworz Sejf",
-                "content" => "Podrzebujemy kodu z Sejfu który <można jakieś zadanie logiczne> aby kolejne zadanie wytriggerować",
-                "response" => 'No response',
-                "expectedResponse" => "Kod",
+                "name" => "Stefan Batty",
+                "email" => "Stefan.Batty@example.com",
+                "subject" => "Potrzebujemy hasła",
+                "content" => 'Podrzebujemy hasła do sieci, powino być gdzies na poskładanej kartce papieru.',
+                "response" => null,
+                "expectedResponse" => "Haslo123!!!",
+                "solutionType" => "external",
+                "visable" => false,
+                "previous_ids" => ""
+            ],
+            [
+                "id" => 51,
+                "avatar" => "https://i.pravatar.cc/40?img=3",
+                "name" => "Stefan Batty",
+                "email" => "Stefan.Batty@example.com",
+                "subject" => "Potrzebujemy hasła",
+                "content" => 'Podrzebujemy hasła przez to że firewall był źle podłączony do sieci, powino być gdzies na poskładanej kartce papieru.',
+                "response" => null,
+                "expectedResponse" => "Haslo123!!!",
+                "solutionType" => "external",
+                "visable" => false,
+                "previous_ids" => ""
+            ],
+            [
+                "id" => 52,
+                "avatar" => "https://i.pravatar.cc/40?img=3",
+                "name" => "Stefan Batty",
+                "email" => "Stefan.Batty@example.com",
+                "subject" => "Potrzebujemy hasła",
+                "content" => 'Udało się zalogować dzięki <br>
+                              <img src="img/achievementPlaceholder.png" style="width:150px; border-radius:50%;">
+                              <br>
+                                Pozdrawiam,<br>
+                                Stefan Batty',
+                "response" => null,
+                "expectedResponse" => "Haslo123!!!",
+                "solutionType" => "external",
+                "visable" => false,
+                "previous_ids" => ""
+            ],
+            ],
+            "Find Key" => [
+            [
+                "id" => 60,
+                "avatar" => "https://i.pravatar.cc/40?img=3",
+                "name" => "Stefan Batty",
+                "email" => "Stefan.Batty@example.com",
+                "subject" => "Znajdzie Klucz",
+                "content" => "Podrzebujemy kodu z Sejfu który powinien być w pokoju. Znajdują się w nim ważne elementy aby kontytować z konfiguracją noda.",
+                "response" => null,
+                "expectedResponse" => "??????????",
                 "solutionType" => "internal",
                 "visable" => false,
                 "previous_ids" => ""
@@ -217,7 +298,7 @@ if ($result == 0) {
             ],
             "Connect Energy" => [
             [
-                "id" => 60,
+                "id" => 70,
                 "avatar" => "https://i.pravatar.cc/40?img=3",
                 "name" => "Admin",
                 "email" => "admin@example.com",
@@ -225,6 +306,109 @@ if ($result == 0) {
                 "content" => "Jak poda się kod z sejfu prosimy o podpięcie Energii.",
                 "response" => 'No response',
                 "expectedResponse" => "Kod",
+                "solutionType" => "internal",
+                "visable" => false,
+                "previous_ids" => ""
+            ],
+            [
+                "id" => 71,
+                "avatar" => "https://i.pravatar.cc/40?img=3",
+                "name" => "Jack Lin?",
+                "email" => "Jack.Lin@ericsson.com",
+                "subject" => "Connect Energy (Solved1)",
+                "content" => 'KPI were restored, And firewall was properly connected bravo. <br>
+                              <img src="img/achievementPlaceholder.png" style="width:150px; border-radius:50%;">
+                              <br>
+                                Best Regards,<br>
+                                Jack Lin',
+                "response" => null,
+                "expectedResponse" => "Thanks for the update!",
+                "solutionType" => "external",
+                "visable" => false,
+                "previous_ids" => ""
+            ],
+            [
+                "id" => 72,
+                "avatar" => "https://i.pravatar.cc/40?img=3",
+                "name" => "Jack Lin?",
+                "email" => "Jack.Lin@ericsson.com",
+                "subject" => "Connect Energy (Solved2)",
+                "content" => 'KPI were restored, And firewall was properly connected bravo. <br>
+                              <img src="img/achievementPlaceholder.png" style="width:150px; border-radius:50%;">
+                              <br>
+                                Best Regards,<br>
+                                Jack Lin',
+                "response" => null,
+                "expectedResponse" => "Thanks for the update!",
+                "solutionType" => "external",
+                "visable" => false,
+                "previous_ids" => ""
+            ]
+            ],
+            "Install Lm" => [
+            [
+                "id" => 80,
+                "avatar" => "https://i.pravatar.cc/40?img=3",
+                "name" => "Stefan Batty",
+                "email" => "Stefan.Batty@example.com",
+                "subject" => "Zainstaluj soft na YB",
+                "content" => "Zainstaluje LM na yellow box zgodnie z instrukcją",
+                "response" => null,
+                "expectedResponse" => "??????????",
+                "solutionType" => "internal",
+                "visable" => false,
+                "previous_ids" => ""
+            ],
+            [
+                "id" => 81,
+                "avatar" => "https://i.pravatar.cc/40?img=3",
+                "name" => "Stefan Batty",
+                "email" => "Stefan.Batty@example.com",
+                "subject" => "Zainstaluj soft na YB(Solved)",
+                "content" => '<img src="img/achievementPlaceholder.png" style="width:150px; border-radius:50%;">',
+                "response" => null,
+                "expectedResponse" => "??????????",
+                "solutionType" => "internal",
+                "visable" => false,
+                "previous_ids" => ""
+            ]
+            ],
+            "Restart RBS" => [
+            [
+                "id" => 90,
+                "avatar" => "https://i.pravatar.cc/40?img=3",
+                "name" => "Stefan Batty",
+                "email" => "Stefan.Batty@example.com",
+                "subject" => "Znajdzie Klucz",
+                "content" => 'Aby zrestartować RBS naciśnijcie poniższy przycisk<BR> <a href="awaria.php" class="restart-button">Restart RBS</a>',
+                "response" => null,
+                "expectedResponse" => "??????????",
+                "solutionType" => "internal",
+                "visable" => false,
+                "previous_ids" => ""
+            ],
+            [
+                "id" => 91,
+                "avatar" => "https://i.pravatar.cc/40?img=3",
+                "name" => "Stefan Batty",
+                "email" => "Stefan.Batty@example.com",
+                "subject" => "Carbon of RBS from Monitor Lizard(Solved)",
+                "content" => '<img src="img/achievementPlaceholder.png" style="width:150px; border-radius:50%;">',
+                "response" => null,
+                "expectedResponse" => "??????????",
+                "solutionType" => "internal",
+                "visable" => false,
+                "previous_ids" => ""
+            ],
+            [
+                "id" => 92,
+                "avatar" => "https://i.pravatar.cc/40?img=3",
+                "name" => "Stefan Batty",
+                "email" => "Stefan.Batty@example.com",
+                "subject" => "Free Monitor Lizard(Solved)",
+                "content" => '<img src="img/achievementPlaceholder.png" style="width:150px; border-radius:50%;">',
+                "response" => null,
+                "expectedResponse" => "??????????",
                 "solutionType" => "internal",
                 "visable" => false,
                 "previous_ids" => ""
@@ -510,7 +694,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
     // If the 'all' parameter is not set, only select messages marked as visable
     if ($all) {
         // Get all messages (ignore 'visable' state)
-        $results = $db->query("SELECT * FROM emails ORDER BY category, id");
+        $results = $db->query("SELECT * FROM emails ORDER BY id");
     } else {
         // Get only messages with visable = 1
         $results = $db->query("SELECT * FROM emails WHERE visable = 1 ORDER BY category, id");

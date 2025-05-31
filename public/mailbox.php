@@ -171,6 +171,24 @@
         #newMailPopup button:hover {
         background-color: #0056b3;
         }
+
+        .restart-button {
+        display: inline-block;
+        width: 100px;          /* kwadratowy kształt */
+        height: 100px;
+        background-color: red;
+        color: white;
+        text-align: center;
+        line-height: 100px;     /* centrowanie tekstu pionowo */
+        text-decoration: none;  /* usuwa podkreślenie linku */
+        font-weight: bold;
+        border-radius: 8px;     /* lekko zaokrąglone rogi */
+        transition: background-color 0.3s ease;
+        }
+
+        .restart-button:hover {
+        background-color: darkred;
+        }
         /* .popup img {
             width: 300px;
             height: auto;
@@ -519,7 +537,7 @@
 
         function getEmailsFromDatabase(topic) {
             // Make a GET request to the PHP server to get all emails
-            fetch('database_api.php')
+            fetch('database_api.php?all=true')
                 .then(response => response.json()) // Parse the JSON response
                 .then(data => {
 
