@@ -46,12 +46,14 @@
   <button class="tab active" onclick="showTab('frame1', this)">Mailbox All</button>
   <button class="tab" onclick="showTab('frame2', this)">Box simulator</button>
   <button class="tab" onclick="showTab('frame3', this)">Device Status</button>
+  <button class="tab" onclick="showTab('frame4', this)">Rbs simulator</button>
 </div>
 
 <div class="iframe-container">
   <iframe id="frame1" class="active" src="database_manager.php"></iframe>
   <iframe id="frame2" src="box_simulator.php"></iframe>
   <iframe id="frame3" src="device_status.php"></iframe>
+  <iframe id="frame4" src="rbs_simulator.php"></iframe>
 </div>
 
 <script>

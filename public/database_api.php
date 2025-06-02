@@ -34,6 +34,78 @@ $db->exec("
     )
 ");
 
+//Tworzy tablelę puzzles do przechowywania czesci stanow 
+$db->exec("
+    CREATE TABLE IF NOT EXISTS puzzles (
+        name TEXT PRIMARY KEY,
+        status TEXT,
+        value TEXT
+    )
+");
+
+// Funkcja zapisująca lub aktualizująca wpis
+function setPuzzleData($name, $status, $value) {
+    global $db; // obiekt SQLite3
+
+    // Przygotuj zapytanie - INSERT OR REPLACE dla aktualizacji lub dodania
+    $stmt = $db->prepare('INSERT OR REPLACE INTO puzzles (name, status, value) VALUES (:name, :status, :value)');
+    if (!$stmt) {
+        return false;
+    }
+
+    $stmt->bindValue(':name', $name, SQLITE3_TEXT);
+    $stmt->bindValue(':status', $status, SQLITE3_TEXT);
+    $stmt->bindValue(':value', $value, SQLITE3_TEXT);
+
+    $result = $stmt->execute();
+    if (!$result) {
+        return false;
+    }
+
+    $result->finalize(); // zwolnij zasoby wyniku
+    return true;
+}
+
+// Funkcja pobierająca dane po name
+function getPuzzleData($name) {
+    global $db; // obiekt SQLite3
+
+    $stmt = $db->prepare('SELECT name, status, value FROM puzzles WHERE name = :name LIMIT 1');
+    if (!$stmt) {
+        return false;
+    }
+
+    $stmt->bindValue(':name', $name, SQLITE3_TEXT);
+
+    $result = $stmt->execute();
+    if (!$result) {
+        return false;
+    }
+
+    $row = $result->fetchArray(SQLITE3_ASSOC);
+    $result->finalize();
+
+    if ($row === false) {
+        return false;
+    }
+
+    return $row;
+}
+
+function initPuzzleState() {
+    global $db;
+
+    $result = $db->query("SELECT COUNT(*) AS count FROM puzzles");
+    $row = $result->fetchArray(SQLITE3_ASSOC);
+    $count = $row['count'];
+
+    if ($count == 0) {
+        setPuzzleData('card', 'idle', '-1');
+    }
+}
+
+initPuzzleState();
+
 $resultDevices = $db->querySingle("SELECT COUNT(*) FROM devices");
 
 $rbsStates = ["idle", "power", "connected", "buring", "weglan_lizard" , "monitor_lizard"];
@@ -51,7 +123,6 @@ if ($resultDevices == 0) {
         $stmt->execute();
     }
 }
-
 
 function getTeamName($db) {
     $result = $db->querySingle("SELECT teamName FROM team WHERE id = 1");
@@ -525,6 +596,44 @@ function handleBoxPost($db, $data) {
 
 }
 
+// Tylko dla kart
+function checkNextPuzzleStep($expected) {
+    global $db;
+
+    //Hardkoded CARD sequence
+    $cardsSequence = ["red", "yellow", "blue"];
+
+    $current = getPuzzleData('card');
+    if (!$current) {
+        return ['ok' => false, 'message' => 'Brak wpisu "card".'];
+    }
+
+    $currentIndex = intval($current['value']);
+    $nextIndex = $currentIndex + 1;
+
+    if (!isset($cardsSequence[$nextIndex])) {
+        return ['ok' => false, 'message' => 'Nie ma kolejnego kroku.'];
+    }
+
+    $expectedNextStep = $cardsSequence[$nextIndex];
+
+    if ($expected === $expectedNextStep) {
+        $isLastStep = ($nextIndex === count($cardsSequence) - 1);
+
+        if ($isLastStep) {
+            //!!!!!!!!!! Ostatni Krok nastepne zadanie
+            setPuzzleData('card', 'completed', (string)$nextIndex);
+            return ['ok' => true, 'message' => "rpc installed"];
+        } else {
+            setPuzzleData('card', 'in_progress', (string)$nextIndex);
+            return ['ok' => true, 'message' => "Installing {$expected}"];
+        }
+    } else {
+        setPuzzleData('card', 'idle', "-1");
+        return ['ok' => false, 'message' => "Incorrect, Reseting"];
+    }
+}
+
 function handleBoxCardPost($db, $data) {
     $values = $data['value'];
     $splitValues = explode(" ", $values);
@@ -534,7 +643,7 @@ function handleBoxCardPost($db, $data) {
             //Cards that reject authentication
             echo "Unauthorized";
             break;
-        case "1":
+        case "vip":
             // First Login Card
             setVisableById($db, 12); //!!! Trigger next mail.
             setVisableById($db, 13); //!!! Trigger next mail.
@@ -543,11 +652,25 @@ function handleBoxCardPost($db, $data) {
             echo "Sucesfull Log";
 
             break;
-        case "2":
-
+        case "red":
+            $resultCard = checkNextPuzzleStep("red");
+            echo $resultCard['message'];
+            break;
+        case "blue":
+            $resultCard = checkNextPuzzleStep("blue");
+            echo $resultCard['message'];
+            break;
+        case "yellow":
+            $resultCard = checkNextPuzzleStep("yellow");
+            echo $resultCard['message'];;
+            break;
+        case "reset":
+            setPuzzleData('card', 'idle', "-1");
+            echo "reset";
             break;
         default:
-            echo "defult action";
+            echo "Incorect Action";    
+            //echo "defult action";
             break;
     }
 }
@@ -619,6 +742,31 @@ function handleMailboxPost($db, $data) {
 }
 
 
+
+
+//   <button onclick="sendValue(this)">idle</button>
+//   <button onclick="sendValue(this)">connected</button>
+//   <button onclick="sendValue(this)">power</button>
+//   <button onclick="sendValue(this)">buring</button>
+//   <button onclick="sendValue(this)">weglan_lizard</button>
+//   <button onclick="sendValue(this)">monitor_lizard</button>
+
+function handleRbsSimulatorPost($db, $data) {
+    $values = $data['value'];
+    $splitValues = explode(" ", $values);
+    switch ($splitValues[0]) {
+        case "idle":
+            updateDeviceState($db, "rbs", "idle");
+            echo "idle";
+            break;
+        default:
+            updateDeviceState($db, "rbs", $splitValues[0]);
+            echo $splitValues[0];
+            break;
+    }
+
+}
+
 // POST — add a message
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $data = json_decode(file_get_contents("php://input"), true);
@@ -670,6 +818,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             break;
         case "mailbox":
             handleMailboxPost($db, $data);
+            break;
+        case "rbs_simulator":
+            handleRbsSimulatorPost($db, $data); 
             break;
         default:
             echo "action not recognised";
