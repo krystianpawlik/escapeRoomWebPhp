@@ -35,9 +35,12 @@ $db->exec("
 ");
 
 $resultDevices = $db->querySingle("SELECT COUNT(*) FROM devices");
+
+$rbsStates = ["idle", "power", "connected", "buring", "weglan_lizard" , "monitor_lizard"];
+
 if ($resultDevices == 0) {
     $time = time();
-    $devices = ['box', 'lamp', 'raspberry1', 'raspberry2'];
+    $devices = ['box', 'lamp', 'raspberry1', 'raspberry2', 'rbs'];
 
     $stmt = $db->prepare('INSERT INTO devices (name, last_seen, state) VALUES (:name, :time, :state)');
 
@@ -679,8 +682,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 // GET — fetch data
 if ($_SERVER["REQUEST_METHOD"] === "GET") {
 
+    //to rm
     $lamp = isset($_GET['lamp']) && $_GET['lamp'] === 'true';
-
     if ($lamp)
     {
         //header('Content-Type: application/json');
@@ -688,6 +691,20 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
         return;
     }
 
+    $lamp = isset($_GET['device']) && $_GET['device'] === 'lamp';
+    if ($lamp)
+    {
+        echo getDeviceState($db, "lamp");
+        return;
+    }
+
+    $rbs = isset($_GET['device']) && $_GET['device'] === 'rbs';
+
+    if($rbs)
+    {
+        echo getDeviceState($db, "rbs");;
+        return;
+    }
 
     $all = isset($_GET['all']) && $_GET['all'] === 'true';
 
