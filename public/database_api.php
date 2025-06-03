@@ -238,7 +238,7 @@ if ($result == 0) {
                             Network Control",
 
                 "response" => null,
-                "expectedResponse" => "Maki",
+                "expectedResponse" => "will",
                 "solutionType" => "external",
                 "visable" => false,
                 "previous_ids" => ""
@@ -740,9 +740,6 @@ function handleMailboxPost($db, $data) {
     }
 
 }
-
-
-
 
 //   <button onclick="sendValue(this)">idle</button>
 //   <button onclick="sendValue(this)">connected</button>

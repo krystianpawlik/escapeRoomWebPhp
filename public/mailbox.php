@@ -483,7 +483,7 @@
 
         function sendResponse(emailId) {
             const responseInput = document.getElementById("responseInput");
-            const responseText = responseInput.value.trim();
+            const responseText = responseInput.value.trim().toLowerCase();
             const emailData = Object.values(emailsData).flat().find(e => e.id === emailId);
             if (emailData) {
                 if(responseText == "alert!"){

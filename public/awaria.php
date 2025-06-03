@@ -58,36 +58,54 @@
       font-size: 28px;
       margin-top: 30px;
     }
+
+    #alert-message {
+      background-color: #400;
+      color: red;
+      font-size: 24px;
+      font-weight: bold;
+      padding: 20px;
+      margin-bottom: 20px;
+      border: 2px solid red;
+      border-radius: 10px;
+      box-shadow: 0 0 10px red;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.05); opacity: 0.8; }
+      100% { transform: scale(1); opacity: 1; }
+    }
   </style>
 </head>
 <body>
 
+  <div id="alert-message">🚨 Awaria – aby naprawić, odpowiedz na pytania! 🚨</div>
   <img id="fire-gif" src="https://media.giphy.com/media/26ufdipQqU2lhNA4g/giphy.gif" alt="Płonący serwer">
   <div id="timer">30</div>
   <div class="question" id="question"></div>
   <div class="answers" id="answers"></div>
   <div id="result"></div>
 
-  <script>
-    const questions = [
-      {
-        question: "Co to jest JavaScript?",
-        answers: ["System operacyjny", "Język programowania", "Edytor tekstu", "Baza danych"],
-        correct: 1
-      },
-      {
-        question: "Który język służy do stylowania stron?",
-        answers: ["Python", "C++", "CSS", "SQL"],
-        correct: 2
-      },
-      {
-        question: "Co oznacza HTML?",
-        answers: ["Hyper Trainer Markup Language", "Hyper Text Markup Language", "Home Tool Markup Language", "Hot Mail Language"],
-        correct: 1
-      }
-    ];
+  <div id="feedback-message" style="margin-top: 10px; font-size: 20px; color: orange;"></div>
 
-    let timeLeft = 30;
+  <audio id="fire-audio" autoplay loop>
+  <source src="https://cdn.pixabay.com/audio/2021/12/08/audio_437e5fb413.mp3" type="audio/mpeg">
+    Twoja przeglądarka nie obsługuje elementu audio.
+  </audio>
+
+  <script>
+
+const questions = [
+  {
+    question: "Którą rocznicę Ericssona w Polsce obchodzimy w tym roku?",
+    answers: ["120", "121", "100", "101"],
+    correct: 1,
+    image: "https://media.giphy.com/media/13HgwGsXF0aiGY/giphy.gif" 
+  }
+];
+    let timeLeft = 600;
     let currentQuestionIndex = 0;
     let timerInterval;
     let timeRanOut = false;
@@ -110,8 +128,8 @@
           clearInterval(timerInterval);
           timeRanOut = true;
           timerEl.textContent = "0";
-          gifEl.src = "https://i.imgur.com/bXoJ7ZT.png"; // zwęglony komputer
-          gifEl.style.boxShadow = "0 0 30px gray";
+          // gifEl.src = "https://i.imgur.com/bXoJ7ZT.png"; // zwęglony komputer
+          // gifEl.style.boxShadow = "0 0 30px gray";
         }
       }, 1000);
     }
@@ -125,6 +143,8 @@
       const q = questions[currentQuestionIndex];
       questionEl.textContent = q.question;
       answersEl.innerHTML = "";
+      gifEl.src = q.image;
+      gifEl.style.boxShadow = "0 0 30px red";
 
       q.answers.forEach((answer, i) => {
         const btn = document.createElement("button");
@@ -148,8 +168,13 @@
     function blockButtons(ms) {
       const buttons = answersEl.querySelectorAll("button");
       buttons.forEach(btn => btn.disabled = true);
+
+      const feedbackEl = document.getElementById("feedback-message");
+      feedbackEl.textContent = "❌ Zła odpowiedź! Przyciski zablokowane na 5 sekund...";
+      // Po czasie ukryj
       setTimeout(() => {
         buttons.forEach(btn => btn.disabled = false);
+        feedbackEl.textContent = "";
       }, ms);
     }
 
@@ -167,7 +192,7 @@
             gifEl.style.boxShadow = "0 0 30px green";
             message = "🎉 Udało się odpowiedzieć na wszystkie pytania na czas!";
         } else {
-            gif = "https://i.imgur.com/bXoJ7ZT.png"; // zwęglony komputer
+            gif = "https://media1.tenor.com/m/CcCDRhgwP78AAAAC/overheat-computer.gif"; // zwęglony komputer
             gifEl.style.boxShadow = "0 0 30px gray";
             message = "🧨 Udało się odpowiedzieć na wszystkie pytania,<br>ale jeden z elementów został zwęglony!";
         }
@@ -193,6 +218,14 @@
     // Start
     loadQuestion();
     startTimer();
+
+    window.addEventListener("load", () => {
+    const audio = document.getElementById("fire-audio");
+    //audio.volume = 0.4; // Głośność 0.0–1.0 (zmniejszona)
+    audio.play().catch(e => {
+      console.log("Autoplay zablokowany — włącz dźwięk ręcznie");
+    });
+  });
   </script>
 
 </body>
