@@ -254,10 +254,10 @@
     <script>
 
         const popupQuestions = [
-            { question: "Was this response really correct?", answers: ["Yes", "No", "Not sure", "Show correct answer"], correct: "No" },
-            { question: "What is the capital of France?", answers: ["Berlin", "Madrid", "Paris", "Rome"], correct: "Paris" },
-            { question: "How many continents are there?", answers: ["5", "6", "7", "8"], correct: "7" },
-            { question: "Which planet is known as the Red Planet?", answers: ["Earth", "Mars", "Venus", "Jupiter"], correct: "Mars" }
+            { question: "Was this response really correct?", answers: ["Yes", "No", "Not sure", "Show correct answer"], correct: 1 }, // "No" jest pod indeksem 1
+            { question: "What is the capital of France?", answers: ["Berlin", "Madrid", "Paris", "Rome"], correct: 2 }, // "Paris" pod indeksem 2
+            { question: "How many continents are there?", answers: ["5", "6", "7", "8"], correct: 2 }, // "7" pod indeksem 2
+            { question: "Which planet is known as the Red Planet?", answers: ["Earth", "Mars", "Venus", "Jupiter"], correct: 1 } // "Mars" pod indeksem 1
         ];
 
         //solutionType=TextBox or solutionType="external"
@@ -332,34 +332,31 @@
             const popupClone = document.importNode(template.content, true);
             const popupElement = popupClone.querySelector(".popup");
 
-            // Ustaw unikalne ID dla popupu
             const uniqueId = `popup-${Date.now()}`;
             popupElement.setAttribute("id", uniqueId);
 
-            // Ustaw tekst pytania
             popupElement.querySelectorAll(".question-text").forEach(el => {
                 el.textContent = questionData.question;
             });
 
-            // Dodaj przyciski odpowiedzi
             const answersContainer = popupElement.querySelector(".answers");
-            questionData.answers.forEach(answer => {
+            answersContainer.innerHTML = ""; // upewnij się, że kontener jest pusty przed dodaniem przycisków
+
+            questionData.answers.forEach((answer, index) => {
                 const btn = document.createElement("button");
                 btn.textContent = answer;
                 btn.onclick = () => {
-                if (answer === questionData.correct) {
-                    closePopup(uniqueId);
-                } else {
-                    thinkAgain(uniqueId);
-                }
+                    if (index === questionData.correct) {
+                        closePopup(uniqueId);
+                    } else {
+                        thinkAgain(uniqueId);
+                    }
                 };
                 answersContainer.appendChild(btn);
             });
 
-            // Dodaj popup do dokumentu
             document.body.appendChild(popupElement);
 
-            // Odtwórz dźwięk
             const audio = popupElement.querySelector(".popup-audio");
             if (audio) {
                 audio.play();
