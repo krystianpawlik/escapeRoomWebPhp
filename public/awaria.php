@@ -91,7 +91,7 @@
   <div id="feedback-message" style="margin-top: 10px; font-size: 20px; color: orange;"></div>
 
   <audio id="fire-audio" autoplay loop>
-  <source src="https://cdn.pixabay.com/audio/2021/12/08/audio_437e5fb413.mp3" type="audio/mpeg">
+  <source src="mp3/burn_flame.mp3" type="audio/mpeg">
     Twoja przeglądarka nie obsługuje elementu audio.
   </audio>
 
