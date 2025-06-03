@@ -112,7 +112,7 @@ $rbsStates = ["idle", "power", "connected", "buring", "weglan_lizard" , "monitor
 
 if ($resultDevices == 0) {
     $time = time();
-    $devices = ['box', 'lamp', 'raspberry1', 'raspberry2', 'rbs'];
+    $devices = ['box', 'lamp', 'raspberry1', 'raspberry2', 'rbs', "power_connector", "router"];
 
     $stmt = $db->prepare('INSERT INTO devices (name, last_seen, state) VALUES (:name, :time, :state)');
 
@@ -741,6 +741,62 @@ function handleMailboxPost($db, $data) {
 
 }
 
+function handlePowerConnectorPost($db, $data) {
+    $values = $data['value'];
+    $splitValues = explode(" ", $values);
+    switch ($splitValues[0]) {
+        case "power_sucesfull":
+            // setVisableById($db, XXX);
+            updateDeviceState($db, "power_connector", "power_sucesfull");
+            echo "power_sucesfull";
+            break;
+        case "power_wrong":
+            // setVisableById($db, XXX);
+            updateDeviceState($db, "power_connector", "power_wrong");
+            echo "power_wrong";
+            break;
+        case "idle":
+            updateDeviceState($db, "power_connector", "idle");
+            echo "idle";
+            break;
+        case "alive":
+            updateDeviceTime($db, "power_connector");
+            echo "alive";
+            break;
+        default:
+            echo "defult action";
+            break;
+    }
+}
+
+function handleRouterPost($db, $data) {
+    $values = $data['value'];
+    $splitValues = explode(" ", $values);
+    switch ($splitValues[0]) {
+        case "firewall_connected":
+            // setVisableById($db, XXX);
+            updateDeviceState($db, "router", "firewall_connected");
+            echo "firewall_connected";
+            break;
+        case "firewall_disconnected":
+            // setVisableById($db, XXX);
+            updateDeviceState($db, "router", "firewall_disconnected");
+            echo "firewall_disconnected";
+            break;
+        case "idle":
+            updateDeviceState($db, "router", "idle");
+            echo "idle";
+            break;
+        case "alive":
+            updateDeviceTime($db, "router");
+            echo "alive";
+            break;
+        default:
+            echo "defult action";
+            break;
+    }
+}
+
 //   <button onclick="sendValue(this)">idle</button>
 //   <button onclick="sendValue(this)">connected</button>
 //   <button onclick="sendValue(this)">power</button>
@@ -818,6 +874,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             break;
         case "rbs_simulator":
             handleRbsSimulatorPost($db, $data); 
+            break;
+        case "power_connector":
+            handlePowerConnectorPost($db, $data);
+            break;
+        case "router":
+            handleRouterPost($db, $data);
             break;
         default:
             echo "action not recognised";
