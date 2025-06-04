@@ -1063,7 +1063,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
         $results = $db->query("SELECT * FROM emails ORDER BY id");
     } else {
         // Get only messages with visable = 1
-        $results = $db->query("SELECT * FROM emails WHERE visable = 1 ORDER BY category, id");
+        $results = $db->query("SELECT * FROM emails WHERE visable = 1 ORDER BY id");
     }
 
     $grouped = [];
