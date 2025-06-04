@@ -34,8 +34,8 @@
   <div id="result">Wynik akcji: brak</div>
   <script>
     const actions = [
-      { action: "power_connector", value: "power_sucesfull" },
-      { action: "power_connector", value: "power_wrong" },
+      { action: "power_connector", value: "power_ok" },
+      { action: "power_connector", value: "power_nok" },
       { action: "power_connector", value: "alive" },
       { action: "power_connector", value: "idle" },
       { action: "router", value: "firewall_connected" },
