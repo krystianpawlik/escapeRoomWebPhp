@@ -165,7 +165,7 @@ if ($result == 0) {
                 "subject" => "Authorisation!",
                 "content" => 'We kindly ask you to carry out a <b>verification of personnel using ID cards</b>. This process is part of our ongoing efforts to ensure site security and confirm that all individuals have the appropriate access permissions.<br>
                               In the light of our recent suspicion regarding possible unauthorized access to the RBS system, we kindly request an urgent verification. <b>Use available yellow box for verification.</b><br>
-
+                            <br>
                             Best Regards,<br>
                             Wacław Jala',
                 "response" => null,
@@ -181,7 +181,7 @@ if ($result == 0) {
                 "email" => "support@ericsson.com",
                 "subject" => "Authorisation!",
                 "content" => 'The verification has been successfully completed. You will receive new emails with further instructions shortly.<br>
-
+                            <br>
                             Best Regards,<br>
                             Wacław Jala',
 
@@ -193,12 +193,12 @@ if ($result == 0) {
             ],
             [
                 "id" => 13,
-                "avatar" => "img/stefan_baty_sq.png",
-                "name" => "Stefan Baty",
-                "email" => "stefan.batya@example.com",
+                "avatar" => "img/waclaw_jala_sq.png",
+                "name" => "Safety team",
+                "email" => 'support@ericsson.com  <br> CC: stefan.baty@ericsson.com',
                 "subject" => "Authorisation!(Finished)",
                 "content" => 'It\'s just the beginning<BR> <img src="img/keyCardIcon.png" style="width:150px; border-radius:50%;"><br>
-
+                            <br>
                             Best Regards,<br>
                             Wacław Jala',
 
@@ -219,8 +219,9 @@ if ($result == 0) {
                 "content" => 'Jak wiecie, poprzednio wysłany technik próbując naprawić RBS został porażony prądem.<br>
                               W związku z powyższym, RBS został odłączony od prądu.<br>
                               <b>Znajdźcie kabel zasilający i podepnijcie RBS do prądu</b>, pamiętajcie, żeby skorzystać z <b>instrukcji</b> i przestrzegać zasad bhp (Ericsson Target Zero)<br>
-                              Pozdrawiam <br>,
-                              Ryszard Tomka ',
+                              <br>
+                              Pozdrawiam, <br>
+                              Ryszard Tomka',
                 "response" => null,
                 "expectedResponse" => "???",
                 "solutionType" => "internal",
@@ -234,8 +235,9 @@ if ($result == 0) {
                 "email" => "ryszard.tomka@example.com",
                 "subject" => "Podpięcie RBS na site Ankh Morpork - niezidentyfikowana awaria sprzętu (Finished) ",
                 "content" => 'Świetnie! Udało Wam się bezbłędnie podłączyć RBS do sieci elektrycznej.<br>
-                              Pozdrawiam <br>,
-                              Ryszard Tomka ',
+                              <br>
+                              Pozdrawiam, <br>
+                              Ryszard Tomka',
                 "response" => null,
                 "expectedResponse" => "???",
                 "solutionType" => "internal",
@@ -249,8 +251,9 @@ if ($result == 0) {
                 "email" => "ryszard.tomka@example.com",
                 "subject" => "Podpięcie RBS na site Ankh Morpork - niezidentyfikowana awaria sprzętu (Finished)",
                 "content" => 'RBS został podłączony do sieci elektrycznej, ale odnotowaliśmy niepożądany skok napięcia. Następnym razem pamiętajcie, aby czytać instrukcje! <br>
-                              Pozdrawiam <br>,
-                              Ryszard Tomka ',
+                              <br>
+                              Pozdrawiam, <br>
+                              Ryszard Tomka',
                 "response" => null,
                 "expectedResponse" => "???",
                 "solutionType" => "internal",
@@ -266,7 +269,10 @@ if ($result == 0) {
                 "name" => "CES",
                 "email" => "adam.michalczewski@example.com",
                 "subject" => "Router Configuration",
-                "content" => "Kpi dropped for some reason, counters indicate problem with router, please configure it and send us password. Instruction how to configure router should be in the room.",//aby poszukali w pokoju
+                "content" => 'Kpi dropped for some reason, counters indicate problem with router, please configure it and send us password. Instruction how to configure router should be in the room.<br>
+                              <br>
+                              Best Regards,<br>
+                              Adam Michałczewski',//aby poszukali w pokoju
                 "response" => null,
                 "expectedResponse" => "5963",
                 "solutionType" => "external",
@@ -282,8 +288,8 @@ if ($result == 0) {
                 "content" => 'KPI were restored, but for some reason people who should not have access have additional privileges. Did you connect firewall? <br>
                               <img src="img/achievementPlaceholder.png" style="width:150px; border-radius:50%;">
                               <br>
-                                Best Regards,<br>
-                                Adam Michałczewski',
+                              Best Regards,<br>
+                              Adam Michałczewski',
                 "response" => null,
                 "expectedResponse" => "???",
                 "solutionType" => "external",
@@ -337,14 +343,14 @@ if ($result == 0) {
             ],
             [
                 "id" => 41,
-                "avatar" => "img/michal_adamczewski_sq.png",
+                "avatar" => "img/adam_michalczewski_sq.png",
                 "name" => "CES",
                 "email" => "michal.adamczewski@example.com",
                 "subject" => "Re: System Update",
                 "content" => "Wygląda na to, że sieć została skonfigurowana. Natomiast, aby zatwierdzić zmiany potrzebujemy hasła.<br>
                               Poprzednik technik wspominał, że hasło jest ukryte w światłowodzie. Ale niestety nie wiem o co mu chodziło.<br>
                               Poszukaj wskazówek w pokoju i prześlij mi hasło.<br>
-
+                            <br>
                             Best Regards,<br>
                             Michał Adamczewski",
 
@@ -381,6 +387,7 @@ if ($result == 0) {
                 "email" => "sfetan.Bafy@erikson.kom",
                 "subject" => "Potrzebujemy hasła adamina",
                 "content" => 'Potrzebujemy hasła admina do sieci - klient pilnie potrzebuje zmian konfiguracji, powinno być gdzies na poskładanej kartce papieru (origami). <br>
+                                <br>
                                 Pozdrawiam,<br>
                                 Sfetan Bafy',
                 "response" => null,
@@ -396,8 +403,7 @@ if ($result == 0) {
                 "email" => "向前: sfetan.Bafy@erikson.kom, everyone@weihua.cn",
                 "subject" => "Potrzebujemy hasła (Finished)",
                 "content" => 'Udało się zalogować, dzięki. 谢谢<br>
-                              <img src="img/achievementPlaceholder.png" style="width:150px; border-radius:50%;">
-                              <br>
+                              <img src="img/achievementPlaceholder.png" style="width:150px; border-radius:50%;"><br>
                                 Pozdrawiam 此致,<br>
                                 Sfetan Bafy',
                 "response" => null,
@@ -415,7 +421,12 @@ if ($result == 0) {
                 "name" => "Stefan Baty",
                 "email" => "stefan.baty@ericsson.com",
                 "subject" => "Odszukajcie i załadujcie UPki na IUWUU",
-                "content" => "Node jest już widoczny w naszych narzędziach do zarządzania siecią, ale nie możemy manualnie przeinstalować UP. Znajdzcie LMy ukryte w pokoju i zainstalujcie je na zgodnie z instrukcją na prototypie tajnego, wewnętrznego urządzenia Innovative Unofficial Wireless UP Uploader (IUWUU), pieszczotliwie nazywanego Yellow Box.",
+                "content" => 
+                            "Node jest już widoczny w naszych narzędziach do zarządzania siecią, ale nie możemy manualnie przeinstalować UP. Znajdzcie LMy ukryte w pokoju i zainstalujcie je na zgodnie z instrukcją na prototypie tajnego, wewnętrznego urządzenia Innovative Unofficial Wireless UP Uploader (IUWUU), pieszczotliwie nazywanego Yellow Box.
+                            <br><br>
+                            Pozdrawiam,<br>
+                            Stefan Baty
+                            ",
                 "response" => null,
                 "expectedResponse" => "???",
                 "solutionType" => "internal",
@@ -428,7 +439,11 @@ if ($result == 0) {
                 "name" => "Stefan Baty",
                 "email" => "stefan.baty@ericsson.com",
                 "subject" => "Odszukajcie i załadujcie UPki na IUWUU (Finished)",
-                "content" => "IUWUU zwrócił informację, że LM są wgrane i UP jest gotowy do instalacji. Czekajcie na następne instrukcje przed podejmowaniem jakichkolwiek akcji. ",
+                "content" => "IUWUU zwrócił informację, że LM są wgrane i UP jest gotowy do instalacji. Czekajcie na następne instrukcje przed podejmowaniem jakichkolwiek akcji.<br> 
+                            <br>
+                            Pozdrawiam,<br>
+                            Stefan Baty
+                            ",
                 "response" => null,
                 "expectedResponse" => "???",
                 "solutionType" => "internal",
@@ -441,7 +456,11 @@ if ($result == 0) {
                 "name" => "Mikołaj Fajans",
                 "email" => "mikolaj.fajans@ericsson.com",
                 "subject" => "Re: Odszukajcie i załadujcie UPki na IUWUU",
-                "content" => "Seems that LM installation failed. Please make sure you follow the instruction. Ask technical support for help, it is urgent!",
+                "content" => "Seems that LM installation failed. Please make sure you follow the instruction. Ask technical support for help, it is urgent.<br>
+                             <br>
+                             Best Regards,<br>
+                             Mikołaj Fajans<br>
+                             ",
                 "response" => null,
                 "expectedResponse" => "???",
                 "solutionType" => "internal",
@@ -457,7 +476,10 @@ if ($result == 0) {
                 "name" => "Stefan Baty",
                 "email" => "stefan.baty@ericsson.com",
                 "subject" => " Wgranie UP na node",
-                "content" => "Czas na finalny krok. Włożcie IUWUU do RBS, IUWUU automatycznie wgra i zainstaluje UP, po czym puści testy. Damy Wam znać o jak wyszedł health check.",
+                "content" => "Czas na finalny krok. Włożcie IUWUU do RBS, IUWUU automatycznie wgra i zainstaluje UP, po czym puści testy. Damy Wam znać o jak wyszedł health check.<br>
+                             <br>
+                             Pozdrawiam,<br>
+                             Stefan Baty",
                 "response" => null,
                 "expectedResponse" => "???",
                 "solutionType" => "internal",
@@ -471,7 +493,11 @@ if ($result == 0) {
                 "email" => "stefan.baty@ericsson.com",
                 "subject" => "Wgranie UP na node(Finished)",
                 "content" => 'UP załadował się poprawnie. Checki trwają, niedługo dostaniecie raport.<br>
-                             <img src="img/achievementPlaceholder.png" style="width:150px; border-radius:50%;">',
+                             <img src="img/achievementPlaceholder.png" style="width:150px; border-radius:50%;">
+                             <br>
+                             Pozdrawiam,<br>
+                             Stefan Baty"
+                             ',
                 "response" => null,
                 "expectedResponse" => "???",
                 "solutionType" => "internal",
@@ -488,7 +514,10 @@ if ($result == 0) {
 			    CC: "mikolaj.fajans@ericsson.com, stefan.baty@ericsson.com',
                 "subject" => "OVERHEAT alarm!!!",
                 "content" => 'Enable troubleshooting mode and answer a series of questions to find the cause. The issue has been escalated, so you have limited time.
-                              To begin, press the button below<BR> <a href="awaria.php" class="restart-button">Troubleshooting Emergency Mode</a>',
+                              To begin, press the button below<BR> <a href="awaria.php" class="restart-button">Troubleshooting Emergency Mode</a>
+                              <br>
+                              Best Regards,<br>
+                              Jack Lin<br>',
                 "response" => null,
                 "expectedResponse" => "???",
                 "solutionType" => "internal",
@@ -500,10 +529,13 @@ if ($result == 0) {
                 "avatar" => "img/jack_lin_sq.png",
                 "name" => "Jack Lin",
                 "email" => 'jack.lin@ericsson.com<br>
-			    CC: "mikolaj.fajans@ericsson.com, stefan.baty@ericsson.com",
-                "subject" => "OVERHEAT alarm!!!(Finished)',
+			    CC: "mikolaj.fajans@ericsson.com, stefan.baty@ericsson.com',
+                "subject" => "OVERHEAT alarm!!!(Finished)",
                 "content" => 'Congratulations, you saved the node from destruction and located the root cause and saved Monitor Lizard from the fire. <br>
-			      <img src="img/achievementPlaceholder.png" style="width:150px; border-radius:50%;">',
+			                  <img src="img/achievementPlaceholder.png" style="width:150px; border-radius:50%;">
+                              <br>
+                              Best Regards,<br>
+                              Jack Lin<br>',
                 "response" => null,
                 "expectedResponse" => "???",
                 "solutionType" => "internal",
@@ -520,7 +552,11 @@ if ($result == 0) {
                 "subject" => "OVERHEAT alarm!!!(Finished)",
                 "content" => 'Unfortunately, the RBS has burned down and so has the Monitor Lizard that nested inside causing the problems.
                               We will send new RBS to the client, and face the consequences of this failure.<br>
-                              <img src="img/achievementPlaceholder.png" style="width:150px; border-radius:50%;">',
+                              <img src="img/achievementPlaceholder.png" style="width:150px; border-radius:50%;">
+                              <br>
+                              Best Regards,<br>
+                              Jack Lin<br>
+                              ',
                 "response" => null,
                 "expectedResponse" => "???",
                 "solutionType" => "internal",
