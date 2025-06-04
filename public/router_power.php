@@ -34,14 +34,14 @@
   <div id="result">Wynik akcji: brak</div>
   <script>
     const actions = [
-      { action: "power_connector", value: "power_ok" },
-      { action: "power_connector", value: "power_nok" },
-      { action: "power_connector", value: "alive" },
-      { action: "power_connector", value: "idle" },
-      { action: "router", value: "firewall_connected" },
-      { action: "router", value: "firewall_disconnected" },
-      { action: "router", value: "idle" },
-      { action: "router", value: "alive" },
+      { device: "power_connector", value: "power_ok" },
+      { device: "power_connector", value: "power_nok" },
+      { device: "power_connector", value: "alive" },
+      { device: "power_connector", value: "idle" },
+      { device: "router", value: "firewall_connected" },
+      { device: "router", value: "firewall_disconnected" },
+      { device: "router", value: "idle" },
+      { device: "router", value: "alive" },
     ];
 
     const container = document.getElementById("button-container");
