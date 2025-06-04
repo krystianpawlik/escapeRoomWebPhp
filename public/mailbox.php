@@ -366,6 +366,69 @@
         Twoja przeglądarka nie obsługuje odtwarzania audio.
     </audio>
 
+
+
+  <!-- Popup -->
+  <div id="popup-wrapper-konfetti">
+    <div class="popup-content-konfetti">
+      <img src="https://i.imgur.com/OUzWj2Y.png" alt="Wybuchająca buzia z konfetti" />
+      <h2>Gratulacje!</h2>
+      <p>Oto Twoja zawartość w popupie.</p>
+      <button class="konfetti-close-btn" id="popup-close-btn">Zakończ</button>
+    </div>
+  </div>
+
+  <!-- Canvas do konfetti -->
+  <canvas id="confetti-canvas"></canvas>
+
+    <!-- Biblioteka konfetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <script>
+    const confettiCanvas = document.getElementById('confetti-canvas');
+    confettiCanvas.width = window.innerWidth;
+    confettiCanvas.height = window.innerHeight;
+
+    let konfettiAnimationId = null;
+    let konfettiStarted = false;
+
+    function startKonfettiLoop() {
+      konfettiAnimationId = requestAnimationFrame(startKonfettiLoop);
+      confetti({
+        particleCount: 7,
+        startVelocity: 30,
+        spread: 360,
+        ticks: 60,
+        origin: {
+          x: Math.random(),
+          y: Math.random() - 0.2
+        }
+      });
+    }
+
+    function stopKonfetti() {
+      cancelAnimationFrame(konfettiAnimationId);
+    }
+
+    // Startujemy konfetti i pokazujemy popup od razu
+    window.onload = () => {
+    //   startKonfettiLoop();
+    //   document.getElementById('popup-wrapper-konfetti').style.display = 'flex';
+    };
+
+    // Obsługa przycisku "Zakończ" - ukrywa popup i zatrzymuje konfetti
+    document.getElementById('popup-close-btn').addEventListener('click', () => {
+      document.getElementById('popup-wrapper-konfetti').style.display = 'none';
+      stopKonfetti();
+    });
+
+    // Aktualizacja rozmiaru canvasa przy resize
+    window.addEventListener('resize', () => {
+      confettiCanvas.width = window.innerWidth;
+      confettiCanvas.height = window.innerHeight;
+    });
+  </script>
+
     <script>
 
         const popupQuestions = [
@@ -710,10 +773,59 @@
             }
         }
 
+        async function checkDevicesState() {
+            try {
+                const response = await fetch(`database_api.php?device=all`);
+                const devices = await response.json(); // tablica urządzeń
+
+                devices.forEach(device => {
+                    const { name, state } = device;
+
+                    switch (name) {
+                        case 'lamp':
+                            if (state === 'shine') {
+                                if (lampAudio.paused) lampAudio.play();
+                            } else {
+                                if (!lampAudio.paused) {
+                                    lampAudio.pause();
+                                    lampAudio.currentTime = 0;
+                                }
+                            }
+                            break;
+                        case 'box':
+                            //placeholder
+                            break;
+
+                        case 'router':
+                            //placeholder
+                            break;
+
+                        case 'rbs':
+                            if (state === 'weglan_lizard' || state === 'monitor_lizard') {
+                                if(konfettiStarted === false)
+                                {
+                                    konfettiStarted = true;
+                                    startKonfettiLoop();
+                                    document.getElementById('popup-wrapper-konfetti').style.display = 'flex';
+                                }
+                            }
+                            break;
+
+                        // inne urządzenia
+                        default:
+                            break;
+                    }
+                });
+
+            } catch (error) {
+                console.error("Błąd podczas pobierania stanu:", error);
+            }
+        }
+
         // Periodically check for updates every 1 second (1000ms)
         setInterval(() => {
 
-            checkLampState();
+            checkDevicesState();
             //console.log("This action runs every second");
             const activeTopic = document.querySelector(".topics li.active"); // Get the currently active topic
 
@@ -735,67 +847,7 @@
         // // Opcjonalnie uruchom od razu
         // checkDeviceState();
 
-
     </script>
 
-  <!-- Popup -->
-  <div id="popup-wrapper-konfetti">
-    <div class="popup-content-konfetti">
-      <img src="https://i.imgur.com/OUzWj2Y.png" alt="Wybuchająca buzia z konfetti" />
-      <h2>Gratulacje!</h2>
-      <p>Oto Twoja zawartość w popupie.</p>
-      <button class="konfetti-close-btn" id="popup-close-btn">Zakończ</button>
-    </div>
-  </div>
-
-  <!-- Canvas do konfetti -->
-  <canvas id="confetti-canvas"></canvas>
-
-    <!-- Biblioteka konfetti -->
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-
-  <script>
-    const confettiCanvas = document.getElementById('confetti-canvas');
-    confettiCanvas.width = window.innerWidth;
-    confettiCanvas.height = window.innerHeight;
-
-    let konfettiAnimationId = null;
-
-    function startKonfettiLoop() {
-      konfettiAnimationId = requestAnimationFrame(startKonfettiLoop);
-      confetti({
-        particleCount: 7,
-        startVelocity: 30,
-        spread: 360,
-        ticks: 60,
-        origin: {
-          x: Math.random(),
-          y: Math.random() - 0.2
-        }
-      });
-    }
-
-    function stopKonfetti() {
-      cancelAnimationFrame(konfettiAnimationId);
-    }
-
-    // Startujemy konfetti i pokazujemy popup od razu
-    window.onload = () => {
-    //   startKonfettiLoop();
-    //   document.getElementById('popup-wrapper-konfetti').style.display = 'flex';
-    };
-
-    // Obsługa przycisku "Zakończ" - ukrywa popup i zatrzymuje konfetti
-    document.getElementById('popup-close-btn').addEventListener('click', () => {
-      document.getElementById('popup-wrapper-konfetti').style.display = 'none';
-      stopKonfetti();
-    });
-
-    // Aktualizacja rozmiaru canvasa przy resize
-    window.addEventListener('resize', () => {
-      confettiCanvas.width = window.innerWidth;
-      confettiCanvas.height = window.innerHeight;
-    });
-  </script>
 </body>
 </html>

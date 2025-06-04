@@ -619,6 +619,17 @@ function getDeviceState($db, $deviceName) {
     }
 }
 
+function getAllDeviceState($db) {
+    $result = $db->prepare("SELECT * FROM devices")->execute();
+    $devices = [];
+
+    while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
+        $devices[] = $row;
+    }
+
+    return $devices;
+}
+
 function setVisableById($db, $id) {
     // $stmt = $db->prepare("UPDATE emails SET visable = 1 WHERE id = :id");
     // $stmt->bindValue(':id', $id, SQLITE3_INTEGER);
@@ -765,6 +776,10 @@ function handleLampPost($db, $data) {
             updateDeviceTime($db, "lamp");
             echo "alive";
             break; 
+        case "reset":
+            updateDeviceState($db, "lamp", "idle");
+            echo "reset";
+            break;
         default:
             echo "defult action";
             break;
@@ -1052,6 +1067,14 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
     if($rbs)
     {
         echo getDeviceState($db, "rbs");;
+        return;
+    }
+
+    $deviceAll = isset($_GET['device']) && $_GET['device'] === 'all';
+    if($deviceAll)
+    {
+        header('Content-Type: application/json');
+        echo json_encode(getAllDeviceState($db));;
         return;
     }
 
