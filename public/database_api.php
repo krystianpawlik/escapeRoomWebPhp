@@ -745,15 +745,15 @@ function handlePowerConnectorPost($db, $data) {
     $values = $data['value'];
     $splitValues = explode(" ", $values);
     switch ($splitValues[0]) {
-        case "power_sucesfull":
+        case "power_ok":
             // setVisableById($db, XXX);
-            updateDeviceState($db, "power_connector", "power_sucesfull");
-            echo "power_sucesfull";
+            updateDeviceState($db, "power_connector", "power_ok");
+            echo "power_ok";
             break;
-        case "power_wrong":
+        case "power_nok":
             // setVisableById($db, XXX);
-            updateDeviceState($db, "power_connector", "power_wrong");
-            echo "power_wrong";
+            updateDeviceState($db, "power_connector", "power_nok");
+            echo "power_nok";
             break;
         case "idle":
             updateDeviceState($db, "power_connector", "idle");
