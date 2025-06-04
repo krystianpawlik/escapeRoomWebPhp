@@ -824,13 +824,26 @@ function handleRbsSimulatorPost($db, $data) {
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $data = json_decode(file_get_contents("php://input"), true);
 
-    if (!isset($data['action'])) {
-        http_response_code(400);
-        echo "Missing field: action";
-        exit;
+    // if (!isset($data['action'])) {
+    //     http_response_code(400);
+    //     echo "Missing field: action";
+    //     exit;
+    // }
+
+    // Check for 'action' or 'device' in the decoded JSON
+    $response = [];
+    
+    if (isset($data['action'])) {
+        $response['field'] = 'action';
+        $response['device'] = $data['action'];
+    } elseif (isset($data['device'])) {
+        $response['field'] = 'device';
+        $response['device'] = $data['device'];
+    } else {
+        $response['error'] = 'Neither action nor device field found.';
     }
 
-    switch ($data['action']) {
+    switch ($response['device']) {
         case "update":
             // Handles "visable" update
             if (!isset($data['id'])) {
@@ -882,7 +895,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             handleRouterPost($db, $data);
             break;
         default:
-            echo "action not recognised";
+            echo "action or device not recognised";
             break;
     }
 
