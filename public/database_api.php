@@ -143,14 +143,6 @@ function setTeamName($db, $teamName) {
 //
 setTeamName($db, "Troubleshooting team");
 
-// 1X Card veryfication
-// 3X Contactrons and Lamp
-// 4X Router
-// 5X Origami
-// 6X Key
-// 7X Energy
-// 8X InstallLms
-// 9X RBS restart? Time quize?
 
 // Check if table is empty
 $result = $db->querySingle("SELECT COUNT(*) FROM emails");
@@ -648,15 +640,16 @@ function handleBoxPost($db, $data) {
         case "teamName":
             //Todo probably to be removed
             //for now leaving for future
-            $teamName = $splitValues[1];
+            // $teamName = $splitValues[1];
             
-            if (setTeamName($db, $teamName)) {
-                setVisableById($db, 12); //!!! Trigger next mail.
-                setVisableById($db, 13); //!!! Trigger next mail.
-                setVisableById($db, 30); //!!! Trigger next mail.
-                setVisableById($db, 40); //!!! Trigger next mail.
-                echo json_encode(['line1' => "Authentication", 'line2' => $teamName]);
-            }
+            // if (setTeamName($db, $teamName)) {
+            //     // setVisableById($db, 12); //!!! Trigger next mail.
+            //     // setVisableById($db, 13); //!!! Trigger next mail.
+            //     // setVisableById($db, 30); //!!! Trigger next mail.
+            //     // setVisableById($db, 40); //!!! Trigger next mail.
+            //     echo json_encode(['line1' => "Authentication", 'line2' => $teamName]);
+            // }
+            echo "team name not working";
             break;
         case "alive":
             //log to database
@@ -699,6 +692,9 @@ function checkNextPuzzleStep($expected) {
 
         if ($isLastStep) {
             //!!!!!!!!!! Ostatni Krok nastepne zadanie
+            setVisableById($db, 51);
+            setVisableById($db, 60);
+
             setPuzzleData('card', 'completed', (string)$nextIndex);
             return ['ok' => true, 'message' => "rpc installed"];
         } else {
@@ -706,6 +702,9 @@ function checkNextPuzzleStep($expected) {
             return ['ok' => true, 'message' => "Installing {$expected}"];
         }
     } else {
+        // mail poganiajacy ze cos sie nie udalo
+        setVisableById($db, 52);
+
         setPuzzleData('card', 'idle', "-1");
         return ['ok' => false, 'message' => "Incorrect, Reseting"];
     }
@@ -722,10 +721,14 @@ function handleBoxCardPost($db, $data) {
             break;
         case "vip":
             // First Login Card
-            setVisableById($db, 12); //!!! Trigger next mail.
-            setVisableById($db, 13); //!!! Trigger next mail.
-            setVisableById($db, 30); //!!! Trigger next mail.
-            setVisableById($db, 40); //!!! Trigger next mail.
+            
+            // setVisableById($db, 13); //!!! Trigger next mail.
+            // setVisableById($db, 30); //!!! Trigger next mail.
+            // setVisableById($db, 40); //!!! Trigger next mail.
+
+            setVisableById($db, 12);
+            setVisableById($db, 13);
+            setVisableById($db, 20);
             echo "Sucesfull Log";
 
             break;
@@ -775,14 +778,18 @@ function handleKontaktPost($db, $data) {
     $splitValues = explode(" ", $values);
     switch ($splitValues[0]) {
         case "connected":
-            setVisableById($db, 31); //!!! Trigger next mail.
-            updateDeviceState($db, "lamp", "shine");
-            //start music
-            //start light
+            if (getDeviceState($db, "lamp") != "done")
+            {
+                updateDeviceState($db, "lamp", "shine");
+                setVisableById($db, 41); //mail lampa
+            }
 
             break;
         case "disconnected":
-            updateDeviceState($db, "lamp", "idle");
+            if (getDeviceState($db, "lamp") != "done")
+            {
+                updateDeviceState($db, "lamp", "idle");
+            }
             //stop music
             //stop light
             break;
@@ -792,9 +799,9 @@ function handleKontaktPost($db, $data) {
             //updateDeviceTime($db, "lamp");
             echo "alive";
             break; 
-        // case "button":
-        //     echo "button";
-        //     break;
+        case "reset":
+            updateDeviceState($db, "lamp", "idle");
+            break;
         default:
             echo "defult action";
             break;
@@ -806,10 +813,39 @@ function handleMailboxPost($db, $data) {
     $values = $data['value'];
     $splitValues = explode(" ", $values);
     switch ($splitValues[0]) {
-        case "31"://Post that mailbox 31 was sucesfull
-            setVisableById($db, 32);
-            updateDeviceState($db, "lamp", "idle");
-            echo "31";
+        case "30":
+            //router task
+            //router check if router was properly connected
+            if (getDeviceState($db, "router") === "firewall_connected")
+            {
+                setVisableById($db, 32);
+                updateDeviceState($db, "router", "done");
+                echo "firewall connected";
+            } 
+
+            if( getDeviceState($db, "router") === "firewall_disconnected")
+            {
+                setVisableById($db, 31);
+                updateDeviceState($db, "router", "done");
+                echo "firewall connected";
+            }
+
+            if(getDeviceState($db, "router") === "done" && getDeviceState($db, "lamp") === "done")
+            {
+                setVisableById($db, 50);
+            }
+
+            echo "mailbox 30";
+            break;
+        case "41":
+            updateDeviceState($db, "lamp", "done");
+            setVisableById($db, 42);//zakonczenie lampy, will
+            if(getDeviceState($db, "router") === "done" && getDeviceState($db, "lamp") === "done")
+            {
+                setVisableById($db, 50);
+            }
+
+            echo "mailbox 30";
             break;
         default:
             echo "defult action";
@@ -823,13 +859,26 @@ function handlePowerConnectorPost($db, $data) {
     $splitValues = explode(" ", $values);
     switch ($splitValues[0]) {
         case "power_ok":
-            // setVisableById($db, XXX);
+
+            if (getDeviceState($db, "power_connector") === "power_nok")
+            {
+                echo "power alredy power_nok";
+            }
             updateDeviceState($db, "power_connector", "power_ok");
+            setVisableById($db, 21);
+            //start 2 topics
+            setVisableById($db, 30);
+            setVisableById($db, 40);
+
             echo "power_ok";
             break;
         case "power_nok":
-            // setVisableById($db, XXX);
             updateDeviceState($db, "power_connector", "power_nok");
+
+            setVisableById($db, 22);
+            setVisableById($db, 30);
+            setVisableById($db, 40);
+
             echo "power_nok";
             break;
         case "idle":

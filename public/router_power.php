@@ -38,17 +38,20 @@
       { device: "power_connector", value: "power_nok" },
       { device: "power_connector", value: "alive" },
       { device: "power_connector", value: "idle" },
+      { device: "power_connector", value: "reset" },
       { device: "router", value: "firewall_connected" },
       { device: "router", value: "firewall_disconnected" },
       { device: "router", value: "idle" },
       { device: "router", value: "alive" },
+      { device: "router", value: "reset" },
+      { device: "lamp", value: "reset" },
     ];
 
     const container = document.getElementById("button-container");
 
     actions.forEach(item => {
       const btn = document.createElement("button");
-      btn.textContent = `${item.action}:${item.value}`;
+      btn.textContent = `${item.device}:${item.value}`;
 
       btn.addEventListener("click", () => {
 
@@ -56,13 +59,13 @@
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                action: item.action,
+                device: item.device,
                 value: item.value
                 })
             })
             .then(res => res.text())
             .then(data => {
-                document.getElementById("result").textContent = item.action + " " +item.value + " Odpowiedz:" + data;
+                document.getElementById("result").textContent = item.device + " " +item.value + " Odpowiedz:" + data;
             })
             .catch(err => {
                 document.getElementById("result").textContent = `❌ Błąd: ${err}`;
