@@ -29,12 +29,70 @@
         .topics li { padding: 10px; cursor: pointer; border-bottom: 1px solid #64b5f6; }
         .topics li:hover, .topics li.active { background: #1976d2; }
 
-        .mailbox { flex: 1; display: flex; flex-direction: column; padding: 20px; }
-        .mail-list { flex: 1; overflow-y: auto; background: white; padding: 15px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); height: 48%; margin-bottom: 10px; }
-        .email-details { flex: 1; display: flex; flex-direction: column; overflow-y: auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); height: 50%; display: none; }
+        .mailbox {
+            height: 90vh;     /* pełna wysokość ekranu */
+            width: 100vw;      /* pełna szerokość ekranu */
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .mail-list {
+            height: 45%;
+            overflow-y: auto;
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin-bottom: 10px;
+        }
+
+        .email-details {
+            height: 55%;
+            display: none; /* JS ustawi display: flex */
+            flex-direction: column;
+            overflow-y: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .email-details .email-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .email-details .email-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-right: 20px;
+            object-fit: cover;
+        }
+
+        .email-details .email-meta h2 {
+            margin: 0;
+            font-size: 1.5em;
+        }
+
+        .email-details .email-meta h3 {
+            margin: 5px 0 0 0;
+            font-weight: normal;
+            font-size: 1em;
+        }
+
+        .email-details .email-content {
+            margin-bottom: 20px;
+        }
+
         .email-message { display: flex; align-items: center; padding: 10px; border-bottom: 1px solid #bbdefb; cursor: pointer; }
         .email-message:hover { background: #e3f2fd; }
-        .email-message img { width: 70px; height: 70px; border-radius: 50%; margin-right: 10px; }
+        
+        /* avatar top */
+        .email-message img { width: 60px; height: 60px; border-radius: 50%; margin-right: 10px; } 
         
         .response-box { margin-top: auto; display: flex; gap: 10px; padding-top: 10px; }
         .response-box input { flex: 1; padding: 5px; border: 1px solid #ccc; border-radius: 5px; }
@@ -509,10 +567,16 @@
         function showEmailDetails(email) {
             const emailDetails = document.querySelector(".email-details");
             emailDetails.innerHTML = `
-                <h2>${email.subject}</h2>
-                <img src="${email.avatar}" style="width:100px; border-radius:50%;">
-                <h3>${email.name} (${email.email})</h3>
-                <div>${email.content}</div>
+                <div class="email-header">
+                    <img src="${email.avatar}" class="email-avatar">
+                    <div class="email-meta">
+                        <h2>${email.subject}</h2>
+                        <h3>${email.name} (${email.email})</h3>
+                    </div>
+                </div>
+                <div class="email-content">
+                    ${email.content}
+                </div>
                 ${email.response ? `<label class="response-label">${email.response}</label>` : `
                 <div class="response-box">
                     <input type="text" placeholder="Type your response..." id="responseInput">
@@ -521,7 +585,6 @@
             `;
             emailDetails.style.display = "flex";
 
-            // Add Enter eventListener
             const responseInput = document.getElementById("responseInput");
             if (responseInput) {
                 responseInput.addEventListener("keydown", function(event) {
