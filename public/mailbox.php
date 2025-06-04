@@ -34,7 +34,7 @@
         .email-details { flex: 1; display: flex; flex-direction: column; overflow-y: auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); height: 50%; display: none; }
         .email-message { display: flex; align-items: center; padding: 10px; border-bottom: 1px solid #bbdefb; cursor: pointer; }
         .email-message:hover { background: #e3f2fd; }
-        .email-message img { width: 40px; height: 40px; border-radius: 50%; margin-right: 10px; }
+        .email-message img { width: 70px; height: 70px; border-radius: 50%; margin-right: 10px; }
         
         .response-box { margin-top: auto; display: flex; gap: 10px; padding-top: 10px; }
         .response-box input { flex: 1; padding: 5px; border: 1px solid #ccc; border-radius: 5px; }
@@ -201,7 +201,7 @@
         <div class="sidebar">
             <h2>Topics</h2>
             <ul class="topics">
-                <li class="active" onclick="loadEmails('General')">General</li>
+                <li class="active" onclick="loadEmails('Authorisation')">Authorisation</li>
                 <!-- <li onclick="loadEmails('Announcements')">Announcements</li>
                 <li onclick="loadEmails('Support')">Support</li>
                 <li onclick="loadEmails('Feedback')">Feedback</li> -->
@@ -510,7 +510,7 @@
             const emailDetails = document.querySelector(".email-details");
             emailDetails.innerHTML = `
                 <h2>${email.subject}</h2>
-                <img src="${email.avatar}" style="width:50px; border-radius:50%;">
+                <img src="${email.avatar}" style="width:100px; border-radius:50%;">
                 <h3>${email.name} (${email.email})</h3>
                 <div>${email.content}</div>
                 ${email.response ? `<label class="response-label">${email.response}</label>` : `
@@ -604,7 +604,7 @@
         }, 1000); // Check every 1000ms = 1 second
 
         document.addEventListener("DOMContentLoaded", () => {
-            getEmailsFromDatabase("General");
+            getEmailsFromDatabase("Authorisation");
             const audio = document.getElementById('mailSound');
             audio.load(); // Wczytaj dźwięk natychmiast
         });

@@ -156,63 +156,174 @@ setTeamName($db, "Troubleshooting team");
 $result = $db->querySingle("SELECT COUNT(*) FROM emails");
 if ($result == 0) {
     $initialData = [
-        "General" => [
+        "Authorisation" => [
             [
                 "id" => 11,
-                "avatar" => "https://i.pravatar.cc/40?img=1",
-                "name" => "Safty team",
+                "avatar" => "img/waclaw_jala_sq.png",
+                "name" => "Safety team",
                 "email" => "support@ericsson.com",
-                "subject" => "Veryfication!",
-                "content" => "We kindly ask you to carry out a <b>verification of personnel using ID cards</b>. This process is part of our ongoing efforts to ensure site security and confirm that all individuals have the appropriate access permissions.<br>
-                              In light of our recent suspicion regarding possible unauthorized access to the RBS system, we kindly request an urgent verification. <b>Use available yellow box for veryfication.</b>",
+                "subject" => "Authorisation!",
+                "content" => 'We kindly ask you to carry out a <b>verification of personnel using ID cards</b>. This process is part of our ongoing efforts to ensure site security and confirm that all individuals have the appropriate access permissions.<br>
+                              In the light of our recent suspicion regarding possible unauthorized access to the RBS system, we kindly request an urgent verification. <b>Use available yellow box for verification.</b><br>
+
+                            Best Regards,<br>
+                            Wacław Jala',
                 "response" => null,
-                "expectedResponse" => "",
+                "expectedResponse" => "???",
                 "solutionType" => "external",
                 "visable" => true,
                 "previous_ids" => ""
             ],
             [
                 "id" => 12,
-                "avatar" => "https://i.pravatar.cc/40?img=1",
-                "name" => "Safty team",
+                "avatar" => "img/waclaw_jala_sq.png",
+                "name" => "Safety team",
                 "email" => "support@ericsson.com",
-                "subject" => "Veryfication!",
-                "content" => "The verification has been successfully completed. You will receive new emails with further instructions shortly.",
+                "subject" => "Authorisation!",
+                "content" => 'The verification has been successfully completed. You will receive new emails with further instructions shortly.<br>
+
+                            Best Regards,<br>
+                            Wacław Jala',
+
                 "response" => null,
-                "expectedResponse" => "",
+                "expectedResponse" => "???",
                 "solutionType" => "external",
                 "visable" => false,
                 "previous_ids" => ""
             ],
             [
                 "id" => 13,
-                "avatar" => "https://i.pravatar.cc/40?img=2",
-                "name" => "Jane Smith",
-                "email" => "jane@example.com",
-                "subject" => "Veryfication!(Solved)",
-                "content" => 'It just begining<BR> <img src="img/keyCardIcon.png" style="width:150px; border-radius:50%;">',
+                "avatar" => "img/stefan_baty_sq.png",
+                "name" => "Stefan Baty",
+                "email" => "stefan.batya@example.com",
+                "subject" => "Authorisation!(Finished)",
+                "content" => 'It\'s just the beginning<BR> <img src="img/keyCardIcon.png" style="width:150px; border-radius:50%;"><br>
+
+                            Best Regards,<br>
+                            Wacław Jala',
+
                 "response" => null,
-                "expectedResponse" => "Got it!",
+                "expectedResponse" => "???",
                 "solutionType" => "external",
                 "visable" => false,
                 "previous_ids" => ""
             ]
         ],
-        "Network_Configuration/Kontaktrons" => [
+        "Connect Energy" => [
+            [
+                "id" => 20,
+                "avatar" => "img/ryszard_tomka_sq.png",
+                "name" => "Admin IT",
+                "email" => "ryszard.tomka@example.com",
+                "subject" => "Podpięcie RBS na site Ankh Morpork - niezidentyfikowana awaria sprzętu ",
+                "content" => 'Jak wiecie, poprzednio wysłany technik próbując naprawić RBS został porażony prądem.<br>
+                              W związku z powyższym, RBS został odłączony od prądu.<br>
+                              <b>Znajdźcie kabel zasilający i podepnijcie RBS do prądu</b>, pamiętajcie, żeby skorzystać z <b>instrukcji</b> i przestrzegać zasad bhp (Ericsson Target Zero)<br>
+                              Pozdrawiam <br>,
+                              Ryszard Tomka ',
+                "response" => null,
+                "expectedResponse" => "???",
+                "solutionType" => "internal",
+                "visable" => false,
+                "previous_ids" => ""
+            ],
+            [
+                "id" => 21,
+                "avatar" => "img/ryszard_tomka_sq.png",
+                "name" => "Admin IT",
+                "email" => "ryszard.tomka@example.com",
+                "subject" => "Podpięcie RBS na site Ankh Morpork - niezidentyfikowana awaria sprzętu (Finished) ",
+                "content" => 'Świetnie! Udało Wam się bezbłędnie podłączyć RBS do sieci elektrycznej.<br>
+                              Pozdrawiam <br>,
+                              Ryszard Tomka ',
+                "response" => null,
+                "expectedResponse" => "???",
+                "solutionType" => "internal",
+                "visable" => false,
+                "previous_ids" => ""
+            ],
+            [
+                "id" => 22,
+                "avatar" => "img/ryszard_tomka_sq.png",
+                "name" => "Admin IT",
+                "email" => "ryszard.tomka@example.com",
+                "subject" => "Podpięcie RBS na site Ankh Morpork - niezidentyfikowana awaria sprzętu (Finished)",
+                "content" => 'RBS został podłączony do sieci elektrycznej, ale odnotowaliśmy niepożądany skok napięcia. Następnym razem pamiętajcie, aby czytać instrukcje! <br>
+                              Pozdrawiam <br>,
+                              Ryszard Tomka ',
+                "response" => null,
+                "expectedResponse" => "???",
+                "solutionType" => "internal",
+                "visable" => false,
+                "previous_ids" => ""
+            ]
+            ],
+
+ "Router_Configuration" => [
             [
                 "id" => 30,
-                "avatar" => "https://i.pravatar.cc/40?img=3",
-                "name" => "Admin",
-                "email" => "admin@example.com",
+                "avatar" => "img/adam_michalczewski_sq.png",
+                "name" => "CES",
+                "email" => "adam.michalczewski@example.com",
+                "subject" => "Router Configuration",
+                "content" => "Kpi dropped for some reason, counters indicate problem with router, please configure it and send us password. Instruction how to configure router should be in the room.",//aby poszukali w pokoju
+                "response" => null,
+                "expectedResponse" => "5963",
+                "solutionType" => "external",
+                "visable" => false,
+                "previous_ids" => ""
+            ],
+            [
+                "id" => 31,
+                "avatar" => "img/adam_michalczewski_sq.png",
+                "name" => "CES",
+                "email" => "adam.michalczewski@example.com",
+                "subject" => "Router Configuration (Finished)",
+                "content" => 'KPI were restored, but for some reason people who should not have access have additional privileges. Did you connect firewall? <br>
+                              <img src="img/achievementPlaceholder.png" style="width:150px; border-radius:50%;">
+                              <br>
+                                Best Regards,<br>
+                                Adam Michałczewski',
+                "response" => null,
+                "expectedResponse" => "???",
+                "solutionType" => "external",
+                "visable" => false,
+                "previous_ids" => ""
+            ],
+            [
+                "id" => 32,
+                "avatar" => "img/adam_michalczewski_sq.png",
+                "name" => "CES",
+                "email" => "adam.michalczewski@example.com",
+                "subject" => "Router Configuration (Finished)",
+                "content" => 'KPI were restored, And firewall was properly connected, bravo. <br>
+                              <img src="img/achievementPlaceholder.png" style="width:150px; border-radius:50%;">
+                              <br>
+                                Best Regards,<br>
+                                Adam Michałczewski',
+                "response" => null,
+                "expectedResponse" => "???",
+                "solutionType" => "external",
+                "visable" => false,
+                "previous_ids" => ""
+            ]
+            ],
+
+"Network_Configuration" => [
+            [
+                "id" => 40,
+                "avatar" => "img/nc_fd_sq.png",
+                "name" => "NC",
+                "email" => "nc.frontdesk@example.com",
                 "subject" => "System Update",
                 "content" => "We've lost contact with multiple RBS in the customer network.<br>
 
                             Your objectives:<br>
                                 <ol type = \"1\" style=\"margin-left: 20px\">
                                 <li>Locate missing antenna components hidden on-site.</li>
-                                <li>Use the map to correctly reconfigure our programable network.</li>
+                                <li>Use the Ankh-Morpork map to correctly reconfigure our programable network (Fill missing spaces on the map with found components.</li>
                                 </ol><br>
-                                This failure impacts client operations. <br>
+                                This failure impacts client's operations. <br>
                                 Act fast. Restore the link.<br><br>
 
                             Best Regards,<br>
@@ -225,17 +336,17 @@ if ($result == 0) {
                 "previous_ids" => ""
             ],
             [
-                "id" => 31,
-                "avatar" => "https://i.pravatar.cc/40?img=3",
-                "name" => "Admin",
-                "email" => "admin@example.com",
-                "subject" => "System Update",
-                "content" => "Wygląda że sieć została skonfigurowana. Natomiast aby zatwierdzić zmiany potrzebujemy hasła.<br>
-                              Poprzednik technik wspominał że chasło jest ukryte w światłowodzie. Ale niestety nie wiem o co mu chodziło.<br>
-                              Poszukaj wskazuwek w pokoju i prześlij mi hasło.<br>
+                "id" => 41,
+                "avatar" => "img/michal_adamczewski_sq.png",
+                "name" => "CES",
+                "email" => "michal.adamczewski@example.com",
+                "subject" => "Re: System Update",
+                "content" => "Wygląda na to, że sieć została skonfigurowana. Natomiast, aby zatwierdzić zmiany potrzebujemy hasła.<br>
+                              Poprzednik technik wspominał, że hasło jest ukryte w światłowodzie. Ale niestety nie wiem o co mu chodziło.<br>
+                              Poszukaj wskazówek w pokoju i prześlij mi hasło.<br>
 
                             Best Regards,<br>
-                            Network Control",
+                            Michał Adamczewski",
 
                 "response" => null,
                 "expectedResponse" => "will",
@@ -244,12 +355,12 @@ if ($result == 0) {
                 "previous_ids" => ""
             ],
             [
-                "id" => 32,
-                "avatar" => "https://i.pravatar.cc/40?img=3",
-                "name" => "Admin",
-                "email" => "admin@example.com",
-                "subject" => "System Update(Solved)",
-                "content" => 'Brawo hasło które mi podaliście jest poprawne.<br>
+                "id" => 42,
+                "avatar" => "img/adam_michalczewski_sq.png",
+                "name" => "CES",
+                "email" => "adam.michalczewski@example.com",
+                "subject" => "System Update (Finished)",
+                "content" => 'Brawo! Hasło, które mi podaliście jest poprawne.<br>
                             <img src="img/achievementPlaceholder.png" style="width:150px; border-radius:50%;">
                             <br>
                             Best Regards,<br>
@@ -261,234 +372,164 @@ if ($result == 0) {
                 "previous_ids" => ""
             ]
             ],
-            "Router_Configuration" => [
-            [
-                "id" => 40,
-                "avatar" => "https://i.pravatar.cc/40?img=3",
-                "name" => "Jack Lin?",
-                "email" => "Jack.Lin@ericsson.com",
-                "subject" => "Router_Configuration",
-                "content" => "Kpi drop for some reasone, counters indicate problem with router, please configure it, and send us password. Instruction how to configure router should be in room.",//aby poszukali w pokoju
-                "response" => null,
-                "expectedResponse" => "Haslo!!!", //
-                "solutionType" => "external",
-                "visable" => false,
-                "previous_ids" => ""
-            ],
-            [
-                "id" => 41,
-                "avatar" => "https://i.pravatar.cc/40?img=3",
-                "name" => "Jack Lin?",
-                "email" => "Jack.Lin@ericsson.com",
-                "subject" => "Router_Configuration",
-                "content" => 'KPI were restored, but for some reasone peopel who should not have access have additional features. Did you connect firewall? <br>
-                              <img src="img/achievementPlaceholder.png" style="width:150px; border-radius:50%;">
-                              <br>
-                                Best Regards,<br>
-                                Jack Lin',
-                "response" => null,
-                "expectedResponse" => "Thanks for the update!",
-                "solutionType" => "external",
-                "visable" => false,
-                "previous_ids" => ""
-            ],
-            [
-                "id" => 42,
-                "avatar" => "https://i.pravatar.cc/40?img=3",
-                "name" => "Jack Lin?",
-                "email" => "Jack.Lin@ericsson.com",
-                "subject" => "(Solved)",
-                "content" => 'KPI were restored, And firewall was properly connected bravo. <br>
-                              <img src="img/achievementPlaceholder.png" style="width:150px; border-radius:50%;">
-                              <br>
-                                Best Regards,<br>
-                                Jack Lin',
-                "response" => null,
-                "expectedResponse" => "Thanks for the update!",
-                "solutionType" => "external",
-                "visable" => false,
-                "previous_ids" => ""
-            ]
-            ],
+
             "Password Needed" => [
             [
-                "id" => 50,
-                "avatar" => "https://i.pravatar.cc/40?img=3",
-                "name" => "Stefan Batty",
-                "email" => "Stefan.Batty@example.com",
-                "subject" => "Potrzebujemy hasła",
-                "content" => 'Podrzebujemy hasła do sieci, powino być gdzies na poskładanej kartce papieru.',
+                "id" => 80,
+                "avatar" => "img/sfetan_bafy_sq.png",
+                "name" => "Sfetan Bafy",
+                "email" => "sfetan.Bafy@erikson.kom",
+                "subject" => "Potrzebujemy hasła adamina",
+                "content" => 'Potrzebujemy hasła admina do sieci - klient pilnie potrzebuje zmian konfiguracji, powinno być gdzies na poskładanej kartce papieru (origami). <br>
+                                Pozdrawiam,<br>
+                                Sfetan Bafy',
                 "response" => null,
                 "expectedResponse" => "Haslo123!!!",
                 "solutionType" => "external",
+                "visable" => false,
+                "previous_ids" => ""
+            ],
+            [
+                "id" => 81,
+                "avatar" => "img/sfetan_bafy_sq.png",
+                "name" => "Sfetan Bafy",
+                "email" => "向前: sfetan.Bafy@erikson.kom, everyone@weihua.cn",
+                "subject" => "Potrzebujemy hasła (Finished)",
+                "content" => 'Udało się zalogować, dzięki. 谢谢<br>
+                              <img src="img/achievementPlaceholder.png" style="width:150px; border-radius:50%;">
+                              <br>
+                                Pozdrawiam 此致,<br>
+                                Sfetan Bafy',
+                "response" => null,
+                "expectedResponse" => "???",
+                "solutionType" => "external",
+                "visable" => false,
+                "previous_ids" => ""
+            ],
+        ],
+
+            "Find UPs" => [
+            [
+                "id" => 50,
+                "avatar" => "img/stefan_baty_sq.png",
+                "name" => "Stefan Baty",
+                "email" => "stefan.baty@ericsson.com",
+                "subject" => "Odszukajcie i załadujcie UPki na IUWUU",
+                "content" => "Node jest już widoczny w naszych narzędziach do zarządzania siecią, ale nie możemy manualnie przeinstalować UP. Znajdzcie LMy ukryte w pokoju i zainstalujcie je na zgodnie z instrukcją na prototypie tajnego, wewnętrznego urządzenia Innovative Unofficial Wireless UP Uploader (IUWUU), pieszczotliwie nazywanego Yellow Box.",
+                "response" => null,
+                "expectedResponse" => "???",
+                "solutionType" => "internal",
                 "visable" => false,
                 "previous_ids" => ""
             ],
             [
                 "id" => 51,
-                "avatar" => "https://i.pravatar.cc/40?img=3",
-                "name" => "Stefan Batty",
-                "email" => "Stefan.Batty@example.com",
-                "subject" => "Potrzebujemy hasła",
-                "content" => 'Podrzebujemy hasła przez to że firewall był źle podłączony do sieci, powino być gdzies na poskładanej kartce papieru.',
+                "avatar" => "img/stefan_baty_sq.png",
+                "name" => "Stefan Baty",
+                "email" => "stefan.baty@ericsson.com",
+                "subject" => "Odszukajcie i załadujcie UPki na IUWUU (Finished)",
+                "content" => "IUWUU zwrócił informację, że LM są wgrane i UP jest gotowy do instalacji. Czekajcie na następne instrukcje przed podejmowaniem jakichkolwiek akcji. ",
                 "response" => null,
-                "expectedResponse" => "Haslo123!!!",
-                "solutionType" => "external",
+                "expectedResponse" => "???",
+                "solutionType" => "internal",
                 "visable" => false,
                 "previous_ids" => ""
             ],
             [
                 "id" => 52,
-                "avatar" => "https://i.pravatar.cc/40?img=3",
-                "name" => "Stefan Batty",
-                "email" => "Stefan.Batty@example.com",
-                "subject" => "Potrzebujemy hasła",
-                "content" => 'Udało się zalogować dzięki <br>
-                              <img src="img/achievementPlaceholder.png" style="width:150px; border-radius:50%;">
-                              <br>
-                                Pozdrawiam,<br>
-                                Stefan Batty',
+                "avatar" => "img/mikolaj_fajans_sq.png",
+                "name" => "Mikołaj Fajans",
+                "email" => "mikolaj.fajans@ericsson.com",
+                "subject" => "Re: Odszukajcie i załadujcie UPki na IUWUU",
+                "content" => "Seems that LM installation failed. Please make sure you follow the instruction. Ask technical support for help, it is urgent!",
                 "response" => null,
-                "expectedResponse" => "Haslo123!!!",
-                "solutionType" => "external",
-                "visable" => false,
-                "previous_ids" => ""
-            ],
-            ],
-            "Find Key" => [
-            [
-                "id" => 60,
-                "avatar" => "https://i.pravatar.cc/40?img=3",
-                "name" => "Stefan Batty",
-                "email" => "Stefan.Batty@example.com",
-                "subject" => "Znajdzie Klucz",
-                "content" => "Podrzebujemy kodu z Sejfu który powinien być w pokoju. Znajdują się w nim ważne elementy aby kontytować z konfiguracją noda.",
-                "response" => null,
-                "expectedResponse" => "??????????",
+                "expectedResponse" => "???",
                 "solutionType" => "internal",
                 "visable" => false,
                 "previous_ids" => ""
             ]
             ],
-            "Connect Energy" => [
+            
+            "Install Lms" => [
+            [
+                "id" => 60,
+                "avatar" => "img/stefan_baty_sq.png",
+                "name" => "Stefan Baty",
+                "email" => "stefan.baty@ericsson.com",
+                "subject" => " Wgranie UP na node",
+                "content" => "Czas na finalny krok. Włożcie IUWUU do RBS, IUWUU automatycznie wgra i zainstaluje UP, po czym puści testy. Damy Wam znać o jak wyszedł health check.",
+                "response" => null,
+                "expectedResponse" => "???",
+                "solutionType" => "internal",
+                "visable" => false,
+                "previous_ids" => ""
+            ],
+            [
+                "id" => 61,
+                "avatar" => "img/stefan_baty_sq.png",
+                "name" => "Stefan Baty",
+                "email" => "stefan.baty@ericsson.com",
+                "subject" => "Wgranie UP na node(Finished)",
+                "content" => 'UP załadował się poprawnie. Checki trwają, niedługo dostaniecie raport.<br>
+                             <img src="img/achievementPlaceholder.png" style="width:150px; border-radius:50%;">',
+                "response" => null,
+                "expectedResponse" => "???",
+                "solutionType" => "internal",
+                "visable" => false,
+                "previous_ids" => ""
+            ]
+            ],
+            "RBS Overheat" => [
             [
                 "id" => 70,
-                "avatar" => "https://i.pravatar.cc/40?img=3",
-                "name" => "Admin",
-                "email" => "admin@example.com",
-                "subject" => "Otworz Sejf",
-                "content" => "Jak poda się kod z sejfu prosimy o podpięcie Energii.",
-                "response" => 'No response',
-                "expectedResponse" => "Kod",
+                "avatar" => "img/jack_lin_sq.png",
+                "name" => "Jack Lin",
+                "email" => 'jack.lin@ericsson.com<br>
+			    CC: "mikolaj.fajans@ericsson.com, stefan.baty@ericsson.com',
+                "subject" => "OVERHEAT alarm!!!",
+                "content" => 'Enable troubleshooting mode and answer a series of questions to find the cause. The issue has been escalated, so you have limited time.
+                              To begin, press the button below<BR> <a href="awaria.php" class="restart-button">Troubleshooting Emergency Mode</a>',
+                "response" => null,
+                "expectedResponse" => "???",
                 "solutionType" => "internal",
                 "visable" => false,
                 "previous_ids" => ""
             ],
             [
                 "id" => 71,
-                "avatar" => "https://i.pravatar.cc/40?img=3",
-                "name" => "Jack Lin?",
-                "email" => "Jack.Lin@ericsson.com",
-                "subject" => "Connect Energy (Solved1)",
-                "content" => 'KPI were restored, And firewall was properly connected bravo. <br>
-                              <img src="img/achievementPlaceholder.png" style="width:150px; border-radius:50%;">
-                              <br>
-                                Best Regards,<br>
-                                Jack Lin',
+                "avatar" => "img/jack_lin_sq.png",
+                "name" => "Jack Lin",
+                "email" => 'jack.lin@ericsson.com<br>
+			    CC: "mikolaj.fajans@ericsson.com, stefan.baty@ericsson.com",
+                "subject" => "OVERHEAT alarm!!!(Finished)',
+                "content" => 'Congratulations, you saved the node from destruction and located the root cause and saved Monitor Lizard from the fire. <br>
+			      <img src="img/achievementPlaceholder.png" style="width:150px; border-radius:50%;">',
                 "response" => null,
-                "expectedResponse" => "Thanks for the update!",
-                "solutionType" => "external",
+                "expectedResponse" => "???",
+                "solutionType" => "internal",
                 "visable" => false,
                 "previous_ids" => ""
             ],
             [
                 "id" => 72,
-                "avatar" => "https://i.pravatar.cc/40?img=3",
-                "name" => "Jack Lin?",
-                "email" => "Jack.Lin@ericsson.com",
-                "subject" => "Connect Energy (Solved2)",
-                "content" => 'KPI were restored, And firewall was properly connected bravo. <br>
-                              <img src="img/achievementPlaceholder.png" style="width:150px; border-radius:50%;">
-                              <br>
-                                Best Regards,<br>
-                                Jack Lin',
+               "avatar" => "img/jack_lin_sq.png",
+                "name" => "Jack Lin",
+                "email" => 'jack.lin@ericsson.com<br>
+			    CC: "mikolaj.fajans@ericsson.com, stefan.baty@ericsson.com',
+
+                "subject" => "OVERHEAT alarm!!!(Finished)",
+                "content" => 'Unfortunately, the RBS has burned down and so has the Monitor Lizard that nested inside causing the problems.
+                              We will send new RBS to the client, and face the consequences of this failure.<br>
+                              <img src="img/achievementPlaceholder.png" style="width:150px; border-radius:50%;">',
                 "response" => null,
-                "expectedResponse" => "Thanks for the update!",
-                "solutionType" => "external",
-                "visable" => false,
-                "previous_ids" => ""
-            ]
-            ],
-            "Install Lm" => [
-            [
-                "id" => 80,
-                "avatar" => "https://i.pravatar.cc/40?img=3",
-                "name" => "Stefan Batty",
-                "email" => "Stefan.Batty@example.com",
-                "subject" => "Zainstaluj soft na YB",
-                "content" => "Zainstaluje LM na yellow box zgodnie z instrukcją",
-                "response" => null,
-                "expectedResponse" => "??????????",
-                "solutionType" => "internal",
-                "visable" => false,
-                "previous_ids" => ""
-            ],
-            [
-                "id" => 81,
-                "avatar" => "https://i.pravatar.cc/40?img=3",
-                "name" => "Stefan Batty",
-                "email" => "Stefan.Batty@example.com",
-                "subject" => "Zainstaluj soft na YB(Solved)",
-                "content" => '<img src="img/achievementPlaceholder.png" style="width:150px; border-radius:50%;">',
-                "response" => null,
-                "expectedResponse" => "??????????",
-                "solutionType" => "internal",
-                "visable" => false,
-                "previous_ids" => ""
-            ]
-            ],
-            "Restart RBS" => [
-            [
-                "id" => 90,
-                "avatar" => "https://i.pravatar.cc/40?img=3",
-                "name" => "Stefan Batty",
-                "email" => "Stefan.Batty@example.com",
-                "subject" => "Znajdzie Klucz",
-                "content" => 'Aby zrestartować RBS naciśnijcie poniższy przycisk<BR> <a href="awaria.php" class="restart-button">Restart RBS</a>',
-                "response" => null,
-                "expectedResponse" => "??????????",
-                "solutionType" => "internal",
-                "visable" => false,
-                "previous_ids" => ""
-            ],
-            [
-                "id" => 91,
-                "avatar" => "https://i.pravatar.cc/40?img=3",
-                "name" => "Stefan Batty",
-                "email" => "Stefan.Batty@example.com",
-                "subject" => "Carbon of RBS from Monitor Lizard(Solved)",
-                "content" => '<img src="img/achievementPlaceholder.png" style="width:150px; border-radius:50%;">',
-                "response" => null,
-                "expectedResponse" => "??????????",
-                "solutionType" => "internal",
-                "visable" => false,
-                "previous_ids" => ""
-            ],
-            [
-                "id" => 92,
-                "avatar" => "https://i.pravatar.cc/40?img=3",
-                "name" => "Stefan Batty",
-                "email" => "Stefan.Batty@example.com",
-                "subject" => "Free Monitor Lizard(Solved)",
-                "content" => '<img src="img/achievementPlaceholder.png" style="width:150px; border-radius:50%;">',
-                "response" => null,
-                "expectedResponse" => "??????????",
+                "expectedResponse" => "???",
                 "solutionType" => "internal",
                 "visable" => false,
                 "previous_ids" => ""
             ]
             ]
             ];
+
 
     //insert data
     $stmt = $db->prepare("INSERT INTO emails 
