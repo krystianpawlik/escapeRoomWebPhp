@@ -263,46 +263,83 @@
         }
 
         /* Popup */
-        #popup-wrapper-konfetti {
-        position: fixed;
-        top: 0; left: 0;
-        width: 100vw; height: 100vh;
-        background: rgba(0, 0, 0, 0.1);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 10001; /* nad canvasem */
-        animation: fadeIn 0.4s ease-in;
-        display:none;
-        }
 
-        .popup-content-konfetti {
-        background: white;
-        border-radius: 16px;
-        width: 400px;
-        max-width: 90%;
-        padding: 20px;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
-        text-align: center;
-        }
+#popup-wrapper-konfetti {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.1);
 
-        .popup-content-konfetti img {
-        width: 100px;
-        height: auto;
-        border-radius: 50%;
-        margin-bottom: 15px;
-        }
+  display: block;          /* brak flexa */
+  overflow-y: auto;        /* pozwala na przewijanie */
+  padding: 40px 0;         /* odstęp od góry/dół */
 
-        .konfetti-close-btn {
-        margin-top: 15px;
-        padding: 12px 25px;
-        background-color: #ff5c5c;
-        color: white;
-        border: none;
-        border-radius: 8px;
-        font-size: 16px;
-        cursor: pointer;
-        }
+  z-index: 10001;
+  animation: fadeIn 0.4s ease-in;
+  display: none;
+}
+
+.popup-content-konfetti {
+  background: #fff;
+  margin: 0 auto;
+  width: 65%;              /* <-- zmniejszona szerokość */
+  max-width: 900px;        /* maksymalnie 900px */
+  padding: 20px;
+  border-radius: 12px;
+
+  height: auto;
+  min-height: 80vh;        /* <- min. 80% ekranu wysokości */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+#popup-wrapper-konfetti .popup-content-konfetti {
+  display: flex;
+  flex-direction: column;
+
+  background: #fff;
+  margin: 0 auto;
+  width: 35%;
+  max-width: 900px;
+  padding: 20px;
+  border-radius: 12px;
+
+  min-height: 80vh;
+  max-height: 90vh;
+  overflow: hidden;
+
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+#popup-wrapper-konfetti .konfetti-iframe-wrapper {
+  flex: 1;
+  height: 100%;
+  margin-top: 10px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+#popup-wrapper-konfetti .konfetti-iframe-wrapper iframe {
+  width: 100%;
+  height: 100%;
+  flex-grow: 1;
+  border: none;
+}
+
+#popup-wrapper-konfetti .konfetti-close-btn {
+  display: inline-block;   /* lub inline-flex */
+  width: auto;             /* usuń szerokość na 100% lub blokową */
+  padding: 12px 25px;      /* zostaw oryginalny padding */
+  margin-top: 15px;
+  background-color: #ff5c5c;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: center;
+}
 
         @keyframes fadeIn {
         from { opacity: 0 }
@@ -368,16 +405,19 @@
 
 
 
-  <!-- Popup -->
-  <div id="popup-wrapper-konfetti">
+    <!-- Popup -->
+    <div id="popup-wrapper-konfetti">
     <div class="popup-content-konfetti">
-      <img src="https://i.imgur.com/OUzWj2Y.png" alt="Wybuchająca buzia z konfetti" />
-      <h2>Gratulacje!</h2>
-      <p>Oto Twoja zawartość w popupie.</p>
-      <button class="konfetti-close-btn" id="popup-close-btn">Zakończ</button>
-    </div>
-  </div>
+        <h2>Gratulacje! Uruchomiliście RBS.</h2>
+        <p>Oto wasze osiągnięcia.</p>
 
+        <div class="konfetti-iframe-wrapper">
+        <iframe src="achievements.php" frameborder="0"></iframe>
+        </div>
+
+        <button class="konfetti-close-btn" id="popup-close-btn">Zakończ</button>
+    </div>
+    </div>
   <!-- Canvas do konfetti -->
   <canvas id="confetti-canvas"></canvas>
 
@@ -717,7 +757,7 @@
 
         function getEmailsFromDatabase(topic) {
             // Make a GET request to the PHP server to get all emails
-            fetch('database_api.php')
+            fetch('database_api.php?all=true')
                 .then(response => response.json()) // Parse the JSON response
                 .then(data => {
 

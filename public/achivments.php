@@ -37,7 +37,7 @@ $emails = getVisibleSolvedEmails();
     <meta charset="UTF-8">
     <title>Widoczne rozwiązane maile</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 40px; background-color: #f9f9f9; }
+        body { font-family: Arial, sans-serif; background-color: #f9f9f9; padding: 0px}
         .email-card {
             background-color: #fff;
             border: 1px solid #ddd;
