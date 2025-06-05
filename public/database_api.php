@@ -237,7 +237,7 @@ if ($result == 0) {
                 "email" => "ryszard.tomka@example.com",
                 "subject" => "Podpięcie RBS na site Ankh Morpork - niezidentyfikowana awaria sprzętu (Finished) ",
                 "content" => 'Świetnie! Udało Wam się bezbłędnie podłączyć RBS do sieci elektrycznej.<br>
-                              <br>
+                              <img src="img/achievement/2_wpiecie_do_sieci_ok.png" style="width:150px; border-radius:50%;"/><br>
                               Pozdrawiam, <br>
                               Ryszard Tomka',
                 "response" => null,
@@ -245,7 +245,7 @@ if ($result == 0) {
                 "solutionType" => "internal",
                 "visable" => false,
                 "previous_ids" => "",
-                "achievement" => null,
+                "achievement" => "img/achievement/2_wpiecie_do_sieci_ok.png",
                 "achievement_text" => null
             ],
             [
@@ -255,7 +255,7 @@ if ($result == 0) {
                 "email" => "ryszard.tomka@example.com",
                 "subject" => "Podpięcie RBS na site Ankh Morpork - niezidentyfikowana awaria sprzętu (Finished)",
                 "content" => 'RBS został podłączony do sieci elektrycznej, ale odnotowaliśmy niepożądany skok napięcia. Następnym razem pamiętajcie, aby czytać instrukcje! <br>
-                              <br>
+                              <img src="img/achievement/2_porazenie_pradem_nok.png" style="width:150px; border-radius:50%;"/><br>
                               Pozdrawiam, <br>
                               Ryszard Tomka',
                 "response" => null,
@@ -263,7 +263,7 @@ if ($result == 0) {
                 "solutionType" => "internal",
                 "visable" => false,
                 "previous_ids" => "",
-                "achievement" => "/img/achievement/2_porazenie_pradem_nok.png",
+                "achievement" => "img/achievement/2_porazenie_pradem_nok.png",
                 "achievement_text" => null
             ]
             ],
@@ -294,8 +294,7 @@ if ($result == 0) {
                 "email" => "adam.michalczewski@example.com",
                 "subject" => "Router Configuration (Finished)",
                 "content" => 'KPI were restored, but for some reason people who should not have access have additional privileges. Did you connect firewall? <br>
-                              <img src="img/achievementPlaceholder.png" style="width:150px; border-radius:50%;">
-                              <br>
+                              <img src="img/achievement/3_hakier_nok.png" style="width:150px; border-radius:50%;"><br>
                               Best Regards,<br>
                               Adam Michałczewski',
                 "response" => null,
@@ -303,7 +302,7 @@ if ($result == 0) {
                 "solutionType" => "external",
                 "visable" => false,
                 "previous_ids" => "",
-                "achievement" => null,
+                "achievement" => "img/achievement/3_hakier_nok.png",
                 "achievement_text" => null
             ],
             [
@@ -313,16 +312,15 @@ if ($result == 0) {
                 "email" => "adam.michalczewski@example.com",
                 "subject" => "Router Configuration (Finished)",
                 "content" => 'KPI were restored, And firewall was properly connected, bravo. <br>
-                              <img src="img/achievementPlaceholder.png" style="width:150px; border-radius:50%;">
-                              <br>
-                                Best Regards,<br>
-                                Adam Michałczewski',
+                              <img src="img/achievement/3_firewall_zainstalowany_ok.png" style="width:150px; border-radius:50%;"><br>
+                              Best Regards,<br>
+                              Adam Michałczewski',
                 "response" => null,
                 "expectedResponse" => "???",
                 "solutionType" => "external",
                 "visable" => false,
                 "previous_ids" => "",
-                "achievement" => null,
+                "achievement" => "img/achievement/3_firewall_zainstalowany_ok.png",
                 "achievement_text" => null
             ]
             ],
@@ -383,8 +381,7 @@ if ($result == 0) {
                 "email" => "adam.michalczewski@example.com",
                 "subject" => "System Update (Finished)",
                 "content" => 'Brawo! Hasło, które mi podaliście jest poprawne.<br>
-                            <img src="img/achievementPlaceholder.png" style="width:150px; border-radius:50%;">
-                            <br>
+                            <img src="img/achievement/4_swiatelka_ok.jpg" style="width:150px; border-radius:50%;"><br>
                             Best Regards,<br>
                             Network Control',
                 "response" => null,
@@ -392,7 +389,7 @@ if ($result == 0) {
                 "solutionType" => "external",
                 "visable" => false,
                 "previous_ids" => "",
-                "achievement" => null,
+                "achievement" => "img/achievement/4_swiatelka_ok.jpg",
                 "achievement_text" => null
             ]
             ],
@@ -416,6 +413,9 @@ if ($result == 0) {
                 "achievement" => null,
                 "achievement_text" => null
             ],
+
+            //to do zgloszenie spamu
+
             [
                 "id" => 81,
                 "avatar" => "img/sfetan_bafy_sq.png",
@@ -423,7 +423,7 @@ if ($result == 0) {
                 "email" => "向前: sfetan.Bafy@erikson.kom, everyone@weihua.cn",
                 "subject" => "Potrzebujemy hasła (Finished)",
                 "content" => 'Udało się zalogować, dzięki. 谢谢<br>
-                              <img src="img/achievementPlaceholder.png" style="width:150px; border-radius:50%;"><br>
+                              <img src="img/achievement/8_jestes_zrybiony_nok.png" style="width:150px; border-radius:50%;"><br>
                                 Pozdrawiam 此致,<br>
                                 Sfetan Bafy',
                 "response" => null,
@@ -431,7 +431,7 @@ if ($result == 0) {
                 "solutionType" => "external",
                 "visable" => false,
                 "previous_ids" => "",
-                "achievement" => null,
+                "achievement" => "img/achievement/8_jestes_zrybiony_nok.png",
                 "achievement_text" => null
             ],
         ],
@@ -463,17 +463,17 @@ if ($result == 0) {
                 "name" => "Mikołaj Fajans",
                 "email" => "mikolaj.fajans@ericsson.com",
                 "subject" => "Re: Odszukajcie i załadujcie UPki na IUWUU",
-                "content" => "Seems that LM installation failed. Please make sure you follow the instruction. Ask technical support for help, it is urgent.<br>
-                             <br>
+                "content" => 'Seems that LM installation failed. Please make sure you follow the instruction. Ask technical support for help, it is urgent.<br>
+                             <img src="img/achievement/5_zly_niklas_nok.png" style="width:150px; border-radius:50%;"><br>
                              Best Regards,<br>
                              Mikołaj Fajans<br>
-                             ",
+                             ',
                 "response" => null,
                 "expectedResponse" => "???",
                 "solutionType" => "internal",
                 "visable" => false,
                 "previous_ids" => "",
-                "achievement" => null,
+                "achievement" => "img/achievement/5_zly_niklas_nok.png",
                 "achievement_text" => null
             ],
             [
@@ -482,17 +482,17 @@ if ($result == 0) {
                 "name" => "Stefan Baty",
                 "email" => "stefan.baty@ericsson.com",
                 "subject" => "Odszukajcie i załadujcie UPki na IUWUU (Finished)",
-                "content" => "IUWUU zwrócił informację, że LM są wgrane i UP jest gotowy do instalacji. Czekajcie na następne instrukcje przed podejmowaniem jakichkolwiek akcji.<br> 
-                            <br>
+                "content" => 'IUWUU zwrócił informację, że LM są wgrane i UP jest gotowy do instalacji. Czekajcie na następne instrukcje przed podejmowaniem jakichkolwiek akcji.<br> 
+                            <img src="img/achievement/5_prawidlowe_lmy_ok.jpg" style="width:150px; border-radius:50%;"><br>
                             Pozdrawiam,<br>
                             Stefan Baty
-                            ",
+                            ',
                 "response" => null,
                 "expectedResponse" => "???",
                 "solutionType" => "internal",
                 "visable" => false,
                 "previous_ids" => "",
-                "achievement" => null,
+                "achievement" => "img/achievement/5_prawidlowe_lmy_ok.jpg",
                 "achievement_text" => null
             ],
 
@@ -524,8 +524,7 @@ if ($result == 0) {
                 "email" => "stefan.baty@ericsson.com",
                 "subject" => "Wgranie UP na node(Finished)",
                 "content" => 'UP załadował się poprawnie. Checki trwają, niedługo dostaniecie raport.<br>
-                             <img src="img/achievementPlaceholder.png" style="width:150px; border-radius:50%;">
-                             <br>
+                             <img src="img/achievement/iuwuu_w_rbs_gotowe.png" style="width:150px; border-radius:50%;"><br>
                              Pozdrawiam,<br>
                              Stefan Baty"
                              ',
@@ -534,7 +533,7 @@ if ($result == 0) {
                 "solutionType" => "internal",
                 "visable" => false,
                 "previous_ids" => "",
-                "achievement" => null,
+                "achievement" => "img/achievement/iuwuu_w_rbs_gotowe.png",
                 "achievement_text" => null
             ]
             ],
@@ -567,7 +566,7 @@ if ($result == 0) {
 			    CC: "mikolaj.fajans@ericsson.com, stefan.baty@ericsson.com',
                 "subject" => "OVERHEAT alarm!!!(Finished)",
                 "content" => 'Congratulations, you saved the node from destruction and located the root cause and saved Monitor Lizard from the fire. <br>
-			                  <img src="img/achievementPlaceholder.png" style="width:150px; border-radius:50%;">
+			                  <img src="img/achievement/7_monitor_lizard_zyw_ok.png" style="width:150px; border-radius:50%;">
                               <br>
                               Best Regards,<br>
                               Jack Lin<br>',
@@ -576,7 +575,7 @@ if ($result == 0) {
                 "solutionType" => "internal",
                 "visable" => false,
                 "previous_ids" => "",
-                "achievement" => null,
+                "achievement" => "img/achievement/7_monitor_lizard_zyw_ok.png",
                 "achievement_text" => null
             ],
             [
@@ -589,8 +588,7 @@ if ($result == 0) {
                 "subject" => "OVERHEAT alarm!!!(Finished)",
                 "content" => 'Unfortunately, the RBS has burned down and so has the Monitor Lizard that nested inside causing the problems.
                               We will send new RBS to the client, and face the consequences of this failure.<br>
-                              <img src="img/achievementPlaceholder.png" style="width:150px; border-radius:50%;">
-                              <br>
+                              <img src="img/achievement/7_weglan_rbsu_nok.png" style="width:150px; border-radius:50%;"><br>
                               Best Regards,<br>
                               Jack Lin<br>
                               ',
@@ -599,7 +597,7 @@ if ($result == 0) {
                 "solutionType" => "internal",
                 "visable" => false,
                 "previous_ids" => "",
-                "achievement" => null,
+                "achievement" => "img/achievement/7_weglan_rbsu_nok.png",
                 "achievement_text" => null
             ]
             ]
