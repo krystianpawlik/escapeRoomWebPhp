@@ -704,7 +704,7 @@ function checkNextPuzzleStep($expected) {
 
         if ($isLastStep) {
             //!!!!!!!!!! Ostatni Krok nastepne zadanie
-            setVisableById($db, 51);
+            setVisableById($db, 52);
             setVisableById($db, 60);
 
             setPuzzleData('card', 'completed', (string)$nextIndex);
@@ -715,7 +715,7 @@ function checkNextPuzzleStep($expected) {
         }
     } else {
         // mail poganiajacy ze cos sie nie udalo
-        setVisableById($db, 52);
+        setVisableById($db, 51);
 
         setPuzzleData('card', 'idle', "-1");
         return ['ok' => false, 'message' => "Incorrect, Reseting"];
