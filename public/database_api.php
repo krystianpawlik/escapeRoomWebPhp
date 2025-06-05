@@ -14,7 +14,9 @@ $db->exec("CREATE TABLE IF NOT EXISTS emails (
     solutionType TEXT,
     category TEXT,
     visable INTEGER,
-    previous_ids TEXT
+    previous_ids TEXT,
+    achievement TEXT,
+    achievement_text TEXT
 )");
 
 // Create team table if it doesn't exist
@@ -164,7 +166,9 @@ if ($result == 0) {
                 "expectedResponse" => "???",
                 "solutionType" => "external",
                 "visable" => true,
-                "previous_ids" => ""
+                "previous_ids" => "",
+                "achievement" => null,
+                "achievement_text" => null
             ],
             [
                 "id" => 12,
@@ -181,7 +185,9 @@ if ($result == 0) {
                 "expectedResponse" => "???",
                 "solutionType" => "external",
                 "visable" => false,
-                "previous_ids" => ""
+                "previous_ids" => "",
+                "achievement" => null,
+                "achievement_text" => null
             ],
             [
                 "id" => 13,
@@ -189,7 +195,7 @@ if ($result == 0) {
                 "name" => "Safety team",
                 "email" => 'support@ericsson.com  <br> CC: stefan.baty@ericsson.com',
                 "subject" => "Authorisation!(Finished)",
-                "content" => 'It\'s just the beginning<BR> <img src="img/keyCardIcon.png" style="width:150px; border-radius:50%;"><br>
+                "content" => 'It\'s just the beginning<BR> <img src="img/achievement/1_autoryzacja_ok.png" style="width:150px; border-radius:50%;"/><br>
                             <br>
                             Best Regards,<br>
                             Wacław Jala',
@@ -198,7 +204,9 @@ if ($result == 0) {
                 "expectedResponse" => "???",
                 "solutionType" => "external",
                 "visable" => false,
-                "previous_ids" => ""
+                "previous_ids" => "",
+                "achievement" => "img/achievement/1_autoryzacja_ok.png",
+                "achievement_text" => null
             ]
         ],
         "Connect Energy" => [
@@ -218,7 +226,9 @@ if ($result == 0) {
                 "expectedResponse" => "???",
                 "solutionType" => "internal",
                 "visable" => false,
-                "previous_ids" => ""
+                "previous_ids" => "",
+                "achievement" => null,
+                "achievement_text" => null
             ],
             [
                 "id" => 21,
@@ -234,7 +244,9 @@ if ($result == 0) {
                 "expectedResponse" => "???",
                 "solutionType" => "internal",
                 "visable" => false,
-                "previous_ids" => ""
+                "previous_ids" => "",
+                "achievement" => null,
+                "achievement_text" => null
             ],
             [
                 "id" => 22,
@@ -250,7 +262,9 @@ if ($result == 0) {
                 "expectedResponse" => "???",
                 "solutionType" => "internal",
                 "visable" => false,
-                "previous_ids" => ""
+                "previous_ids" => "",
+                "achievement" => "/img/achievement/2_porazenie_pradem_nok.png",
+                "achievement_text" => null
             ]
             ],
 
@@ -269,7 +283,9 @@ if ($result == 0) {
                 "expectedResponse" => "5963",
                 "solutionType" => "external",
                 "visable" => false,
-                "previous_ids" => ""
+                "previous_ids" => "",
+                "achievement" => null,
+                "achievement_text" => null
             ],
             [
                 "id" => 31,
@@ -286,7 +302,9 @@ if ($result == 0) {
                 "expectedResponse" => "???",
                 "solutionType" => "external",
                 "visable" => false,
-                "previous_ids" => ""
+                "previous_ids" => "",
+                "achievement" => null,
+                "achievement_text" => null
             ],
             [
                 "id" => 32,
@@ -303,7 +321,9 @@ if ($result == 0) {
                 "expectedResponse" => "???",
                 "solutionType" => "external",
                 "visable" => false,
-                "previous_ids" => ""
+                "previous_ids" => "",
+                "achievement" => null,
+                "achievement_text" => null
             ]
             ],
 
@@ -331,7 +351,9 @@ if ($result == 0) {
                 "expectedResponse" => "",
                 "solutionType" => "external",
                 "visable" => false,
-                "previous_ids" => ""
+                "previous_ids" => "",
+                "achievement" => null,
+                "achievement_text" => null
             ],
             [
                 "id" => 41,
@@ -350,7 +372,9 @@ if ($result == 0) {
                 "expectedResponse" => "will",
                 "solutionType" => "external",
                 "visable" => false,
-                "previous_ids" => ""
+                "previous_ids" => "",
+                "achievement" => null,
+                "achievement_text" => null
             ],
             [
                 "id" => 42,
@@ -367,7 +391,9 @@ if ($result == 0) {
                 "expectedResponse" => "",
                 "solutionType" => "external",
                 "visable" => false,
-                "previous_ids" => ""
+                "previous_ids" => "",
+                "achievement" => null,
+                "achievement_text" => null
             ]
             ],
 
@@ -386,7 +412,9 @@ if ($result == 0) {
                 "expectedResponse" => "Haslo123!!!",
                 "solutionType" => "external",
                 "visable" => false,
-                "previous_ids" => ""
+                "previous_ids" => "",
+                "achievement" => null,
+                "achievement_text" => null
             ],
             [
                 "id" => 81,
@@ -402,7 +430,9 @@ if ($result == 0) {
                 "expectedResponse" => "???",
                 "solutionType" => "external",
                 "visable" => false,
-                "previous_ids" => ""
+                "previous_ids" => "",
+                "achievement" => null,
+                "achievement_text" => null
             ],
         ],
 
@@ -423,7 +453,9 @@ if ($result == 0) {
                 "expectedResponse" => "???",
                 "solutionType" => "internal",
                 "visable" => false,
-                "previous_ids" => ""
+                "previous_ids" => "",
+                "achievement" => null,
+                "achievement_text" => null
             ],
             [
                 "id" => 51,
@@ -440,7 +472,9 @@ if ($result == 0) {
                 "expectedResponse" => "???",
                 "solutionType" => "internal",
                 "visable" => false,
-                "previous_ids" => ""
+                "previous_ids" => "",
+                "achievement" => null,
+                "achievement_text" => null
             ],
             [
                 "id" => 52,
@@ -457,7 +491,9 @@ if ($result == 0) {
                 "expectedResponse" => "???",
                 "solutionType" => "internal",
                 "visable" => false,
-                "previous_ids" => ""
+                "previous_ids" => "",
+                "achievement" => null,
+                "achievement_text" => null
             ],
 
             ],
@@ -477,7 +513,9 @@ if ($result == 0) {
                 "expectedResponse" => "???",
                 "solutionType" => "internal",
                 "visable" => false,
-                "previous_ids" => ""
+                "previous_ids" => "",
+                "achievement" => null,
+                "achievement_text" => null
             ],
             [
                 "id" => 61,
@@ -495,7 +533,9 @@ if ($result == 0) {
                 "expectedResponse" => "???",
                 "solutionType" => "internal",
                 "visable" => false,
-                "previous_ids" => ""
+                "previous_ids" => "",
+                "achievement" => null,
+                "achievement_text" => null
             ]
             ],
             "RBS Overheat" => [
@@ -515,7 +555,9 @@ if ($result == 0) {
                 "expectedResponse" => "???",
                 "solutionType" => "internal",
                 "visable" => false,
-                "previous_ids" => ""
+                "previous_ids" => "",
+                "achievement" => null,
+                "achievement_text" => null
             ],
             [
                 "id" => 71,
@@ -533,7 +575,9 @@ if ($result == 0) {
                 "expectedResponse" => "???",
                 "solutionType" => "internal",
                 "visable" => false,
-                "previous_ids" => ""
+                "previous_ids" => "",
+                "achievement" => null,
+                "achievement_text" => null
             ],
             [
                 "id" => 72,
@@ -554,7 +598,9 @@ if ($result == 0) {
                 "expectedResponse" => "???",
                 "solutionType" => "internal",
                 "visable" => false,
-                "previous_ids" => ""
+                "previous_ids" => "",
+                "achievement" => null,
+                "achievement_text" => null
             ]
             ]
             ];
@@ -562,8 +608,8 @@ if ($result == 0) {
 
     //insert data
     $stmt = $db->prepare("INSERT INTO emails 
-        (id, avatar, name, email, subject, content, response, expectedResponse, solutionType, category, visable, previous_ids)
-        VALUES (:id, :avatar, :name, :email, :subject, :content, :response, :expectedResponse, :solutionType, :category, :visable, :previous_ids)");
+        (id, avatar, name, email, subject, content, response, expectedResponse, solutionType, category, visable, previous_ids, achievement, achievement_text)
+        VALUES (:id, :avatar, :name, :email, :subject, :content, :response, :expectedResponse, :solutionType, :category, :visable, :previous_ids, :achievement, :achievement_text)");
 
     foreach ($initialData as $category => $emails) {
         foreach ($emails as $email) {
@@ -579,6 +625,8 @@ if ($result == 0) {
             $stmt->bindValue(':category', $category, SQLITE3_TEXT);
             $stmt->bindValue(':visable', $email['visable'] ? 1 : 0, SQLITE3_INTEGER);
             $stmt->bindValue(':previous_ids',  $email['previous_ids'], SQLITE3_TEXT);
+            $stmt->bindValue(':achievement',  $email['achievement'], SQLITE3_TEXT);
+            $stmt->bindValue(':achievement_text',  $email['achievement_text'], SQLITE3_TEXT);
             $stmt->execute();
         }
     }
