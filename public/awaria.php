@@ -117,6 +117,48 @@ const questions = [
     const resultEl = document.getElementById("result");
     const gifEl = document.getElementById("fire-gif");
 
+    function sendScriptPost(payload)
+    {
+      fetch('database_api.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      })
+      .then(response => response.text()) 
+      .then(data => {
+        //updateScreen('', data);
+      })
+      .catch(error => {
+        //updateScreen('Error:', error.message);
+      });
+    }
+
+    function startBurningRbs(){
+      payload = {
+        device: "script",
+        value: "start_burning"
+      };
+      sendScriptPost(payload);
+    }
+
+    function sendWeglanLizardRbs(){
+      payload = {
+        device: "script",
+        value: "weglan_lizard"
+      };
+      sendScriptPost(payload);
+    }
+
+    function sendMonitorLizardRbs(){
+      payload = {
+        device: "script",
+        value: "monitor_lizard"
+      };
+      sendScriptPost(payload);
+    }
+
     function startTimer() {
       timerInterval = setInterval(() => {
         if (quizFinished) return;
@@ -187,11 +229,13 @@ const questions = [
         let gif = "";
 
         if (!timeRanOut) {
+            sendMonitorLizardRbs();
             clearInterval(timerInterval);
             gif = "https://media.giphy.com/media/l0Exk8EUzSLsrErEQ/giphy.gif"; // sukces
             gifEl.style.boxShadow = "0 0 30px green";
             message = "🎉 Udało się odpowiedzieć na wszystkie pytania na czas!";
         } else {
+            sendWeglanLizardRbs();
             gif = "https://media1.tenor.com/m/CcCDRhgwP78AAAAC/overheat-computer.gif"; // zwęglony komputer
             gifEl.style.boxShadow = "0 0 30px gray";
             message = "🧨 Udało się odpowiedzieć na wszystkie pytania,<br>ale jeden z elementów został zwęglony!";
@@ -220,6 +264,7 @@ const questions = [
     startTimer();
 
     window.addEventListener("load", () => {
+    startBurningRbs();
     const audio = document.getElementById("fire-audio");
     //audio.volume = 0.4; // Głośność 0.0–1.0 (zmniejszona)
     audio.play().catch(e => {

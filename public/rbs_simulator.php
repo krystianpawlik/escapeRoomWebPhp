@@ -26,9 +26,9 @@
   <h2>Symulator Przycisków</h2>
 
   <button onclick="sendValue(this)">idle</button>
+  <button onclick="sendValue(this)">plugged</button>
   <button onclick="sendValue(this)">connected</button>
-  <button onclick="sendValue(this)">power</button>
-  <button onclick="sendValue(this)">buring</button>
+  <button onclick="sendValue(this)">burning</button>
   <button onclick="sendValue(this)">weglan_lizard</button>
   <button onclick="sendValue(this)">monitor_lizard</button>
 

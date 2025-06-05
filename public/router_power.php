@@ -45,6 +45,10 @@
       { device: "router", value: "alive" },
       { device: "router", value: "reset" },
       { device: "lamp", value: "reset" },
+      { device: "skyfall", value: "drop" },
+      { device: "skyfall", value: "reset" },
+      { device: "script", value: "start_burning"},
+      { device: "box-card", value: "cabinet"},
     ];
 
     const container = document.getElementById("button-container");

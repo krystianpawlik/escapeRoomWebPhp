@@ -112,7 +112,7 @@ $rbsStates = ["idle", "power", "connected", "buring", "weglan_lizard" , "monitor
 
 if ($resultDevices == 0) {
     $time = time();
-    $devices = ['box', 'lamp', 'raspberry1', 'raspberry2', 'rbs', "power_connector", "router"];
+    $devices = ['box', 'lamp', 'raspberry1', 'raspberry2', 'rbs', "power_connector", "router", "skyfall"];
 
     $stmt = $db->prepare('INSERT INTO devices (name, last_seen, state) VALUES (:name, :time, :state)');
 
@@ -406,7 +406,7 @@ if ($result == 0) {
             ],
         ],
 
-            "Find UPs" => [
+            "Find Lms" => [
             [
                 "id" => 50,
                 "avatar" => "img/stefan_baty_sq.png",
@@ -427,6 +427,23 @@ if ($result == 0) {
             ],
             [
                 "id" => 51,
+                "avatar" => "img/mikolaj_fajans_sq.png",
+                "name" => "Mikołaj Fajans",
+                "email" => "mikolaj.fajans@ericsson.com",
+                "subject" => "Re: Odszukajcie i załadujcie UPki na IUWUU",
+                "content" => "Seems that LM installation failed. Please make sure you follow the instruction. Ask technical support for help, it is urgent.<br>
+                             <br>
+                             Best Regards,<br>
+                             Mikołaj Fajans<br>
+                             ",
+                "response" => null,
+                "expectedResponse" => "???",
+                "solutionType" => "internal",
+                "visable" => false,
+                "previous_ids" => ""
+            ],
+            [
+                "id" => 52,
                 "avatar" => "img/stefan_baty_sq.png",
                 "name" => "Stefan Baty",
                 "email" => "stefan.baty@ericsson.com",
@@ -442,26 +459,10 @@ if ($result == 0) {
                 "visable" => false,
                 "previous_ids" => ""
             ],
-            [
-                "id" => 52,
-                "avatar" => "img/mikolaj_fajans_sq.png",
-                "name" => "Mikołaj Fajans",
-                "email" => "mikolaj.fajans@ericsson.com",
-                "subject" => "Re: Odszukajcie i załadujcie UPki na IUWUU",
-                "content" => "Seems that LM installation failed. Please make sure you follow the instruction. Ask technical support for help, it is urgent.<br>
-                             <br>
-                             Best Regards,<br>
-                             Mikołaj Fajans<br>
-                             ",
-                "response" => null,
-                "expectedResponse" => "???",
-                "solutionType" => "internal",
-                "visable" => false,
-                "previous_ids" => ""
-            ]
+
             ],
             
-            "Install Lms" => [
+            "Install UPs" => [
             [
                 "id" => 60,
                 "avatar" => "img/stefan_baty_sq.png",
@@ -759,6 +760,12 @@ function handleBoxCardPost($db, $data) {
             setPuzzleData('card', 'idle', "-1");
             echo "reset";
             break;
+        case "cabinet":
+            //mozliwe ze bedzie do zrobienia sprawdzenie
+            setVisableById($db, 61);
+            setVisableById($db, 70);
+            echo "cabinet";
+            break;
         default:
             echo "Incorect Action";    
             //echo "defult action";
@@ -834,6 +841,7 @@ function handleMailboxPost($db, $data) {
             if (getDeviceState($db, "router") === "firewall_connected")
             {
                 setVisableById($db, 32);
+                updateDeviceState($db, "rbs", "connected");
                 updateDeviceState($db, "router", "done");
                 echo "firewall connected";
             } 
@@ -841,6 +849,7 @@ function handleMailboxPost($db, $data) {
             if( getDeviceState($db, "router") === "firewall_disconnected")
             {
                 setVisableById($db, 31);
+                updateDeviceState($db, "rbs", "connected");
                 updateDeviceState($db, "router", "done");
                 echo "firewall connected";
             }
@@ -880,6 +889,9 @@ function handlePowerConnectorPost($db, $data) {
                 echo "power alredy power_nok";
             }
             updateDeviceState($db, "power_connector", "power_ok");
+
+            updateDeviceState($db, "rbs", "plugged");
+            
             setVisableById($db, 21);
             //start 2 topics
             setVisableById($db, 30);
@@ -889,6 +901,8 @@ function handlePowerConnectorPost($db, $data) {
             break;
         case "power_nok":
             updateDeviceState($db, "power_connector", "power_nok");
+
+            updateDeviceState($db, "rbs", "plugged");
 
             setVisableById($db, 22);
             setVisableById($db, 30);
@@ -938,6 +952,30 @@ function handleRouterPost($db, $data) {
     }
 }
 
+function handleSkyfallPost($db, $data) {
+    $values = $data['value'];
+    $splitValues = explode(" ", $values);
+    switch ($splitValues[0]) {
+        case "reset":
+        case "idle":
+            updateDeviceState($db, "skyfall", "idle");
+            echo "idle";
+            break;
+        case "drop":
+            //Todo probably to be removed
+            updateDeviceState($db, "skyfall", "drop");
+            echo "drop";
+            break;
+        case "alive":
+            updateDeviceTime($db, "skyfall");
+            echo "alive";
+            break;
+        default:
+            echo "defult action";
+            break;
+    }
+}
+
 //   <button onclick="sendValue(this)">idle</button>
 //   <button onclick="sendValue(this)">connected</button>
 //   <button onclick="sendValue(this)">power</button>
@@ -960,6 +998,32 @@ function handleRbsSimulatorPost($db, $data) {
     }
 
 }
+
+function handleScriptPost($db, $data) {
+    $values = $data['value'];
+    $splitValues = explode(" ", $values);
+    switch ($splitValues[0]) {
+        case "start_burning":
+            updateDeviceState($db, "rbs", "burning");
+            echo "start_burning";
+            break;
+        case "weglan_lizard":
+            updateDeviceState($db, "rbs", "weglan_lizard");
+            setVisableById($db, 72);
+            echo "weglan_lizard";
+            break;
+        case "monitor_lizard":
+            updateDeviceState($db, "rbs", "monitor_lizard");
+            setVisableById($db, 71);
+            echo "monitor_lizard";
+            break;
+        default:
+            echo "default script post";
+            break;
+    }
+
+}
+
 
 // POST — add a message
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -1035,6 +1099,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         case "router":
             handleRouterPost($db, $data);
             break;
+        case "skyfall":
+            handleSkyfallPost($db, $data);
+            break;
+        case "script":
+            handleScriptPost($db, $data);
+            break;
         default:
             echo "action or device not recognised";
             break;
@@ -1063,10 +1133,16 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
     }
 
     $rbs = isset($_GET['device']) && $_GET['device'] === 'rbs';
-
     if($rbs)
     {
         echo getDeviceState($db, "rbs");;
+        return;
+    }
+    
+    $rbs = isset($_GET['device']) && $_GET['device'] === 'skyfall';
+    if($rbs)
+    {
+        echo getDeviceState($db, "skyfall");;
         return;
     }
 
