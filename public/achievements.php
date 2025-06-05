@@ -1,6 +1,31 @@
 <?php
 $db = new SQLite3('database.sqlite');
-$results = $db->query("SELECT achievement, achievement_text FROM emails WHERE visable = 1 AND achievement IS NOT NULL ORDER BY id DESC");
+
+// 1. Pobierz unikalne kategorie z tabeli
+$categoriesResult = $db->query("SELECT DISTINCT category FROM emails");
+
+// Tablica na wszystkie kategorie
+$categories = [];
+while ($catRow = $categoriesResult->fetchArray(SQLITE3_ASSOC)) {
+    $categories[] = $catRow['category'];
+}
+
+// 2. Dla każdej kategorii sprawdź czy jest widoczny achievement
+$categoriesWithoutAchievement = 0;
+foreach ($categories as $category) {
+    $stmt = $db->prepare("SELECT COUNT(*) as count FROM emails WHERE category = :category AND visable = 1 AND achievement IS NOT NULL AND achievement != ''");
+    $stmt->bindValue(':category', $category, SQLITE3_TEXT);
+    $res = $stmt->execute();
+    $row = $res->fetchArray(SQLITE3_ASSOC);
+
+    if ($row['count'] == 0) {
+        // ta kategoria nie ma żadnego widocznego achievementa
+        $categoriesWithoutAchievement++;
+    }
+}
+
+// 3. Pobierz widoczne achievementy
+$results = $db->query("SELECT achievement, achievement_text FROM emails WHERE visable = 1 AND achievement IS NOT NULL AND achievement != '' ORDER BY id DESC");
 ?>
 
 <!DOCTYPE html>
@@ -22,7 +47,7 @@ $results = $db->query("SELECT achievement, achievement_text FROM emails WHERE vi
       display: flex;
       align-items: center;
       border-bottom: 1px solid #ddd;
-      padding: 10px;
+      padding: 10px 0;
     }
     .achievement-entry img {
       max-width: 100px;
@@ -34,23 +59,34 @@ $results = $db->query("SELECT achievement, achievement_text FROM emails WHERE vi
       font-size: 14px;
       color: #333;
     }
+    .summary {
+      margin-bottom: 20px;
+      font-weight: bold;
+      font-size: 16px;
+      color: #222;
+    }
   </style>
 </head>
 <body>
 
-  <?php while ($row = $results->fetchArray(SQLITE3_ASSOC)): ?>
-    <?php if (!empty($row['achievement'])): ?>
-      <div class="achievement-entry">
-        <img src="<?php echo htmlspecialchars($row['achievement']); ?>" alt="Osiągnięcie">
-
-        <?php if (!empty($row['achievement_text'])): ?>
-          <div class="achievement-text">
-            <?php echo htmlspecialchars($row['achievement_text']); ?>
-          </div>
-        <?php endif; ?>
-
-      </div>
+  <p class="summary">
+    <?php if ($categoriesWithoutAchievement == 0): ?>
+      Rozwiązaliście wszystkie zadania
+    <?php else: ?>
+      Nadal nie rozwiązaliście dodatkowych zadań :<?php echo $categoriesWithoutAchievement; ?>
     <?php endif; ?>
+  </p>
+
+  <?php while ($row = $results->fetchArray(SQLITE3_ASSOC)): ?>
+    <div class="achievement-entry">
+      <img src="<?php echo htmlspecialchars($row['achievement']); ?>" alt="Osiągnięcie">
+
+      <?php if (!empty($row['achievement_text'])): ?>
+        <div class="achievement-text">
+          <?php echo htmlspecialchars($row['achievement_text']); ?>
+        </div>
+      <?php endif; ?>
+    </div>
   <?php endwhile; ?>
 
 </body>
