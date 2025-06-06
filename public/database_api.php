@@ -206,7 +206,7 @@ if ($result == 0) {
                 "visable" => false,
                 "previous_ids" => "",
                 "achievement" => "img/achievement/1_autoryzacja_ok.png",
-                "achievement_text" => null
+                "achievement_text" => 'It\'s just the beginning'
             ]
         ],
         "Connect Energy" => [
@@ -246,7 +246,7 @@ if ($result == 0) {
                 "visable" => false,
                 "previous_ids" => "",
                 "achievement" => "img/achievement/2_wpiecie_do_sieci_ok.png",
-                "achievement_text" => null
+                "achievement_text" => "Wpięcie do sieci"
             ],
             [
                 "id" => 22,
@@ -264,7 +264,7 @@ if ($result == 0) {
                 "visable" => false,
                 "previous_ids" => "",
                 "achievement" => "img/achievement/2_porazenie_pradem_nok.png",
-                "achievement_text" => null
+                "achievement_text" => "Porażenie prądem"
             ]
             ],
 
@@ -303,7 +303,7 @@ if ($result == 0) {
                 "visable" => false,
                 "previous_ids" => "",
                 "achievement" => "img/achievement/3_hakier_nok.png",
-                "achievement_text" => null
+                "achievement_text" => "Fail bo hakier"
             ],
             [
                 "id" => 32,
@@ -321,7 +321,7 @@ if ($result == 0) {
                 "visable" => false,
                 "previous_ids" => "",
                 "achievement" => "img/achievement/3_firewall_zainstalowany_ok.png",
-                "achievement_text" => null
+                "achievement_text" => 'Firewall działa'
             ]
             ],
 
@@ -390,7 +390,7 @@ if ($result == 0) {
                 "visable" => false,
                 "previous_ids" => "",
                 "achievement" => "img/achievement/4_swiatelka_ok.jpg",
-                "achievement_text" => null
+                "achievement_text" => "Światełka"
             ]
             ],
 
@@ -432,7 +432,7 @@ if ($result == 0) {
                 "visable" => false,
                 "previous_ids" => "",
                 "achievement" => "img/achievement/8_jestes_zrybiony_nok.png",
-                "achievement_text" => null
+                "achievement_text" => "Jestes zrybiony"
             ],
         ],
 
@@ -474,7 +474,7 @@ if ($result == 0) {
                 "visable" => false,
                 "previous_ids" => "",
                 "achievement" => "img/achievement/5_zly_niklas_nok.png",
-                "achievement_text" => null
+                "achievement_text" => "Zły Niklas"
             ],
             [
                 "id" => 52,
@@ -493,7 +493,7 @@ if ($result == 0) {
                 "visable" => false,
                 "previous_ids" => "",
                 "achievement" => "img/achievement/5_prawidlowe_lmy_ok.jpg",
-                "achievement_text" => null
+                "achievement_text" => "Prawidłowe Lmy"
             ],
 
             ],
@@ -534,7 +534,7 @@ if ($result == 0) {
                 "visable" => false,
                 "previous_ids" => "",
                 "achievement" => "img/achievement/iuwuu_w_rbs_gotowe.png",
-                "achievement_text" => null
+                "achievement_text" => "IUWUU w RBS gotowy do pracy"
             ]
             ],
             "RBS Overheat" => [
@@ -576,7 +576,7 @@ if ($result == 0) {
                 "visable" => false,
                 "previous_ids" => "",
                 "achievement" => "img/achievement/7_monitor_lizard_zyw_ok.png",
-                "achievement_text" => null
+                "achievement_text" => "Monitor lizard"
             ],
             [
                 "id" => 72,
@@ -598,7 +598,7 @@ if ($result == 0) {
                 "visable" => false,
                 "previous_ids" => "",
                 "achievement" => "img/achievement/7_weglan_rbsu_nok.png",
-                "achievement_text" => null
+                "achievement_text" => "Węglan RBS'u"
             ]
             ]
             ];

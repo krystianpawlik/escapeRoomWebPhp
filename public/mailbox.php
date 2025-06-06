@@ -757,7 +757,7 @@
 
         function getEmailsFromDatabase(topic) {
             // Make a GET request to the PHP server to get all emails
-            fetch('database_api.php?all=true')
+            fetch('database_api.php')
                 .then(response => response.json()) // Parse the JSON response
                 .then(data => {
 

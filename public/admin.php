@@ -47,7 +47,7 @@
   <button class="tab" onclick="showTab('frame2', this)">Box simulator</button>
   <button class="tab" onclick="showTab('frame3', this)">Device Status</button>
   <button class="tab" onclick="showTab('frame4', this)">Rbs simulator</button>
-  <button class="tab" onclick="showTab('frame5', this)">Achivments</button>
+  <button class="tab" onclick="showTab('frame5', this)">Achievements</button>
   <button class="tab" onclick="showTab('frame6', this)">Power & Connector — Simulator</button>
 </div>
 
@@ -56,7 +56,7 @@
   <iframe id="frame2" src="box_simulator.php"></iframe>
   <iframe id="frame3" src="device_status.php"></iframe>
   <iframe id="frame4" src="rbs_simulator.php"></iframe>
-  <iframe id="frame5" src="achivments.php"></iframe>
+  <iframe id="frame5" src="achievements.php"></iframe>
   <iframe id="frame6" src="router_power.php"></iframe>
 </div>
 
