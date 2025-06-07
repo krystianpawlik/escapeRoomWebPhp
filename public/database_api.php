@@ -16,7 +16,8 @@ $db->exec("CREATE TABLE IF NOT EXISTS emails (
     visable INTEGER,
     previous_ids TEXT,
     achievement TEXT,
-    achievement_text TEXT
+    achievement_text TEXT,
+    achievement_positive INTEGER DEFAULT 0
 )");
 
 // Create team table if it doesn't exist
@@ -168,7 +169,8 @@ if ($result == 0) {
                 "visable" => true,
                 "previous_ids" => "",
                 "achievement" => null,
-                "achievement_text" => null
+                "achievement_text" => null,
+                "achievement_positive" => 0
             ],
             [
                 "id" => 12,
@@ -187,7 +189,8 @@ if ($result == 0) {
                 "visable" => false,
                 "previous_ids" => "",
                 "achievement" => null,
-                "achievement_text" => null
+                "achievement_text" => null,
+                "achievement_positive" => 0
             ],
             [
                 "id" => 13,
@@ -206,7 +209,8 @@ if ($result == 0) {
                 "visable" => false,
                 "previous_ids" => "",
                 "achievement" => "img/achievement/1_autoryzacja_ok.png",
-                "achievement_text" => 'It\'s just the beginning'
+                "achievement_text" => 'It\'s just the beginning',
+                "achievement_positive" => 1
             ]
         ],
         "Connect Energy" => [
@@ -228,7 +232,8 @@ if ($result == 0) {
                 "visable" => false,
                 "previous_ids" => "",
                 "achievement" => null,
-                "achievement_text" => null
+                "achievement_text" => null,
+                "achievement_positive" => 0
             ],
             [
                 "id" => 21,
@@ -246,7 +251,8 @@ if ($result == 0) {
                 "visable" => false,
                 "previous_ids" => "",
                 "achievement" => "img/achievement/2_wpiecie_do_sieci_ok.png",
-                "achievement_text" => "Wpięcie do sieci"
+                "achievement_text" => "Wpięcie do sieci",
+                "achievement_positive" => 1
             ],
             [
                 "id" => 22,
@@ -264,7 +270,8 @@ if ($result == 0) {
                 "visable" => false,
                 "previous_ids" => "",
                 "achievement" => "img/achievement/2_porazenie_pradem_nok.png",
-                "achievement_text" => "Porażenie prądem"
+                "achievement_text" => "Porażenie prądem",
+                "achievement_positive" => 0
             ]
             ],
 
@@ -285,7 +292,8 @@ if ($result == 0) {
                 "visable" => false,
                 "previous_ids" => "",
                 "achievement" => null,
-                "achievement_text" => null
+                "achievement_text" => null,
+                "achievement_positive" => 0
             ],
             [
                 "id" => 31,
@@ -303,7 +311,8 @@ if ($result == 0) {
                 "visable" => false,
                 "previous_ids" => "",
                 "achievement" => "img/achievement/3_hakier_nok.png",
-                "achievement_text" => "Fail bo hakier"
+                "achievement_text" => "Fail bo hakier",
+                "achievement_positive" => 0
             ],
             [
                 "id" => 32,
@@ -321,7 +330,8 @@ if ($result == 0) {
                 "visable" => false,
                 "previous_ids" => "",
                 "achievement" => "img/achievement/3_firewall_zainstalowany_ok.png",
-                "achievement_text" => 'Firewall działa'
+                "achievement_text" => 'Firewall działa',
+                "achievement_positive" => 1
             ]
             ],
 
@@ -351,7 +361,8 @@ if ($result == 0) {
                 "visable" => false,
                 "previous_ids" => "",
                 "achievement" => null,
-                "achievement_text" => null
+                "achievement_text" => null,
+                "achievement_positive" => 0
             ],
             [
                 "id" => 41,
@@ -372,7 +383,8 @@ if ($result == 0) {
                 "visable" => false,
                 "previous_ids" => "",
                 "achievement" => null,
-                "achievement_text" => null
+                "achievement_text" => null,
+                "achievement_positive" => 0
             ],
             [
                 "id" => 42,
@@ -390,7 +402,8 @@ if ($result == 0) {
                 "visable" => false,
                 "previous_ids" => "",
                 "achievement" => "img/achievement/4_swiatelka_ok.jpg",
-                "achievement_text" => "Światełka"
+                "achievement_text" => "Światełka",
+                "achievement_positive" => 1
             ]
             ],
 
@@ -411,7 +424,8 @@ if ($result == 0) {
                 "visable" => false,
                 "previous_ids" => "",
                 "achievement" => null,
-                "achievement_text" => null
+                "achievement_text" => null,
+                "achievement_positive" => 0
             ],
 
             //to do zgloszenie spamu
@@ -432,7 +446,8 @@ if ($result == 0) {
                 "visable" => false,
                 "previous_ids" => "",
                 "achievement" => "img/achievement/8_jestes_zrybiony_nok.png",
-                "achievement_text" => "Jestes zrybiony"
+                "achievement_text" => "Jestes zrybiony",
+                "achievement_positive" => 0
             ],
         ],
 
@@ -455,7 +470,8 @@ if ($result == 0) {
                 "visable" => false,
                 "previous_ids" => "",
                 "achievement" => null,
-                "achievement_text" => null
+                "achievement_text" => null,
+                "achievement_positive" => 0
             ],
             [
                 "id" => 51,
@@ -474,7 +490,8 @@ if ($result == 0) {
                 "visable" => false,
                 "previous_ids" => "",
                 "achievement" => "img/achievement/5_zly_niklas_nok.png",
-                "achievement_text" => "Zły Niklas"
+                "achievement_text" => "Zły Niklas",
+                "achievement_positive" => 0
             ],
             [
                 "id" => 52,
@@ -493,7 +510,8 @@ if ($result == 0) {
                 "visable" => false,
                 "previous_ids" => "",
                 "achievement" => "img/achievement/5_prawidlowe_lmy_ok.jpg",
-                "achievement_text" => "Prawidłowe Lmy"
+                "achievement_text" => "Prawidłowe Lmy",
+                "achievement_positive" => 1
             ],
 
             ],
@@ -515,7 +533,8 @@ if ($result == 0) {
                 "visable" => false,
                 "previous_ids" => "",
                 "achievement" => null,
-                "achievement_text" => null
+                "achievement_text" => null,
+                "achievement_positive" => 0
             ],
             [
                 "id" => 61,
@@ -534,7 +553,8 @@ if ($result == 0) {
                 "visable" => false,
                 "previous_ids" => "",
                 "achievement" => "img/achievement/iuwuu_w_rbs_gotowe.png",
-                "achievement_text" => "IUWUU w RBS gotowy do pracy"
+                "achievement_text" => "IUWUU w RBS gotowy do pracy",
+                "achievement_positive" => 1
             ]
             ],
             "RBS Overheat" => [
@@ -556,7 +576,8 @@ if ($result == 0) {
                 "visable" => false,
                 "previous_ids" => "",
                 "achievement" => null,
-                "achievement_text" => null
+                "achievement_text" => null,
+                "achievement_positive" => 0
             ],
             [
                 "id" => 71,
@@ -576,7 +597,8 @@ if ($result == 0) {
                 "visable" => false,
                 "previous_ids" => "",
                 "achievement" => "img/achievement/7_monitor_lizard_zyw_ok.png",
-                "achievement_text" => "Monitor lizard"
+                "achievement_text" => "Monitor lizard",
+                "achievement_positive" => 1
             ],
             [
                 "id" => 72,
@@ -598,7 +620,8 @@ if ($result == 0) {
                 "visable" => false,
                 "previous_ids" => "",
                 "achievement" => "img/achievement/7_weglan_rbsu_nok.png",
-                "achievement_text" => "Węglan RBS'u"
+                "achievement_text" => "Węglan RBS'u",
+                "achievement_positive" => 0
             ]
             ]
             ];
@@ -606,8 +629,8 @@ if ($result == 0) {
 
     //insert data
     $stmt = $db->prepare("INSERT INTO emails 
-        (id, avatar, name, email, subject, content, response, expectedResponse, solutionType, category, visable, previous_ids, achievement, achievement_text)
-        VALUES (:id, :avatar, :name, :email, :subject, :content, :response, :expectedResponse, :solutionType, :category, :visable, :previous_ids, :achievement, :achievement_text)");
+        (id, avatar, name, email, subject, content, response, expectedResponse, solutionType, category, visable, previous_ids, achievement, achievement_text, achievement_positive)
+        VALUES (:id, :avatar, :name, :email, :subject, :content, :response, :expectedResponse, :solutionType, :category, :visable, :previous_ids, :achievement, :achievement_text, :achievement_positive)");
 
     foreach ($initialData as $category => $emails) {
         foreach ($emails as $email) {
@@ -625,6 +648,7 @@ if ($result == 0) {
             $stmt->bindValue(':previous_ids',  $email['previous_ids'], SQLITE3_TEXT);
             $stmt->bindValue(':achievement',  $email['achievement'], SQLITE3_TEXT);
             $stmt->bindValue(':achievement_text',  $email['achievement_text'], SQLITE3_TEXT);
+            $stmt->bindValue(':achievement_positive', $email['achievement_positive'], SQLITE3_INTEGER);
             $stmt->execute();
         }
     }
