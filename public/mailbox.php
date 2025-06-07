@@ -341,6 +341,42 @@
   text-align: center;
 }
 
+#achievementPopup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    background-color: #fff;
+    padding: 20px 20px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    z-index: 1000;
+}
+
+#achievementPopup p {
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+#achievementPopup button {
+    margin-top: 10px;
+    padding: 8px 16px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+#achievementPopup button:hover {
+    background-color: #0056b3;
+}
+
         @keyframes fadeIn {
         from { opacity: 0 }
         to { opacity: 1 }
@@ -372,6 +408,22 @@
         <button onclick="closeNewMailPopup()">Close</button>
     </div>
 
+    <!-- <div id="achievementPopup" style="display: none;">
+        <p style="font-size: 20px;">You have new mail and Achievment!</p>
+        <img id="achievementImage" src="" alt="Achievement Icon" style="width: 100px; height: 100px;" />
+        <p id="achievementText" style="font-size: 20px;"></p>
+        <button onclick="closeAchievementPopup()">Close</button>
+    </div> -->
+
+    <div id="achievementPopup">
+        <h2>New mail and Achievement Unlocked!</h2>
+        <div style="display: flex; align-items: center;margin-top: 10px;">
+            <img id="achievementImage" src="" alt="Achievement Icon" style="width: 100px; height: 100px; margin-right: 20px;" />
+            <p id="achievementText" style="font-size: 20px; margin: 0;"></p>
+        </div>
+        <button onclick="closeAchievementPopup()" style="margin-top: 20px;">Close</button>
+    </div>
+
     <audio id="mailSound" preload="auto">
         <source src="mp3/mailnotyfication.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
@@ -379,10 +431,10 @@
 
     <template id="popupTemplate">
         <div class="popup">
-            <p class="question-text"></p>
+            <!-- <p class="question-text"></p> -->
             <img src="https://media1.tenor.com/m/x8v1oNUOmg4AAAAd/rickroll-roll.gif" alt="Rickroll">
             <audio class="popup-audio" src="https://www.myinstants.com/media/sounds/rickroll.mp3" preload="auto" loop></audio>
-            <p class="quiz-question">Quiz to close: <span class="question-text"></span></p>
+            <p class="quiz-question">Odpowiedz aby zminimalizować: <span class="question-text"></span></p>
             <p class="timer"></p>
             <div class="answers"></div>
         </div>
@@ -469,34 +521,19 @@
     });
   </script>
 
-
+    <script src="private/private_script.js"></script>
 
     <script>
  
-        const popupQuestions = [
-            { question: "Was this response really correct?", answers: ["Yes", "No", "Not sure", "Show correct answer"], correct: 1 }, // "No" jest pod indeksem 1
-            { question: "What is the capital of France?", answers: ["Berlin", "Madrid", "Paris", "Rome"], correct: 2 }, // "Paris" pod indeksem 2
-            { question: "How many continents are there?", answers: ["5", "6", "7", "8"], correct: 2 }, // "7" pod indeksem 2
-            { question: "Which planet is known as the Red Planet?", answers: ["Earth", "Mars", "Venus", "Jupiter"], correct: 1 } // "Mars" pod indeksem 1
-        ];
+        if (typeof window.Questions === 'undefined') {
+            window.Questions = [
+                { question: "Was this response really correct?", answers: ["Yes", "No", "Not sure", "Show correct answer"], correct: 1 }
+            ];
+        }
 
-        //solutionType=TextBox or solutionType="external"
-        // const emailsData = {
-        //     "General": [
-        //         { avatar: "https://i.pravatar.cc/40?img=1", name: "John Doe", email: "john@example.com", 
-        //             subject: "Hello!", content: "Welcome to the mailbox system.", response: null, expectedResponse: "Hello!", solutionType: "TextBox" },
-        //         { avatar: "https://i.pravatar.cc/40?img=2", name: "Jane Smith", email: "jane@example.com", 
-        //             subject: "Meeting Reminder", content: "Don't forget the meeting at 3 PM.", response: null, expectedResponse: "Got it!", solutionType: "external" }
-        //     ],
-        //     "Announcements": [
-        //         { avatar: "https://i.pravatar.cc/40?img=3", name: "Admin", email: "admin@example.com", 
-        //             subject: "System Update", content: "A new update will be released tomorrow.", response: 'Achivment : <b/><img src="https://i.pravatar.cc/40?img=2" style="width:50px; border-radius:50%;">', 
-        //             expectedResponse: "Thanks for the update!", solutionType: "external" }
-        //     ]
-        // };
+        popupQuestions = window.Questions;
 
         let emailsData = null; // Store the last fetched email data
-
 
         function showNewMailPopup() {
             document.getElementById('newMailPopup').style.display = 'block';
@@ -506,6 +543,20 @@
 
         function closeNewMailPopup() {
             document.getElementById('newMailPopup').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        }
+
+        function showAchievementPopup(imageUrl, achievementName) {
+            document.getElementById('achievementImage').src = imageUrl;
+            document.getElementById('achievementText').innerHTML = `${achievementName}`;
+
+            document.getElementById('achievementPopup').style.display = 'block';
+            document.getElementById('overlay').style.display = 'block';
+            document.getElementById('mailSound').play();
+        }
+
+        function closeAchievementPopup() {
+            document.getElementById('achievementPopup').style.display = 'none';
             document.getElementById('overlay').style.display = 'none';
         }
 
@@ -757,12 +808,58 @@
             }
         }
 
+        // function hasNewEmails(oldEmailData, newEmailData) {
+        //     for (const category in newEmailData) {
+        //         const oldCategoryMails = oldEmailData[category] || [];
+        //         const newCategoryMails = newEmailData[category] || [];
+
+        //         const oldIds = new Set(oldCategoryMails.map(mail => mail.id));
+
+        //         for (const mail of newCategoryMails) {
+        //             if (!oldIds.has(mail.id)) {
+        //                 return true; // znalazł nowy mail
+        //             }
+        //         }
+        //     }
+        //     return false; // nie znalazł żadnego nowego maila
+        // }
+
+        function showEmailChangedPopup(oldEmailData, newEmailData) {
+            const newMailsWithAchievement = [];
+
+            for (const category in newEmailData) {
+                const oldCategoryMails = oldEmailData[category] || [];
+                const newCategoryMails = newEmailData[category] || [];
+
+                const oldIds = new Set(oldCategoryMails.map(mail => mail.id));
+                
+                for (const mail of newCategoryMails) {
+                    const isNew = !oldIds.has(mail.id);
+                    //console.log("mail to check:", mail, isNew);
+                    if (isNew && mail.achievement !== null) {
+                        console.log("push mail", mail.id, );
+                        newMailsWithAchievement.push({ ...mail, category });
+                    }
+                }
+            }
+
+            if (newMailsWithAchievement.length > 0) {
+                console.log("🎉 Nowe maile z achievement:", newMailsWithAchievement[0]);
+                showAchievementPopup(newMailsWithAchievement[0].achievement, newMailsWithAchievement[0].achievement_text);
+                // Tu możesz dodać np. wyświetlenie popupu
+            } else {
+                console.log("Brak nowych maili z achievement");
+                showNewMailPopup();
+            }
+        }
+
         function getEmailsFromDatabase(topic) {
             // Make a GET request to the PHP server to get all emails
-            fetch('database_api.php?all=true')
+            fetch('database_api.php')
                 .then(response => response.json()) // Parse the JSON response
                 .then(data => {
 
+                    //const hasDataChanged = hasNewEmails(data, emailsData);
                     const hasDataChanged = JSON.stringify(data) !== JSON.stringify(emailsData);
                     //const topicChanged = lastTopic !== topic;
 
@@ -770,7 +867,8 @@
                     if (hasDataChanged) {
                         if(emailsData != null)
                         {
-                            showNewMailPopup();
+                            //emailsData is old, data is new data
+                            showEmailChangedPopup(emailsData, data);
                         }
                         //TODO popup when new eamil arive.
                         // const mailContent = document.querySelector(".mail-content");
