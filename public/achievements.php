@@ -25,7 +25,7 @@ foreach ($categories as $category) {
 }
 
 // 3. Pobierz widoczne achievementy
-$results = $db->query("SELECT achievement, achievement_text FROM emails WHERE visable = 1 AND achievement IS NOT NULL AND achievement != '' ORDER BY id DESC");
+$results = $db->query("SELECT achievement, achievement_text, achievement_positive FROM emails WHERE visable = 0 AND achievement IS NOT NULL AND achievement != '' ORDER BY id DESC");
 ?>
 
 <!DOCTYPE html>
@@ -65,29 +65,77 @@ $results = $db->query("SELECT achievement, achievement_text FROM emails WHERE vi
       font-size: 16px;
       color: #222;
     }
+
+
+    .achievement-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.achievement-table th,
+.achievement-table td {
+  border: 1px solid #eee;
+  padding: 10px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.image-cell img {
+  max-width: 100px;
+  height: auto;
+  border-radius: 6px;
+}
+
+.text-cell {
+  font-size: 14px;
+  color: #333;
+  width: 50%;
+}
   </style>
 </head>
 <body>
 
-  <p class="summary">
-    <?php if ($categoriesWithoutAchievement == 0): ?>
-      Rozwiązaliście wszystkie zadania
-    <?php else: ?>
-      Nadal nie rozwiązaliście dodatkowych zadań :<?php echo $categoriesWithoutAchievement; ?>
-    <?php endif; ?>
-  </p>
+<p class="summary">
+  <?php if ($categoriesWithoutAchievement == 0): ?>
+    Rozwiązaliście wszystkie zadania.
+  <?php else: ?>
+    Nadal nie rozwiązaliście dodatkowych zadań: <?php echo $categoriesWithoutAchievement; ?>
+  <?php endif; ?>
+</p>
 
-  <?php while ($row = $results->fetchArray(SQLITE3_ASSOC)): ?>
-    <div class="achievement-entry">
-      <img src="<?php echo htmlspecialchars($row['achievement']); ?>" alt="Osiągnięcie">
+<table class="achievement-table">
+  <thead>
+    <tr>
+      <th>Positive</th>
+      <th>Opis osiągnięcia</th>
+      <th>Negative</th>
+    </tr>
+  </thead>
+  <tbody>
+    <?php while ($row = $results->fetchArray(SQLITE3_ASSOC)): ?>
+      <tr>
+        <!-- Pozytywne osiągnięcie z lewej -->
+        <td class="image-cell">
+          <?php if ($row['achievement_positive'] == 1): ?>
+            <img src="<?php echo htmlspecialchars($row['achievement']); ?>" alt="Osiągnięcie">
+          <?php endif; ?>
+        </td>
 
-      <?php if (!empty($row['achievement_text'])): ?>
-        <div class="achievement-text">
-          <?php echo htmlspecialchars($row['achievement_text']); ?>
-        </div>
-      <?php endif; ?>
-    </div>
-  <?php endwhile; ?>
+        <!-- Tekst w środku -->
+        <td class="text-cell">
+          <?php echo $row['achievement_text']; ?>
+        </td>
 
+        <!-- Negatywne osiągnięcie z prawej -->
+        <td class="image-cell">
+          <?php if ($row['achievement_positive'] == 0): ?>
+            <img src="<?php echo htmlspecialchars($row['achievement']); ?>" alt="Osiągnięcie">
+          <?php endif; ?>
+        </td>
+      </tr>
+    <?php endwhile; ?>
+  </tbody>
+</table>
 </body>
 </html>

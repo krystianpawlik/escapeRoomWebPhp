@@ -251,7 +251,7 @@ if ($result == 0) {
                 "visable" => false,
                 "previous_ids" => "",
                 "achievement" => "img/achievement/2_wpiecie_do_sieci_ok.png",
-                "achievement_text" => "Wpięcie do sieci",
+                "achievement_text" => "Wpięcie do sieci<BR> Poprawne wpięcie, uniktneliście wypadku.",
                 "achievement_positive" => 1
             ],
             [
@@ -270,7 +270,7 @@ if ($result == 0) {
                 "visable" => false,
                 "previous_ids" => "",
                 "achievement" => "img/achievement/2_porazenie_pradem_nok.png",
-                "achievement_text" => "Porażenie prądem",
+                "achievement_text" => "Porażenie prądem<BR> Wtyczka podpięta niezgodnie z instrukcją.",
                 "achievement_positive" => 0
             ]
             ],
@@ -311,7 +311,7 @@ if ($result == 0) {
                 "visable" => false,
                 "previous_ids" => "",
                 "achievement" => "img/achievement/3_hakier_nok.png",
-                "achievement_text" => "Fail bo hakier",
+                "achievement_text" => "Fail bo hakier<BR> Brak firewall, sieć podatna na ataki.",
                 "achievement_positive" => 0
             ],
             [
@@ -330,7 +330,7 @@ if ($result == 0) {
                 "visable" => false,
                 "previous_ids" => "",
                 "achievement" => "img/achievement/3_firewall_zainstalowany_ok.png",
-                "achievement_text" => 'Firewall działa',
+                "achievement_text" => 'Firewall działa<br> Firewall zainstalowany zgodnie z instrukcją.',
                 "achievement_positive" => 1
             ]
             ],
@@ -402,7 +402,7 @@ if ($result == 0) {
                 "visable" => false,
                 "previous_ids" => "",
                 "achievement" => "img/achievement/4_swiatelka_ok.jpg",
-                "achievement_text" => "Światełka",
+                "achievement_text" => "Światełka<BR> Udało wam się odczytać świetlny sygnał.",
                 "achievement_positive" => 1
             ]
             ],
@@ -446,7 +446,7 @@ if ($result == 0) {
                 "visable" => false,
                 "previous_ids" => "",
                 "achievement" => "img/achievement/8_jestes_zrybiony_nok.png",
-                "achievement_text" => "Jestes zrybiony",
+                "achievement_text" => "Jestes zrybiony<BR> Nabraliście się na mail typu phishing",
                 "achievement_positive" => 0
             ],
         ],
@@ -490,7 +490,7 @@ if ($result == 0) {
                 "visable" => false,
                 "previous_ids" => "",
                 "achievement" => "img/achievement/5_zly_niklas_nok.png",
-                "achievement_text" => "Zły Niklas",
+                "achievement_text" => "Zły Niklas<br>Wystąpił błąd w kolejności wgrywania Lm'ów.",
                 "achievement_positive" => 0
             ],
             [
@@ -510,7 +510,7 @@ if ($result == 0) {
                 "visable" => false,
                 "previous_ids" => "",
                 "achievement" => "img/achievement/5_prawidlowe_lmy_ok.jpg",
-                "achievement_text" => "Prawidłowe Lmy",
+                "achievement_text" => "Prawidłowe Lmy<br>LMy zostały wgrane zgodnie z ustaloną kolejnością.",
                 "achievement_positive" => 1
             ],
 
@@ -553,7 +553,7 @@ if ($result == 0) {
                 "visable" => false,
                 "previous_ids" => "",
                 "achievement" => "img/achievement/iuwuu_w_rbs_gotowe.png",
-                "achievement_text" => "IUWUU w RBS gotowy do pracy",
+                "achievement_text" => "IUWUU w RBS gotowy do pracy<br> Wszystko podpięte",
                 "achievement_positive" => 1
             ]
             ],
@@ -597,7 +597,7 @@ if ($result == 0) {
                 "visable" => false,
                 "previous_ids" => "",
                 "achievement" => "img/achievement/7_monitor_lizard_zyw_ok.png",
-                "achievement_text" => "Monitor lizard",
+                "achievement_text" => "Monitor lizard<br> Uwolniliście uwięzione zwierzątko.",
                 "achievement_positive" => 1
             ],
             [
@@ -620,7 +620,7 @@ if ($result == 0) {
                 "visable" => false,
                 "previous_ids" => "",
                 "achievement" => "img/achievement/7_weglan_rbsu_nok.png",
-                "achievement_text" => "Węglan RBS'u",
+                "achievement_text" => "Węglan RBS'u <br> Nie zdążyliście odpowiedzieć na pytania.",
                 "achievement_positive" => 0
             ]
             ]

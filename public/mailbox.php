@@ -399,7 +399,7 @@
     </template>
 
     <audio id="lampMusic" preload="auto" loop>
-         <source src="https://incompetech.com/music/royalty-free/mp3-royaltyfree/Carefree.mp3" type="audio/mpeg">
+         <source src="private/sample_lamp.mp3" type="audio/mpeg">
         Twoja przeglądarka nie obsługuje odtwarzania audio.
     </audio>
 
@@ -469,8 +469,10 @@
     });
   </script>
 
-    <script>
 
+
+    <script>
+ 
         const popupQuestions = [
             { question: "Was this response really correct?", answers: ["Yes", "No", "Not sure", "Show correct answer"], correct: 1 }, // "No" jest pod indeksem 1
             { question: "What is the capital of France?", answers: ["Berlin", "Madrid", "Paris", "Rome"], correct: 2 }, // "Paris" pod indeksem 2
@@ -757,7 +759,7 @@
 
         function getEmailsFromDatabase(topic) {
             // Make a GET request to the PHP server to get all emails
-            fetch('database_api.php')
+            fetch('database_api.php?all=true')
                 .then(response => response.json()) // Parse the JSON response
                 .then(data => {
 
