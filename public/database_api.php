@@ -855,6 +855,10 @@ function handleBoxCardPost($db, $data) {
             setVisableById($db, 70);
             echo "cabinet";
             break;
+        case "keydrop":
+            updateDeviceState($db, "skyfall", "drop");
+            echo "skyfall";
+            break;
         default:
             echo "Incorect Action";    
             //echo "defult action";

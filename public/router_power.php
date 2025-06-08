@@ -49,6 +49,7 @@
       { device: "skyfall", value: "reset" },
       { device: "script", value: "start_burning"},
       { device: "box-card", value: "cabinet"},
+      { device: "box-card", value: "keydrop" },
     ];
 
     const container = document.getElementById("button-container");
