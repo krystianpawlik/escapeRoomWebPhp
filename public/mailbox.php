@@ -538,6 +538,8 @@
         function showNewMailPopup() {
             document.getElementById('newMailPopup').style.display = 'block';
             document.getElementById('overlay').style.display = 'block';
+
+            console.log("Normal mailSound play");
             document.getElementById('mailSound').play();
         }
 
@@ -552,6 +554,8 @@
 
             document.getElementById('achievementPopup').style.display = 'block';
             document.getElementById('overlay').style.display = 'block';
+
+            console.log("Achievement mailSound play");
             document.getElementById('mailSound').play();
         }
 
@@ -838,37 +842,38 @@
         // }
 
         function showEmailChangedPopup(oldEmailData, newEmailData) {
-            const newMailsWithAchievement = [];
+            const changedMailsWithAchievement = [];
 
             for (const category in newEmailData) {
                 const oldCategoryMails = oldEmailData[category] || [];
                 const newCategoryMails = newEmailData[category] || [];
 
-                const oldIds = new Set(oldCategoryMails.map(mail => mail.id));
-                
-                for (const mail of newCategoryMails) {
-                    const isNew = !oldIds.has(mail.id);
-                    //console.log("mail to check:", mail, isNew);
-                    if (isNew && mail.achievement !== null) {
-                        console.log("push mail", mail.id, );
-                        newMailsWithAchievement.push({ ...mail, category });
+                const oldMailMap = new Map(oldCategoryMails.map(mail => [mail.id, mail]));
+
+                for (const newMail of newCategoryMails) {
+                    const oldMail = oldMailMap.get(newMail.id);
+
+                    const isNew = !oldMail;
+                    const visibleChanged = oldMail && newMail.visible !== oldMail.visible;
+
+                    if ((isNew || visibleChanged) && newMail.achievement !== null) {
+                        changedMailsWithAchievement.push({ ...newMail, category });
                     }
                 }
             }
 
-            if (newMailsWithAchievement.length > 0) {
-                console.log("🎉 Nowe maile z achievement:", newMailsWithAchievement[0]);
-                showAchievementPopup(newMailsWithAchievement[0].achievement, newMailsWithAchievement[0].achievement_text);
-                // Tu możesz dodać np. wyświetlenie popupu
+            if (changedMailsWithAchievement.length > 0) {
+                console.log("🎉 Mail z achievementem (nowy lub widoczność zmieniona):", changedMailsWithAchievement[0]);
+                showAchievementPopup(changedMailsWithAchievement[0].achievement, changedMailsWithAchievement[0].achievement_text);
             } else {
-                console.log("Brak nowych maili z achievement");
+                console.log("Brak nowych maili z achievementem ani zmiany widoczności");
                 showNewMailPopup();
             }
         }
 
         function getEmailsFromDatabase(topic) {
             // Make a GET request to the PHP server to get all emails
-            fetch('database_api.php?all=true')
+            fetch('database_api.php')
                 .then(response => response.json()) // Parse the JSON response
                 .then(data => {
 

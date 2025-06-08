@@ -288,7 +288,7 @@ if ($result == 0) {
                               Best Regards,<br>
                               Adam Michałczewski',//aby poszukali w pokoju
                 "response" => null,
-                "expectedResponse" => "5963",
+                "expectedResponse" => "5963",//zmienic na dobry
                 "solutionType" => "external",
                 "visable" => false,
                 "previous_ids" => "",
@@ -932,6 +932,8 @@ function handleMailboxPost($db, $data) {
                 setVisableById($db, 32);
                 updateDeviceState($db, "rbs", "connected");
                 updateDeviceState($db, "router", "done");
+                setVisableById($db, 80);//start spam mail
+
                 echo "firewall connected";
             } 
 
@@ -940,6 +942,8 @@ function handleMailboxPost($db, $data) {
                 setVisableById($db, 31);
                 updateDeviceState($db, "rbs", "connected");
                 updateDeviceState($db, "router", "done");
+                setVisableById($db, 80);//start spam mail
+
                 echo "firewall connected";
             }
 
