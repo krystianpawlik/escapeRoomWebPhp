@@ -11,6 +11,7 @@ $db->exec("CREATE TABLE IF NOT EXISTS emails (
     content TEXT,
     response TEXT,
     expectedResponse TEXT,
+    expectedNegativeResponse TEXT,
     solutionType TEXT,
     category TEXT,
     visable INTEGER,
@@ -419,7 +420,8 @@ if ($result == 0) {
                                 Pozdrawiam,<br>
                                 Sfetan Bafy',
                 "response" => null,
-                "expectedResponse" => "Haslo123!!!",
+                "expectedResponse" => "spamisko",
+                "expectedNegativeResponse" => "haslo123",
                 "solutionType" => "external",
                 "visable" => false,
                 "previous_ids" => "",
@@ -427,9 +429,6 @@ if ($result == 0) {
                 "achievement_text" => null,
                 "achievement_positive" => 0
             ],
-
-            //to do zgloszenie spamu
-
             [
                 "id" => 81,
                 "avatar" => "img/sfetan_bafy_sq.png",
@@ -449,6 +448,25 @@ if ($result == 0) {
                 "achievement_text" => "Jestes zrybiony<BR> Nabraliście się na mail typu phishing",
                 "achievement_positive" => 0
             ],
+            [
+                "id" => 82,
+                "avatar" => "img/waclaw_jala_sq.png",
+                "name" => "Safety team",
+                "email" => "support@ericsson.com",
+                "subject" => "Potrzebujemy hasła (Finished)!",
+                "content" => 'Thanks for sucesfully reporting phishing attempt.<br>
+                            <img src="img/achievement/8_dzieki_za_zgloszenie_spamu_ok.png" style="width:150px; border-radius:50%;"><br>
+                            Best Regards,<br>
+                            Wacław Jala',
+                "response" => null,
+                "expectedResponse" => "???",
+                "solutionType" => "external",
+                "visable" => false,
+                "previous_ids" => "",
+                "achievement" => "img/achievement/8_dzieki_za_zgloszenie_spamu_ok.png",
+                "achievement_text" => "Dzieki za zgloszenie spamu<br> Nie nabraliście się na mail typu phishing",
+                "achievement_positive" => 1
+            ]
         ],
 
             "Find Lms" => [
@@ -629,8 +647,8 @@ if ($result == 0) {
 
     //insert data
     $stmt = $db->prepare("INSERT INTO emails 
-        (id, avatar, name, email, subject, content, response, expectedResponse, solutionType, category, visable, previous_ids, achievement, achievement_text, achievement_positive)
-        VALUES (:id, :avatar, :name, :email, :subject, :content, :response, :expectedResponse, :solutionType, :category, :visable, :previous_ids, :achievement, :achievement_text, :achievement_positive)");
+        (id, avatar, name, email, subject, content, response, expectedResponse, expectedNegativeResponse, solutionType, category, visable, previous_ids, achievement, achievement_text, achievement_positive)
+        VALUES (:id, :avatar, :name, :email, :subject, :content, :response, :expectedResponse, :expectedNegativeResponse, :solutionType, :category, :visable, :previous_ids, :achievement, :achievement_text, :achievement_positive)");
 
     foreach ($initialData as $category => $emails) {
         foreach ($emails as $email) {
@@ -642,6 +660,7 @@ if ($result == 0) {
             $stmt->bindValue(':content', $email['content'], SQLITE3_TEXT);
             $stmt->bindValue(':response', $email['response'], SQLITE3_TEXT);
             $stmt->bindValue(':expectedResponse', $email['expectedResponse'], SQLITE3_TEXT);
+            $stmt->bindValue(':expectedNegativeResponse', $email['expectedNegativeResponse'], SQLITE3_TEXT);
             $stmt->bindValue(':solutionType', $email['solutionType'], SQLITE3_TEXT);
             $stmt->bindValue(':category', $category, SQLITE3_TEXT);
             $stmt->bindValue(':visable', $email['visable'] ? 1 : 0, SQLITE3_INTEGER);
@@ -940,6 +959,12 @@ function handleMailboxPost($db, $data) {
             }
 
             echo "mailbox 30";
+            break;
+        case "80":
+            setVisableById($db, 82);//zakonczenie report spam, spamisko
+            break;
+        case "80_negative":
+            setVisableById($db, 81);//zakonczenie negatywne podales haslo123
             break;
         default:
             echo "defult action";

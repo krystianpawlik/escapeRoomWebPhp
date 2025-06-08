@@ -754,25 +754,38 @@
             const responseText = responseInput.value.trim().toLowerCase();
             const emailData = Object.values(emailsData).flat().find(e => e.id === emailId);
             if (emailData) {
-                if(responseText == "alert!"){
-                    //only temporary
-                            // Użycie:
-                    blockPageWithBigRedAlerts([
-                        "⚠️ ALERT SYSTEMOWY: Naruszenie bezpieczeństwa!",
-                        "❗ALERT: Błąd krytyczny systemu!",
-                        "⛔ALERT: Zatrzymano wszystkie procesy.",
-                        "✅ Proces zakończony. Można kontynuować."
-                    ], 5000);
-                }else if (responseText !== emailData.expectedResponse) {
-                    // document.getElementById("popup").style.display = "block";
-                    // document.getElementById("popupAudio").play();
-                    generatePopup();
-                } else{
-                    //emailData.response = responseText;
-                    //toDo send update to database
+                // if(responseText == "alert!"){
+                //     //only temporary
+                //             // Użycie:
+                //     blockPageWithBigRedAlerts([
+                //         "⚠️ ALERT SYSTEMOWY: Naruszenie bezpieczeństwa!",
+                //         "❗ALERT: Błąd krytyczny systemu!",
+                //         "⛔ALERT: Zatrzymano wszystkie procesy.",
+                //         "✅ Proces zakończony. Można kontynuować."
+                //     ], 5000);
+                // }else 
+
+                console.log(`Odpowiedź serwera: responseText=${responseText}, expectedResponse=${emailData.expectedResponse}, expectedNegativeRespons=${emailData.expectedNegativeResponse}`);
+                if(responseText === emailData.expectedResponse){
                     sendMailboxPost(emailId);
                     showEmailDetails(emailData);
+                } else if (responseText != "" && responseText === emailData.expectedNegativeResponse){
+                    
+                    sendMailboxPost(emailId+"_negative");
+                    showEmailDetails(emailData);
+                } else {
+                    generatePopup();
                 }
+
+                // if (responseText !== emailData.expectedResponse  ) {
+                //     // document.getElementById("popup").style.display = "block";
+                //     // document.getElementById("popupAudio").play();
+                    
+                // } else{
+                //     //emailData.response = responseText;
+                //     //toDo send update to database
+                    
+                // }
             }
         }
 
@@ -855,7 +868,7 @@
 
         function getEmailsFromDatabase(topic) {
             // Make a GET request to the PHP server to get all emails
-            fetch('database_api.php')
+            fetch('database_api.php?all=true')
                 .then(response => response.json()) // Parse the JSON response
                 .then(data => {
 
@@ -884,7 +897,7 @@
                 })
                 .catch(error => {
                     console.error('Error fetching data:', error);
-                    mailContent.innerHTML = "<p>There was an error loading the emails.</p>";
+                    //mailContent.innerHTML = "<p>There was an error loading the emails.</p>";
                 });
         }
 
