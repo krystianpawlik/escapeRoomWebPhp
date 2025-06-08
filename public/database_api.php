@@ -301,6 +301,25 @@ if ($result == 0) {
                 "avatar" => "img/adam_michalczewski_sq.png",
                 "name" => "CES",
                 "email" => "adam.michalczewski@example.com",
+                "subject" => "Router Configuration",
+                "content" => 'We have received the password, but there is no connection. Please check if the router is connected and send the password again.<br>
+                              <br>
+                              Best Regards,<br>
+                              Adam Michałczewski',//aby poszukali w pokoju
+                "response" => null,
+                "expectedResponse" => "5963",//zmienic na dobry
+                "solutionType" => "external",
+                "visable" => false,
+                "previous_ids" => "",
+                "achievement" => null,
+                "achievement_text" => null,
+                "achievement_positive" => 0
+            ],
+            [
+                "id" => 32,
+                "avatar" => "img/adam_michalczewski_sq.png",
+                "name" => "CES",
+                "email" => "adam.michalczewski@example.com",
                 "subject" => "Router Configuration (Finished)",
                 "content" => 'KPI were restored, but for some reason people who should not have access have additional privileges. Did you connect firewall? <br>
                               <img src="img/achievement/3_hakier_nok.png" style="width:150px; border-radius:50%;"><br>
@@ -316,7 +335,7 @@ if ($result == 0) {
                 "achievement_positive" => 0
             ],
             [
-                "id" => 32,
+                "id" => 33,
                 "avatar" => "img/adam_michalczewski_sq.png",
                 "name" => "CES",
                 "email" => "adam.michalczewski@example.com",
@@ -333,7 +352,8 @@ if ($result == 0) {
                 "achievement" => "img/achievement/3_firewall_zainstalowany_ok.png",
                 "achievement_text" => 'Firewall działa<br> Firewall zainstalowany zgodnie z instrukcją.',
                 "achievement_positive" => 1
-            ]
+            ],
+
             ],
 
 "Network_Configuration" => [
@@ -928,12 +948,13 @@ function handleMailboxPost($db, $data) {
     $values = $data['value'];
     $splitValues = explode(" ", $values);
     switch ($splitValues[0]) {
+        case "31":
         case "30":
             //router task
             //router check if router was properly connected
             if (getDeviceState($db, "router") === "firewall_connected")
             {
-                setVisableById($db, 32);
+                setVisableById($db, 33);
                 updateDeviceState($db, "rbs", "connected");
                 updateDeviceState($db, "router", "done");
                 setVisableById($db, 80);//start spam mail
@@ -943,12 +964,17 @@ function handleMailboxPost($db, $data) {
 
             if( getDeviceState($db, "router") === "firewall_disconnected")
             {
-                setVisableById($db, 31);
+                setVisableById($db, 32);
                 updateDeviceState($db, "rbs", "connected");
                 updateDeviceState($db, "router", "done");
                 setVisableById($db, 80);//start spam mail
 
                 echo "firewall connected";
+            }
+
+            if(getDeviceState($db, "router") === "idle")
+            {
+                setVisableById($db, 31);
             }
 
             if(getDeviceState($db, "router") === "done" && getDeviceState($db, "lamp") === "done")
