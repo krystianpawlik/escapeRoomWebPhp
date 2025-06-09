@@ -595,6 +595,30 @@ if ($result == 0) {
                 "achievement_positive" => 1
             ]
             ],
+          "DOOM" => [
+            [
+                "id" => 600,
+                "avatar" => "private/doom_slayer.jpg",
+                "name" => "Doom Slayer",
+                "email" => "Doom.Slayer@ericsson.com",
+                "subject" => "Pierwszy poziom (Finished)",
+                "content" => 'Zrobiliście to. Pierwszy poziom DOOM-a zaliczony.<br>
+                             Zero lagów. Zero packet lossu. Czysty transfer.<br>
+                             Działaliście jak dobrze skalibrowana sieć: bez wahania, bez błędów, bez straty.<br>
+                             Tak pracują tylko ci, którzy naprawdę wiedzą, co robią.<br>
+                             <img src="img/achievement/600_doom_slayer_ok.png" style="width:150px; border-radius:50%;"><br>
+                             Pozdrawiam,<br>
+                             Doom Slayer',
+                "response" => null,
+                "expectedResponse" => "???",
+                "solutionType" => "internal",
+                "visable" => false,
+                "previous_ids" => "",
+                "achievement" => "img/achievement/600_doom_slayer_ok.png",
+                "achievement_text" => "Doom Slayer approve.<br> Pierwszy poziom DOOM-a zaliczony",
+                "achievement_positive" => 1
+            ]
+            ],
             "RBS Overheat" => [
             [
                 "id" => 700,
