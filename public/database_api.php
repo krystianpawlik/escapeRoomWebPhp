@@ -116,7 +116,7 @@ $rbsStates = ["idle", "power", "connected", "buring", "weglan_lizard" , "monitor
 
 if ($resultDevices == 0) {
     $time = time();
-    $devices = ['box', 'lamp', 'raspberry1', 'raspberry2', 'rbs', "power_connector", "router", "skyfall"];
+    $devices = ['box', 'lamp', 'raspberry1', 'raspberry2', 'rbs', "power_connector", "router", "skyfall", "doom"];
 
     $stmt = $db->prepare('INSERT INTO devices (name, last_seen, state) VALUES (:name, :time, :state)');
 
@@ -628,7 +628,7 @@ if ($result == 0) {
 			    CC: "mikolaj.fajans@ericsson.com, stefan.baty@ericsson.com',
                 "subject" => "OVERHEAT alarm!!!",
                 "content" => 'Enable troubleshooting mode and answer a series of questions to find the cause. The issue has been escalated, so you have limited time.
-                              To begin, press the button below<BR> <a href="awaria.php" class="restart-button">Troubleshooting Emergency Mode</a>
+                              To begin, press the button below<BR> <a href="awaria.php" class="restart-button">Troubleshoot</a>
                               <br>
                               Best Regards,<br>
                               Jack Lin<br>',
@@ -816,7 +816,7 @@ function checkNextPuzzleStep($expected) {
     global $db;
 
     //Hardkoded CARD sequence
-    $cardsSequence = ["red", "yellow", "blue"];
+    $cardsSequence = ["startrpc", "red", "blue", "yellow", "startrc", "yellow", "blue", "red", "finish"];
 
     $current = getPuzzleData('card');
     if (!$current) {
@@ -841,8 +841,16 @@ function checkNextPuzzleStep($expected) {
             setVisableById($db, 60);
 
             setPuzzleData('card', 'completed', (string)$nextIndex);
-            return ['ok' => true, 'message' => "rpc installed"];
-        } else {
+            return ['ok' => true, 'message' => "Lms installed"];
+        } else if ($expectedNextStep === "startrpc")
+        {
+            setPuzzleData('card', 'in_progress', (string)$nextIndex);
+            return ['ok' => true, 'message' => "Repo RPC"];
+        }else if ($expectedNextStep === "startrc")
+        {
+            setPuzzleData('card', 'in_progress', (string)$nextIndex);
+            return ['ok' => true, 'message' => "Repo RC"];
+        }else {
             setPuzzleData('card', 'in_progress', (string)$nextIndex);
             return ['ok' => true, 'message' => "Installing {$expected}"];
         }
@@ -889,20 +897,40 @@ function handleBoxCardPost($db, $data) {
             $resultCard = checkNextPuzzleStep("yellow");
             echo $resultCard['message'];;
             break;
+        case "startrpc":
+            $resultCard = checkNextPuzzleStep("startrpc");
+            echo $resultCard['message'];;
+            break;
+        case "startrc":
+            $resultCard = checkNextPuzzleStep("startrc");
+            echo $resultCard['message'];;
+            break;
+        case "finish":
+            $resultCard = checkNextPuzzleStep("finish");
+            echo $resultCard['message'];;
+            break;
         case "reset":
             setPuzzleData('card', 'idle', "-1");
             echo "reset";
             break;
         case "cabinet":
-            //mozliwe ze bedzie do zrobienia sprawdzenie
-            setVisableById($db, 61);
-            setVisableById($db, 700);
-            echo "cabinet";
+            //tylko odpal jak jest completed
+
+
+            if(getPuzzleData('card')['status'] === "completed")
+            {
+                setVisableById($db, 61);
+                setVisableById($db, 700);
+                echo "cabinet";
+            } else{
+                echo "cab_nok";
+            }
             break;
         case "keydrop":
             updateDeviceState($db, "skyfall", "drop");
             echo "skyfall";
             break;
+
         default:
             echo "Incorect Action";    
             //echo "defult action";
@@ -1174,7 +1202,26 @@ function handleScriptPost($db, $data) {
             echo "default script post";
             break;
     }
+}
 
+
+function handleDoomPost($db, $data) {
+    $values = $data['value'];
+    $splitValues = explode(" ", $values);
+    switch ($splitValues[0]) {
+        case "doom":
+            updateDeviceState($db, "doom", "doom");
+            setVisableById($db, 600);
+            echo "doom";
+            break;
+        case "reset":
+            updateDeviceState($db, "doom", "idle");
+            echo "reset";
+            break;
+        default:
+            echo "default script post";
+            break;
+    }
 }
 
 
@@ -1257,6 +1304,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             break;
         case "script":
             handleScriptPost($db, $data);
+            break;
+        case "doom":
+            handleDoomPost($db, $data);
             break;
         default:
             echo "action or device not recognised";

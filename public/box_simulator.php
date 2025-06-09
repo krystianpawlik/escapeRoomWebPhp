@@ -60,7 +60,7 @@
 <div id="response"></div>
 
 <script>
-  const buttonLabels = ["0", "vip", "red", "blue", "yellow", "reset"];
+  const buttonLabels = ["0", "vip", "red", "blue", "yellow", "startrpc", "startrc", "finish", "reset"];
   const imputText = ["login Vip", "Unautorized", 'lm rpcSectorCarrier', 'lm rpcConfig'];
   const controlsContainer = document.getElementById('controls');
 

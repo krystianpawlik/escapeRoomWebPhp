@@ -50,6 +50,8 @@
       { device: "script", value: "start_burning"},
       { device: "box-card", value: "cabinet"},
       { device: "box-card", value: "keydrop" },
+      { device: "doom", value: "doom" },
+      { device: "doom", value: "reset" },
     ];
 
     const container = document.getElementById("button-container");
