@@ -25,7 +25,7 @@ foreach ($categories as $category) {
 }
 
 // 3. Pobierz widoczne achievementy
-$results = $db->query("SELECT achievement, achievement_text, achievement_positive FROM emails WHERE visable = 0 AND achievement IS NOT NULL AND achievement != '' ORDER BY id DESC");
+$results = $db->query("SELECT achievement, achievement_text, achievement_positive FROM emails WHERE visable = 1 AND achievement IS NOT NULL AND achievement != '' ORDER BY id DESC");
 ?>
 
 <!DOCTYPE html>
