@@ -597,7 +597,7 @@ if ($result == 0) {
             ],
             "RBS Overheat" => [
             [
-                "id" => 70,
+                "id" => 700,
                 "avatar" => "img/jack_lin_sq.png",
                 "name" => "Jack Lin",
                 "email" => 'jack.lin@ericsson.com<br>
@@ -618,7 +618,7 @@ if ($result == 0) {
                 "achievement_positive" => 0
             ],
             [
-                "id" => 71,
+                "id" => 701,
                 "avatar" => "img/jack_lin_sq.png",
                 "name" => "Jack Lin",
                 "email" => 'jack.lin@ericsson.com<br>
@@ -639,7 +639,7 @@ if ($result == 0) {
                 "achievement_positive" => 1
             ],
             [
-                "id" => 72,
+                "id" => 702,
                "avatar" => "img/jack_lin_sq.png",
                 "name" => "Jack Lin",
                 "email" => 'jack.lin@ericsson.com<br>
@@ -872,7 +872,7 @@ function handleBoxCardPost($db, $data) {
         case "cabinet":
             //mozliwe ze bedzie do zrobienia sprawdzenie
             setVisableById($db, 61);
-            setVisableById($db, 70);
+            setVisableById($db, 700);
             echo "cabinet";
             break;
         case "keydrop":
@@ -1138,12 +1138,12 @@ function handleScriptPost($db, $data) {
             break;
         case "weglan_lizard":
             updateDeviceState($db, "rbs", "weglan_lizard");
-            setVisableById($db, 72);
+            setVisableById($db, 702);
             echo "weglan_lizard";
             break;
         case "monitor_lizard":
             updateDeviceState($db, "rbs", "monitor_lizard");
-            setVisableById($db, 71);
+            setVisableById($db, 701);
             echo "monitor_lizard";
             break;
         default:
